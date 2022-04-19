@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="20">
+            <StackPanel Orientation="Vertical">
+                <Button x:Name="Start" Width="120" Height="30" Margin="5" Content="启动" Click="Start_Click"/>
+                <Button x:Name="Stop" Width="120" Height="30" Margin="5" Content="关闭" Click="Stop_Click"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <TextBox x:Name="Log" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" IsReadOnly="True" Margin="0,10,0,0" BorderThickness="0" TextChanged="TextLog_TextChanged"/>
+        </Grid>
     </Grid>
 </Window>
