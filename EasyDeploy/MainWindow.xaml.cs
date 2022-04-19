@@ -27,11 +27,17 @@ namespace EasyDeploy
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        static void OnProcessExit(object sender, EventArgs e)
+        {
+            Console.WriteLine("I'm out of here");
         }
 
         private void VCliWrap_StartedCommandEvent(string obj)

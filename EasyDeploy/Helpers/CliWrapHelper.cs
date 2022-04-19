@@ -109,7 +109,12 @@ namespace EasyDeploy.Helpers
         /// </summary>
         public void Stop()
         {
+            using var cts = new CancellationTokenSource();
 
+            // Cancel automatically after a timeout of 10 seconds
+            cts.CancelAfter(TimeSpan.FromSeconds(10));
+
+            var result = _cmd.Observe(cts.Token);
         }
     }
 }
