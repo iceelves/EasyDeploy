@@ -54,12 +54,25 @@ namespace EasyDeploy.Helpers
         /// </summary>
         private int _threadID { get; set; }
 
+        /// <summary>
+        /// 启动命令事件
+        /// </summary>
         public event Action<string> StartedCommandEvent;
 
+        /// <summary>
+        /// 标准输出命令事件
+        /// </summary>
         public event Action<string> StandardOutputCommandEvent;
 
+        /// <summary>
+        /// 标准错误命令事件
+        /// </summary>
         public event Action<string> StandardErrorCommandEvent;
 
+        /// <summary>
+        /// 退出命令事件
+        /// 非正常退出一般不会执行这里
+        /// </summary>
         public event Action<string> ExitedCommandEvent;
 
         /// <summary>
@@ -78,32 +91,32 @@ namespace EasyDeploy.Helpers
                 {
                     _cmd = _cmd.WithArguments(_withArguments);
                 }
-                Task.Run(async () =>
-                {
-                    await foreach (var cmdEvent in _cmd.ListenAsync())
-                    {
-                        switch (cmdEvent)
-                        {
-                            case StartedCommandEvent started:
-                                //Console.WriteLine($"Process started; ID: {started.ProcessId}");
-                                _threadID = started.ProcessId;
-                                StartedCommandEvent?.Invoke($"{started.ProcessId}");
-                                break;
-                            case StandardOutputCommandEvent stdOut:
-                                //Console.WriteLine($"Out> {stdOut.Text}");
-                                StandardOutputCommandEvent?.Invoke($"{stdOut.Text}");
-                                break;
-                            case StandardErrorCommandEvent stdErr:
-                                //Console.WriteLine($"Err> {stdErr.Text}");
-                                StandardErrorCommandEvent?.Invoke($"{stdErr.Text}");
-                                break;
-                            case ExitedCommandEvent exited:
-                                //Console.WriteLine($"Process exited; Code: {exited.ExitCode}");
-                                ExitedCommandEvent?.Invoke($"{exited.ExitCode}");
-                                break;
-                        }
-                    }
-                });
+                _ = Task.Run(async () =>
+                  {
+                      await foreach (var cmdEvent in _cmd.ListenAsync())
+                      {
+                          switch (cmdEvent)
+                          {
+                              case StartedCommandEvent started:
+                                  //Console.WriteLine($"Process started; ID: {started.ProcessId}");
+                                  _threadID = started.ProcessId;
+                                  StartedCommandEvent?.Invoke($"{started.ProcessId}");
+                                  break;
+                              case StandardOutputCommandEvent stdOut:
+                                  //Console.WriteLine($"Out> {stdOut.Text}");
+                                  StandardOutputCommandEvent?.Invoke($"{stdOut.Text}");
+                                  break;
+                              case StandardErrorCommandEvent stdErr:
+                                  //Console.WriteLine($"Err> {stdErr.Text}");
+                                  StandardErrorCommandEvent?.Invoke($"{stdErr.Text}");
+                                  break;
+                              case ExitedCommandEvent exited:
+                                  //Console.WriteLine($"Process exited; Code: {exited.ExitCode}");
+                                  ExitedCommandEvent?.Invoke($"{exited.ExitCode}");
+                                  break;
+                          }
+                      }
+                  });
                 return true;
             }
             else
@@ -131,8 +144,7 @@ namespace EasyDeploy.Helpers
             {
                 return;
             }
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher
-                    ("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid);
             ManagementObjectCollection moc = searcher.Get();
             foreach (ManagementObject mo in moc)
             {
@@ -148,6 +160,5 @@ namespace EasyDeploy.Helpers
                 // Process already exited.
             }
         }
-
     }
 }
