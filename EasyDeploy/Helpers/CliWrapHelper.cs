@@ -6,6 +6,8 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Management;
+using System.Diagnostics;
 
 namespace EasyDeploy.Helpers
 {
@@ -47,6 +49,11 @@ namespace EasyDeploy.Helpers
         /// </summary>
         private Command _cmd { get; set; }
 
+        /// <summary>
+        /// 启动线程 ID
+        /// </summary>
+        private int _threadID { get; set; }
+
         public event Action<string> StartedCommandEvent;
 
         public event Action<string> StandardOutputCommandEvent;
@@ -78,19 +85,20 @@ namespace EasyDeploy.Helpers
                         switch (cmdEvent)
                         {
                             case StartedCommandEvent started:
-                                Console.WriteLine($"Process started; ID: {started.ProcessId}");
+                                //Console.WriteLine($"Process started; ID: {started.ProcessId}");
+                                _threadID = started.ProcessId;
                                 StartedCommandEvent?.Invoke($"{started.ProcessId}");
                                 break;
                             case StandardOutputCommandEvent stdOut:
-                                Console.WriteLine($"Out> {stdOut.Text}");
+                                //Console.WriteLine($"Out> {stdOut.Text}");
                                 StandardOutputCommandEvent?.Invoke($"{stdOut.Text}");
                                 break;
                             case StandardErrorCommandEvent stdErr:
-                                Console.WriteLine($"Err> {stdErr.Text}");
+                                //Console.WriteLine($"Err> {stdErr.Text}");
                                 StandardErrorCommandEvent?.Invoke($"{stdErr.Text}");
                                 break;
                             case ExitedCommandEvent exited:
-                                Console.WriteLine($"Process exited; Code: {exited.ExitCode}");
+                                //Console.WriteLine($"Process exited; Code: {exited.ExitCode}");
                                 ExitedCommandEvent?.Invoke($"{exited.ExitCode}");
                                 break;
                         }
@@ -109,12 +117,37 @@ namespace EasyDeploy.Helpers
         /// </summary>
         public void Stop()
         {
-            using var cts = new CancellationTokenSource();
-
-            // Cancel automatically after a timeout of 10 seconds
-            cts.CancelAfter(TimeSpan.FromSeconds(10));
-
-            var result = _cmd.Observe(cts.Token);
+            KillProcessAndChildren(_threadID);
         }
+
+        /// <summary>
+        /// Kill a process, and all of its children, grandchildren, etc.
+        /// </summary>
+        /// <param name="pid">Process ID.</param>
+        private static void KillProcessAndChildren(int pid)
+        {
+            // Cannot close 'system idle process'.
+            if (pid == 0)
+            {
+                return;
+            }
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher
+                    ("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectCollection moc = searcher.Get();
+            foreach (ManagementObject mo in moc)
+            {
+                KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+            }
+            try
+            {
+                Process proc = Process.GetProcessById(pid);
+                proc.Kill();
+            }
+            catch (ArgumentException)
+            {
+                // Process already exited.
+            }
+        }
+
     }
 }
