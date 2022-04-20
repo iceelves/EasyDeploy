@@ -35,9 +35,9 @@ namespace EasyDeploy
 
         }
 
-        static void OnProcessExit(object sender, EventArgs e)
+        private void OnProcessExit(object sender, EventArgs e)
         {
-            Console.WriteLine("I'm out of here");
+            CliWrap?.Stop();
         }
 
         private void VCliWrap_StartedCommandEvent(string obj)
