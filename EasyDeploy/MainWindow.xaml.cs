@@ -28,6 +28,7 @@ namespace EasyDeploy
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+            this.MouseDown += MainWindow_MouseDown;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -38,6 +39,19 @@ namespace EasyDeploy
         private void OnProcessExit(object sender, EventArgs e)
         {
             CliWrap?.Stop();
+        }
+
+        /// <summary>
+        /// 拖动窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
 
         private void VCliWrap_StartedCommandEvent(string obj)
@@ -71,9 +85,9 @@ namespace EasyDeploy
                 SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Application.Current.Dispatcher));
                 SynchronizationContext.Current.Post(pl =>
                 {
-                    StringBuilder strBuilder = new StringBuilder(Log.Text);
-                    strBuilder.AppendLine($"{logMessage}");
-                    Log.Text = strBuilder.ToString();
+                    //StringBuilder strBuilder = new StringBuilder(Log.Text);
+                    //strBuilder.AppendLine($"{logMessage}");
+                    //Log.Text = strBuilder.ToString();
                 }, null);
             });
         }
@@ -82,7 +96,7 @@ namespace EasyDeploy
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            Log.Text = null;
+            //Log.Text = null;
             CliWrap = new CliWrapHelper("", "ping", new[] { "baidu.com", "-t" });
             CliWrap.StartedCommandEvent += VCliWrap_StartedCommandEvent;
             CliWrap.StandardOutputCommandEvent += VCliWrap_StandardOutputCommandEvent;
@@ -104,6 +118,31 @@ namespace EasyDeploy
         private void TextLog_TextChanged(object sender, TextChangedEventArgs e)
         {
             (sender as TextBox).ScrollToEnd();
+        }
+
+        /// <summary>
+        /// 关闭窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// 最小化窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void MoreMenus_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
