@@ -3,5 +3,8 @@
     <ResourceDictionary.MergedDictionaries>
         <!--定制原生控件-->
         <ResourceDictionary Source="/EasyDeploy;component/Themes/SvgButtonStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/IceDataGridStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+    <!--通用默认样式-->
+    <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}" />
 </ResourceDictionary>

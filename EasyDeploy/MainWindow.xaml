@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
-        Title="EasyDeploy" MinHeight="685" MinWidth="1200" Height="685" Width="1200" Icon="/Images/terminal.png">
+        Title="EasyDeploy" MinHeight="800" MinWidth="1500" Height="800" Width="1500" Icon="/Images/terminal.png">
     <Grid Background="Transparent">
         <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10">
             <Grid>
@@ -47,13 +47,13 @@
                     <Grid>
                         <Grid ShowGridLines="True">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="350"/>
+                                <ColumnDefinition Width="500"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <!--配置列表-->
                             <Grid Grid.Column="0" ShowGridLines="True">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="40"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
@@ -61,15 +61,15 @@
                                     <Button Content="Add" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0"/>
                                 </Grid>
                                 <Grid Grid.Row="1">
-                                    <DataGrid>
+                                    <control:IceDataGrid x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Service" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Module" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="PID" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Port" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Manage" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Service" IsReadOnly="True" Width="*"/>
+                                            <DataGridTextColumn Header="Module" IsReadOnly="True" Width="*"/>
+                                            <DataGridTextColumn Header="PID" IsReadOnly="True" Width="*"/>
+                                            <DataGridTextColumn Header="Port" IsReadOnly="True" Width="*"/>
+                                            <DataGridTextColumn Header="Manage" IsReadOnly="True" Width="200"/>
                                         </DataGrid.Columns>
-                                    </DataGrid>
+                                    </control:IceDataGrid>
                                 </Grid>
                             </Grid>
                             <!--控制台信息-->

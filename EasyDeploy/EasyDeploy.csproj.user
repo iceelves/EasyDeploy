@@ -13,6 +13,12 @@
     <Page Update="Themes\Generic.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\IceDataGridStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\ScrollViewerStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\SvgButtonStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
