@@ -51,8 +51,25 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <!--配置列表-->
-                            <Grid Grid.Column="0">
-                               
+                            <Grid Grid.Column="0" ShowGridLines="True">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <DataGrid>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Service" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Module" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="PID" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Port" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Manage" IsReadOnly="True"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
                             </Grid>
                             <!--控制台信息-->
                             <Grid Grid.Column="1">
