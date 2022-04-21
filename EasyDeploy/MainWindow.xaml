@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
-        Title="EasyDeploy" MinHeight="240" MinWidth="400" Height="600" Width="400" Icon="/Images/terminal.png">
+        Title="EasyDeploy" MinHeight="500" MinWidth="800" Height="500" Width="800" Icon="/Images/terminal.png">
     <Grid Background="Transparent">
-        <Border SnapsToDevicePixels="True" CornerRadius="5" Margin="10" Background="#35363A">
+        <Border x:Name="BaseBorder" SnapsToDevicePixels="True" CornerRadius="5" Margin="10" Background="#35363A">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
@@ -32,6 +32,10 @@
                                            ButtonImage="M96 417.984h832v188.032h-832z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
                                            Click="Minimize_Click"/>
+                            <control:SvgButton x:Name="mainMaximization" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
+                                           ButtonImage="M735.786833 62.98859 288.310382 62.98859c-123.567293 0-223.738737 100.164281-223.738737 223.738737l0 447.476451c0 123.555014 100.17042 223.751017 223.738737 223.751017l447.476451 0c123.561154 0 223.738737-100.196003 223.738737-223.751017L959.52557 286.727327C959.52557 163.15287 859.347986 62.98859 735.786833 62.98859zM831.694159 702.260252c0 70.612221-57.238632 127.850853-127.850853 127.850853L320.292793 830.111105c-70.612221 0-127.850853-57.238632-127.850853-127.850853L192.44194 318.708715c0-70.612221 57.238632-127.850853 127.850853-127.850853l383.551536 0c70.612221 0 127.850853 57.238632 127.850853 127.850853L831.695183 702.260252z"
+                                           NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
+                                           Click="Maximization_Click"/>
                             <control:SvgButton x:Name="mainClose" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
                                            ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
@@ -40,7 +44,9 @@
                     </Grid>
                 </Border>
                 <Grid Grid.Row="1">
-
+                    <Viewbox x:Name="ReSizeBR" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,1,1" Width="8" Height="8">
+                        <Path x:Name="Part_Path" Data="M0 1024l1024 0L1024 0 0 1024z" Fill="#707070"/>
+                    </Viewbox>
                 </Grid>
             </Grid>
             <Border.Effect>
