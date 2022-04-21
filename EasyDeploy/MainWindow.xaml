@@ -57,7 +57,8 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-
+                                    <Label Content="Deploy Service :" Foreground="White" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                    <Button Content="Add" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0"/>
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <DataGrid>
