@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
         Title="EasyDeploy" MinHeight="500" MinWidth="800" Height="500" Width="800" Icon="/Images/terminal.png">
     <Grid Background="Transparent">
-        <Border x:Name="BaseBorder" SnapsToDevicePixels="True" CornerRadius="5" Margin="10" Background="#35363A">
+        <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
@@ -44,6 +44,7 @@
                     </Grid>
                 </Border>
                 <Grid Grid.Row="1">
+                    <Border Background="#35363A" CornerRadius="0,0,5,5" Opacity="0.8"/>
                     <Viewbox x:Name="ReSizeBR" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,1,1" Width="8" Height="8">
                         <Path x:Name="Part_Path" Data="M0 1024l1024 0L1024 0 0 1024z" Fill="#707070"/>
                     </Viewbox>
