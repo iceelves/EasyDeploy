@@ -1,4 +1,5 @@
 ﻿using EasyDeploy.Helpers;
+using EasyDeploy.Views;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -142,6 +143,17 @@ namespace EasyDeploy
         private void MoreMenus_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// 新增服务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddService_Click(object sender, RoutedEventArgs e)
+        {
+            AddService window = new AddService();
+            window.ShowDialog();
         }
 
         #region 修改主窗体大小

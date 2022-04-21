@@ -45,20 +45,22 @@
                 </Border>
                 <Border Grid.Row="1" Background="#35363A" CornerRadius="0,0,5,5">
                     <Grid>
-                        <Grid ShowGridLines="True">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="500"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <!--配置列表-->
-                            <Grid Grid.Column="0" ShowGridLines="True">
+                            <Grid Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
                                     <Label Content="Deploy Service :" Foreground="White" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                    <Button Content="Add" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0"/>
+                                    <control:IceButton x:Name="AddService" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="Add" 
+                                           Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
+                                           Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="AddService_Click"/>
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <control:IceDataGrid x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2">
