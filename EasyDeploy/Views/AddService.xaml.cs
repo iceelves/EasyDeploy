@@ -81,7 +81,7 @@ namespace EasyDeploy.Views
             ServiceModel.ServiceName = ServiceName.Text;
             ServiceModel.ServicePath = ServicePath.Text;
             ServiceModel.Parameter = Parameter.Text;
-            ServiceModel.AutoStart = AutoStart.IsEnabled;
+            ServiceModel.AutoStart = (bool)AutoStart.IsChecked;
             this.Close();
         }
 

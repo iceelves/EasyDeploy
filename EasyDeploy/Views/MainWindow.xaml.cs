@@ -1,4 +1,5 @@
 ﻿using EasyDeploy.Helpers;
+using EasyDeploy.Models;
 using EasyDeploy.Views;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace EasyDeploy
 {
@@ -146,6 +149,27 @@ namespace EasyDeploy
         }
 
         /// <summary>
+        /// 服务配置文件保存路径
+        /// </summary>
+        private string ServiceSavePath = "ServiceConfig.json";
+
+        private List<ServiceModel> _services;
+        /// <summary>
+        /// 服务信息集合
+        /// </summary>
+        public List<ServiceModel> Services
+        {
+            get
+            {
+                return _services;
+            }
+            set
+            {
+                _services = value;
+            }
+        }
+
+        /// <summary>
         /// 新增服务
         /// </summary>
         /// <param name="sender"></param>
@@ -157,7 +181,17 @@ namespace EasyDeploy
             var vServiceModel = window.ServiceModel;
             if (vServiceModel != null)
             {
-                // 保存
+                // 填充数据
+                if (Services == null)
+                {
+                    Services = new List<ServiceModel>();
+                }
+                Services.Add(vServiceModel);
+                // 保存数据集
+                var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
+                StreamWriter sw = new StreamWriter(ServiceSavePath);
+                sw.WriteLine(vServiceJson);
+                sw.Close();
             }
         }
 
