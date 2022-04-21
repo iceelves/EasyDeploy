@@ -35,7 +35,7 @@ namespace EasyDeploy
             this.Loaded += MainWindow_Loaded;
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             this.TitleBar.MouseDown += TitleBar_MouseDown;
-            TitleBar.MouseLeftButtonDown += TitleBar_MouseLeftButtonDown;
+            this.TitleBar.MouseLeftButtonDown += TitleBar_MouseLeftButtonDown;
 
             // 主窗体拖动和缩放
             this.SourceInitialized += MainWindow_SourceInitialized;
