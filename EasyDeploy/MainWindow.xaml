@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
-        Title="EasyDeploy" Height="600" Width="400" Icon="/Images/terminal.png">
+        Title="EasyDeploy" MinHeight="240" MinWidth="400" Height="600" Width="400" Icon="/Images/terminal.png">
     <Grid Background="Transparent">
         <Border SnapsToDevicePixels="True" CornerRadius="5" Margin="10" Background="#35363A">
             <Grid>
@@ -17,7 +17,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!--标题栏-->
-                <Border Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
+                <Border x:Name="TitleBar" Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
                     <Grid>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding ElementName=easyDeploy,Path=Icon}" Width="20" Margin="10,0,5,0"/>
@@ -47,5 +47,25 @@
                 <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
             </Border.Effect>
         </Border>
+        <Grid x:Name="ReSize">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Name="ResizeTopLeft" Fill="Transparent" Grid.Row="0" Grid.Column="0" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+            <Rectangle Name="ResizeTop" Fill="Transparent" Grid.Row="0" Grid.Column="1" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+            <Rectangle Name="ResizeTopRight" Fill="Transparent" Grid.Row="0" Grid.Column="2" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+            <Rectangle Name="ResizeLeft" Fill="Transparent" Grid.Row="1" Grid.Column="0" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+            <Rectangle Name="ResizeRight" Fill="Transparent" Grid.Row="1" Grid.Column="2" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+            <Rectangle Name="ResizeBottomLeft" Fill="Transparent" Grid.Row="2" Grid.Column="0" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+            <Rectangle Name="ResizeBottom" Fill="Transparent" Grid.Row="2" Grid.Column="1" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+            <Rectangle Name="ResizeBottomRight" Fill="Transparent" Grid.Row="2" Grid.Column="2" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
+        </Grid>
     </Grid>
 </Window>
