@@ -154,6 +154,11 @@ namespace EasyDeploy
         {
             AddService window = new AddService();
             window.ShowDialog();
+            var vServiceModel = window.ServiceModel;
+            if (vServiceModel != null)
+            {
+                // 保存
+            }
         }
 
         #region 修改主窗体大小

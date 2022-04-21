@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using EasyDeploy.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,30 +19,18 @@ namespace EasyDeploy.Views
     /// </summary>
     public partial class AddService : Window
     {
-        public AddService()
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public AddService(ServiceModel serviceModel = null)
         {
             InitializeComponent();
             this.TitleBar.MouseDown += TitleBar_MouseDown;
-        }
 
-        /// <summary>
-        /// 最小化窗体
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Minimize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        /// <summary>
-        /// 关闭窗体
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+            if (serviceModel != null)
+            {
+                ServiceModel = serviceModel;
+            }
         }
 
         /// <summary>
@@ -69,8 +58,51 @@ namespace EasyDeploy.Views
             dialog.Filter = "EXE File|*.exe|全部文件|*.*";
             if ((bool)dialog.ShowDialog())
             {
-                ServerPath.Text = dialog.FileName;
+                ServicePath.Text = dialog.FileName;
             }
+        }
+
+        /// <summary>
+        /// 全局服务配置
+        /// </summary>
+        public ServiceModel ServiceModel { get; set; }
+
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (ServiceModel == null)
+            {
+                ServiceModel = new ServiceModel();
+            }
+            ServiceModel.ServiceName = ServiceName.Text;
+            ServiceModel.ServicePath = ServicePath.Text;
+            ServiceModel.Parameter = Parameter.Text;
+            ServiceModel.AutoStart = AutoStart.IsEnabled;
+            this.Close();
+        }
+
+        /// <summary>
+        /// 最小化窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        /// <summary>
+        /// 关闭窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
