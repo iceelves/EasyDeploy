@@ -43,12 +43,14 @@
                         </StackPanel>
                     </Grid>
                 </Border>
-                <Grid Grid.Row="1">
-                    <Border Background="#35363A" CornerRadius="0,0,5,5" Opacity="0.8"/>
-                    <Viewbox x:Name="ReSizeBR" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,1,1" Width="8" Height="8">
-                        <Path x:Name="Part_Path" Data="M0 1024l1024 0L1024 0 0 1024z" Fill="#707070"/>
-                    </Viewbox>
-                </Grid>
+                <Border Grid.Row="1" Background="#35363A" CornerRadius="0,0,5,5" Opacity="0.9">
+                    <Grid>
+                        <!--右下角拖动块-->
+                        <Viewbox x:Name="ReSizeBR" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,1,1" Width="8" Height="8">
+                            <Path x:Name="Part_Path" Data="M0 1024l1024 0L1024 0 0 1024z" Fill="#707070"/>
+                        </Viewbox>
+                    </Grid>
+                </Border>
             </Grid>
             <Border.Effect>
                 <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
