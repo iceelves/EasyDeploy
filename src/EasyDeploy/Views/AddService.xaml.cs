@@ -3,12 +3,14 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -74,6 +76,18 @@ namespace EasyDeploy.Views
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            // 检查数据
+            if (string.IsNullOrEmpty(ServiceName.Text))
+            {
+                BorderFlashing(ServiceName);
+                return;
+            }
+            if (string.IsNullOrEmpty(ServicePath.Text))
+            {
+                BorderFlashing(ServicePath);
+                return;
+            }
+            // 保存数据
             if (ServiceModel == null)
             {
                 ServiceModel = new ServiceModel();
@@ -103,6 +117,28 @@ namespace EasyDeploy.Views
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// 文本框边框闪烁
+        /// 用于错误提示显示
+        /// </summary>
+        /// <param name="containingObject"></param>
+        private void BorderFlashing(FrameworkElement containingObject)
+        {
+            Storyboard _blinkStoryboard = this.TryFindResource("BlinkAnime") as Storyboard;
+            _blinkStoryboard.Begin(containingObject, true);
+
+            Timer timer = new Timer(5000);
+            timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+            {
+                timer.Enabled = false;
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    _blinkStoryboard.Stop(containingObject);
+                }));
+            };
+            timer.Enabled = true;
         }
     }
 }

@@ -9,6 +9,13 @@
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
         Title="AddService" Height="300" Width="520" Icon="/Images/terminal.png">
+    <Window.Resources>
+        <!--文本框边框闪烁-->
+        <Storyboard x:Key="BlinkAnime">
+            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                            From="#FFABADB3" To="Red" Duration="0:0:0.5" RepeatBehavior="3" AutoReverse="True"/>
+        </Storyboard>
+    </Window.Resources>
     <Grid Background="Transparent">
         <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10">
             <Grid>
