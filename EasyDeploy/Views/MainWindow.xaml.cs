@@ -29,7 +29,7 @@ namespace EasyDeploy
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
@@ -47,8 +47,6 @@ namespace EasyDeploy
             this.SourceInitialized += MainWindow_SourceInitialized;
             this.MouseMove += MainWindow_MouseMove;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 服务配置文件保存路径
