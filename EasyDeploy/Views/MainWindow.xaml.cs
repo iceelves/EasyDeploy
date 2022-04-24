@@ -67,7 +67,16 @@ namespace EasyDeploy
         /// <param name="e"></param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
+            // 加载配置文件
+            if (File.Exists(ServiceSavePath))
+            {
+                var vServiceJson = File.ReadAllText(ServiceSavePath);
+                Services = JsonConvert.DeserializeObject<List<ServiceModel>>(vServiceJson);
+            }
+            else
+            {
+                // TODO:未查到配置文件
+            }
         }
 
         /// <summary>
