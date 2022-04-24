@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -32,7 +33,7 @@ namespace EasyDeploy.ViewModels
                     if (File.Exists(ServiceSavePath))
                     {
                         var vServiceJson = File.ReadAllText(ServiceSavePath);
-                        Services = JsonConvert.DeserializeObject<List<ServiceModel>>(vServiceJson);
+                        Services = JsonConvert.DeserializeObject<ObservableCollection<ServiceModel>>(vServiceJson);
                     }
                     else
                     {
@@ -52,10 +53,15 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         private string ServiceSavePath = "ServiceConfig.json";
 
+        private ObservableCollection<ServiceModel> _services;
         /// <summary>
         /// 服务信息集合
         /// </summary>
-        public List<ServiceModel> Services { get; set; }
+        public ObservableCollection<ServiceModel> Services
+        {
+            get => _services;
+            set => SetProperty(ref _services, value);
+        }
 
         ///// <summary>
         ///// 新增服务
@@ -74,7 +80,7 @@ namespace EasyDeploy.ViewModels
                         // 填充数据
                         if (Services == null)
                         {
-                            Services = new List<ServiceModel>();
+                            Services = new ObservableCollection<ServiceModel>();
                         }
                         Services.Add(vServiceModel);
                         // 保存数据集
