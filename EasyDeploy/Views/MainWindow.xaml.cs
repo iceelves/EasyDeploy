@@ -22,17 +22,20 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Newtonsoft.Json;
 using System.IO;
+using System.ComponentModel;
 
 namespace EasyDeploy
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = this;
 
             // 加载和退出
             this.Loaded += MainWindow_Loaded;
@@ -44,6 +47,18 @@ namespace EasyDeploy
             this.SourceInitialized += MainWindow_SourceInitialized;
             this.MouseMove += MainWindow_MouseMove;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// 服务配置文件保存路径
+        /// </summary>
+        private string ServiceSavePath = "ServiceConfig.json";
+
+        /// <summary>
+        /// 服务信息集合
+        /// </summary>
+        public List<ServiceModel> Services { get; set; }
 
         /// <summary>
         /// Loaded
@@ -146,27 +161,6 @@ namespace EasyDeploy
         private void MoreMenus_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        /// <summary>
-        /// 服务配置文件保存路径
-        /// </summary>
-        private string ServiceSavePath = "ServiceConfig.json";
-
-        private List<ServiceModel> _services;
-        /// <summary>
-        /// 服务信息集合
-        /// </summary>
-        public List<ServiceModel> Services
-        {
-            get
-            {
-                return _services;
-            }
-            set
-            {
-                _services = value;
-            }
         }
 
         /// <summary>

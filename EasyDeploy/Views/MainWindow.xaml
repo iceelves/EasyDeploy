@@ -63,7 +63,7 @@
                                            Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="AddService_Click"/>
                                 </Grid>
                                 <Grid Grid.Row="1">
-                                    <control:IceDataGrid x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2">
+                                    <control:IceDataGrid x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Services}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Service" IsReadOnly="True" Width="*"/>
                                             <DataGridTextColumn Header="Module" IsReadOnly="True" Width="*"/>
