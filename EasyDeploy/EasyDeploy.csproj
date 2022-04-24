@@ -15,6 +15,9 @@
   <ItemGroup>
     <PackageReference Include="CliWrap" Version="3.4.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
+    <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
+    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
     <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>
 

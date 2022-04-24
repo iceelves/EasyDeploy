@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.ComponentModel;
 
-namespace EasyDeploy
+namespace EasyDeploy.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
