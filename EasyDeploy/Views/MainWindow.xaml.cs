@@ -35,10 +35,7 @@ namespace EasyDeploy.Views
         {
             InitializeComponent();
 
-            this.DataContext = this;
-
             // 加载和退出
-            this.Loaded += MainWindow_Loaded;
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             this.TitleBar.MouseDown += TitleBar_MouseDown;
             this.TitleBar.MouseLeftButtonDown += TitleBar_MouseLeftButtonDown;
@@ -46,35 +43,6 @@ namespace EasyDeploy.Views
             // 主窗体拖动和缩放
             this.SourceInitialized += MainWindow_SourceInitialized;
             this.MouseMove += MainWindow_MouseMove;
-        }
-
-        /// <summary>
-        /// 服务配置文件保存路径
-        /// </summary>
-        private string ServiceSavePath = "ServiceConfig.json";
-
-        /// <summary>
-        /// 服务信息集合
-        /// </summary>
-        public List<ServiceModel> Services { get; set; }
-
-        /// <summary>
-        /// Loaded
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            // 加载配置文件
-            if (File.Exists(ServiceSavePath))
-            {
-                var vServiceJson = File.ReadAllText(ServiceSavePath);
-                Services = JsonConvert.DeserializeObject<List<ServiceModel>>(vServiceJson);
-            }
-            else
-            {
-                // TODO:未查到配置文件
-            }
         }
 
         /// <summary>
@@ -168,32 +136,6 @@ namespace EasyDeploy.Views
         private void MoreMenus_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        /// <summary>
-        /// 新增服务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddService_Click(object sender, RoutedEventArgs e)
-        {
-            AddService window = new AddService();
-            window.ShowDialog();
-            var vServiceModel = window.ServiceModel;
-            if (vServiceModel != null)
-            {
-                // 填充数据
-                if (Services == null)
-                {
-                    Services = new List<ServiceModel>();
-                }
-                Services.Add(vServiceModel);
-                // 保存数据集
-                var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
-                StreamWriter sw = new StreamWriter(ServiceSavePath);
-                sw.WriteLine(vServiceJson);
-                sw.Close();
-            }
         }
 
         #region 修改主窗体大小
