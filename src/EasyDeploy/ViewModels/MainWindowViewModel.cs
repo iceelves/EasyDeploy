@@ -63,9 +63,9 @@ namespace EasyDeploy.ViewModels
             set => SetProperty(ref _services, value);
         }
 
-        ///// <summary>
-        ///// 新增服务
-        ///// </summary>
+        /// <summary>
+        /// 新增服务
+        /// </summary>
         public DelegateCommand AddService
         {
             get
@@ -89,6 +89,27 @@ namespace EasyDeploy.ViewModels
                         sw.WriteLine(vServiceJson);
                         sw.Close();
                     }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 编辑服务
+        /// </summary>
+        public DelegateCommand<ServiceModel> EditService
+        {
+            get
+            {
+                return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
+                {
+                    AddService window = new AddService(Service);
+                    window.ShowDialog();
+                    Service = window.ServiceModel;
+                    // 保存数据集
+                    var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
+                    StreamWriter sw = new StreamWriter(ServiceSavePath);
+                    sw.WriteLine(vServiceJson);
+                    sw.Close();
                 });
             }
         }

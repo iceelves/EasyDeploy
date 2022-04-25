@@ -33,10 +33,14 @@ namespace EasyDeploy.Views
             if (serviceModel != null)
             {
                 ServiceModel = serviceModel;
+                ServiceName.Text = serviceModel.ServiceName;
+                ServicePath.Text = serviceModel.ServicePath;
                 if (!string.IsNullOrEmpty(serviceModel.ServicePath))
                 {
                     IsAbsolutePath = PathHelper.IsAbsolutePath(serviceModel.ServicePath);
                 }
+                Parameter.Text = serviceModel.Parameter;
+                AutoStart.IsChecked = serviceModel.AutoStart;
             }
         }
 
