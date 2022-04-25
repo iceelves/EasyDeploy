@@ -32,12 +32,21 @@ namespace EasyDeploy.Views
 
             if (serviceModel != null)
             {
+                this.Title = "Edit Service";
                 ServiceModel = serviceModel;
                 ServiceName.Text = serviceModel.ServiceName;
                 ServicePath.Text = serviceModel.ServicePath;
                 if (!string.IsNullOrEmpty(serviceModel.ServicePath))
                 {
                     IsAbsolutePath = PathHelper.IsAbsolutePath(serviceModel.ServicePath);
+                    if (IsAbsolutePath)
+                    {
+                        AbsolutePath.IsChecked = true;
+                    }
+                    else
+                    {
+                        RelativePath.IsChecked = true;
+                    }
                 }
                 Parameter.Text = serviceModel.Parameter;
                 AutoStart.IsChecked = serviceModel.AutoStart;

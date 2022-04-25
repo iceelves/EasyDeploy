@@ -28,6 +28,11 @@ namespace EasyDeploy.Helpers
         /// <returns>相对路径</returns>
         public static string AbsoluteToRelative(string AbsolutePath, string CurrentPath = null)
         {
+            if (!IsAbsolutePath(AbsolutePath))
+            {
+                // 如果检测是相对路径，直接返回
+                return AbsolutePath;
+            }
             if (string.IsNullOrEmpty(CurrentPath))
             {
                 CurrentPath = Environment.CurrentDirectory;
@@ -77,6 +82,11 @@ namespace EasyDeploy.Helpers
         /// <returns>绝对路径</returns>
         public static string RelativeToAbsolute(string RelativePath, string CurrentPath = null)
         {
+            if (IsAbsolutePath(RelativePath))
+            {
+                // 如果检测是绝对路径，直接返回
+                return RelativePath;
+            }
             return string.IsNullOrEmpty(CurrentPath) ? Path.GetFullPath(RelativePath) : Path.GetFullPath(RelativePath, CurrentPath);
         }
     }

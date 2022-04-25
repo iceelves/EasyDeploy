@@ -6,13 +6,14 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows;
 
 namespace EasyDeploy.ViewModels
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : BindableBase, INotifyPropertyChanged
     {
         public MainWindowViewModel()
         {
@@ -53,15 +54,10 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         private string ServiceSavePath = "ServiceConfig.json";
 
-        private ObservableCollection<ServiceModel> _services;
         /// <summary>
         /// 服务信息集合
         /// </summary>
-        public ObservableCollection<ServiceModel> Services
-        {
-            get => _services;
-            set => SetProperty(ref _services, value);
-        }
+        public ObservableCollection<ServiceModel> Services { get; set; }
 
         /// <summary>
         /// 新增服务

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace EasyDeploy.Models
@@ -9,8 +10,10 @@ namespace EasyDeploy.Models
     /// 服务配置模型
     /// 用于保存到 Json
     /// </summary>
-    public class ServiceModel
+    public class ServiceModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// 服务名称
         /// </summary>
