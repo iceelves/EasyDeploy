@@ -43,7 +43,7 @@ namespace EasyDeploy.Models
         /// 服务状态
         /// </summary>
         [JsonIgnore]
-        public ServiceState ServiceState { get; set; } = ServiceState.Error;
+        public ServiceState ServiceState { get; set; }
 
         /// <summary>
         /// 进程 PID

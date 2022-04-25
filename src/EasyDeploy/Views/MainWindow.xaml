@@ -77,17 +77,17 @@
                                             <DataGridTemplateColumn Header="State" IsReadOnly="True" Width="60">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Ellipse x:Name="ServiceType" Width="14" Height="14" Fill="Gray">
+                                                        <Ellipse x:Name="ServiceType" Width="14" Height="14">
                                                             <Ellipse.Style>
                                                                 <Style TargetType="Ellipse">
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}},Path=ServiceState}" Value="None">
+                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="0">
                                                                             <Setter Property="Fill" Value="Gray"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}},Path=ServiceState}" Value="Start">
+                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="1">
                                                                             <Setter Property="Fill" Value="Green"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=ServiceState}" Value="Error">
+                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="2">
                                                                             <Setter Property="Fill" Value="Red"/>
                                                                         </DataTrigger>
                                                                     </Style.Triggers>
