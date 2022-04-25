@@ -86,7 +86,7 @@
                                                             <Button Content="Stop"/>
                                                             <Button Content="Shell"/>
                                                             <Button Content="Edit" Command="{Binding Path=DataContext.EditService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
-                                                            <Button Content="Delete"/>
+                                                            <Button Content="Delete" Command="{Binding Path=DataContext.DeleteService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>

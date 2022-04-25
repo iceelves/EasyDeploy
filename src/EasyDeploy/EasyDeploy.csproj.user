@@ -7,11 +7,17 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\IceMessageBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AddService.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\IceMessageBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AddService.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -1,4 +1,5 @@
-﻿using EasyDeploy.Models;
+﻿using EasyDeploy.Controls;
+using EasyDeploy.Models;
 using EasyDeploy.Views;
 using Newtonsoft.Json;
 using Prism.Commands;
@@ -106,6 +107,24 @@ namespace EasyDeploy.ViewModels
                     StreamWriter sw = new StreamWriter(ServiceSavePath);
                     sw.WriteLine(vServiceJson);
                     sw.Close();
+                });
+            }
+        }
+
+        /// <summary>
+        /// 删除服务
+        /// </summary>
+        public DelegateCommand<ServiceModel> DeleteService
+        {
+            get
+            {
+                return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
+                {
+                    MessageBoxResult result = IceMessageBox.ShowDialogBox($"Delete {Service.ServiceName} ?", "Tips", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        Services.Remove(Service);
+                    }
                 });
             }
         }
