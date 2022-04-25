@@ -30,9 +30,14 @@ namespace EasyDeploy.Models
         public string Parameter { get; set; }
 
         /// <summary>
-        /// 是否自启动
+        /// 程序启动时是否自动启动
         /// </summary>
         public bool AutoStart { get; set; }
+
+        /// <summary>
+        /// 运行异常时是否自动重启
+        /// </summary>
+        public bool AutoReStart { get; set; }
 
         /// <summary>
         /// 服务状态

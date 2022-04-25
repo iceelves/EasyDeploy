@@ -50,6 +50,7 @@ namespace EasyDeploy.Views
                 }
                 Parameter.Text = serviceModel.Parameter;
                 AutoStart.IsChecked = serviceModel.AutoStart;
+                AutoReStart.IsChecked = serviceModel.AutoReStart;
             }
         }
 
@@ -120,6 +121,7 @@ namespace EasyDeploy.Views
             ServiceModel.ServicePath = ServicePath.Text;
             ServiceModel.Parameter = Parameter.Text;
             ServiceModel.AutoStart = (bool)AutoStart.IsChecked;
+            ServiceModel.AutoReStart = (bool)AutoReStart.IsChecked;
             this.Close();
         }
 
