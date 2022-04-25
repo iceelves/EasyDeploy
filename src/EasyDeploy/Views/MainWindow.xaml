@@ -82,6 +82,8 @@
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                            <Button Content="Start"/>
+                                                            <Button Content="Stop"/>
                                                             <Button Content="Shell"/>
                                                             <Button Content="Edit"/>
                                                             <Button Content="Delete"/>
