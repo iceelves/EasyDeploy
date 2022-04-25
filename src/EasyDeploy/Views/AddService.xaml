@@ -61,6 +61,11 @@
                                            Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Select_Click"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="30" Margin="0,10,0,0">
+                                <Label Width="120" Content="Service Path Type:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="White"/>
+                                <RadioButton x:Name="AbsolutePath" GroupName="PathType" Content="AbsolutePath" IsChecked="True" VerticalContentAlignment="Center" Foreground="White" Margin="20,0" Click="PathType_Click"/>
+                                <RadioButton x:Name="RelativePath" GroupName="PathType" Content="RelativePath" IsChecked="False" VerticalContentAlignment="Center" Foreground="White" Margin="20,0" Click="PathType_Click"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30" Margin="0,10,0,0">
                                 <Label Width="120" Content="Parameter:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="White"/>
                                 <TextBox x:Name="Parameter" Width="250" Height="25" Margin="15,0" VerticalContentAlignment="Center" Background="Transparent" Foreground="White"/>
                             </StackPanel>

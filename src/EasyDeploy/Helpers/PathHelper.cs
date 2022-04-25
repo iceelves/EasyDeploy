@@ -77,10 +77,7 @@ namespace EasyDeploy.Helpers
         /// <returns>绝对路径</returns>
         public static string RelativeToAbsolute(string RelativePath, string CurrentPath = null)
         {
-            if (string.IsNullOrEmpty(CurrentPath))
-                return Path.GetFullPath(RelativePath);
-            else
-                return Path.GetFullPath(RelativePath, CurrentPath);
+            return string.IsNullOrEmpty(CurrentPath) ? Path.GetFullPath(RelativePath) : Path.GetFullPath(RelativePath, CurrentPath);
         }
     }
 }

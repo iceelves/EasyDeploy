@@ -1,4 +1,5 @@
-﻿using EasyDeploy.Models;
+﻿using EasyDeploy.Helpers;
+using EasyDeploy.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,10 @@ namespace EasyDeploy.Views
             if (serviceModel != null)
             {
                 ServiceModel = serviceModel;
+                if (!string.IsNullOrEmpty(serviceModel.ServicePath))
+                {
+                    IsAbsolutePath = PathHelper.IsAbsolutePath(serviceModel.ServicePath);
+                }
             }
         }
 
@@ -49,6 +54,12 @@ namespace EasyDeploy.Views
         }
 
         /// <summary>
+        /// 是否为绝对路径
+        /// 默认为绝对路径
+        /// </summary>
+        private bool IsAbsolutePath { get; set; } = true;
+
+        /// <summary>
         /// 选择路径
         /// </summary>
         /// <param name="sender"></param>
@@ -60,7 +71,7 @@ namespace EasyDeploy.Views
             dialog.Filter = "EXE File|*.exe|全部文件|*.*";
             if ((bool)dialog.ShowDialog())
             {
-                ServicePath.Text = dialog.FileName;
+                ServicePath.Text = IsAbsolutePath ? dialog.FileName : PathHelper.AbsoluteToRelative(dialog.FileName);
             }
         }
 
@@ -139,6 +150,31 @@ namespace EasyDeploy.Views
                 }));
             };
             timer.Enabled = true;
+        }
+
+        /// <summary>
+        /// 切换路径类型时触发
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PathType_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)this.AbsolutePath.IsChecked)
+            {
+                IsAbsolutePath = true;
+                if (!string.IsNullOrEmpty(ServicePath.Text))
+                {
+                    ServicePath.Text = PathHelper.RelativeToAbsolute(ServicePath.Text);
+                }
+            }
+            else
+            {
+                IsAbsolutePath = false;
+                if (!string.IsNullOrEmpty(ServicePath.Text))
+                {
+                    ServicePath.Text = PathHelper.AbsoluteToRelative(ServicePath.Text);
+                }
+            }
         }
     }
 }
