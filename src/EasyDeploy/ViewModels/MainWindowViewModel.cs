@@ -1,4 +1,5 @@
 ﻿using EasyDeploy.Controls;
+using EasyDeploy.Helpers;
 using EasyDeploy.Models;
 using EasyDeploy.Views;
 using Newtonsoft.Json;
@@ -85,6 +86,28 @@ namespace EasyDeploy.ViewModels
                         StreamWriter sw = new StreamWriter(ServiceSavePath);
                         sw.WriteLine(vServiceJson);
                         sw.Close();
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 浏览服务文件夹
+        /// </summary>
+        public DelegateCommand<ServiceModel> BrowseService
+        {
+            get
+            {
+                return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
+                {
+                    if (!string.IsNullOrEmpty(Service.ServicePath))
+                    {
+                        var vPath = PathHelper.IsAbsolutePath(Service.ServicePath) ? Service.ServicePath : PathHelper.RelativeToAbsolute(Service.ServicePath);
+                        var vDirectory = Path.GetDirectoryName(vPath);
+                        if (Directory.Exists(vDirectory))
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", vDirectory);
+                        }
                     }
                 });
             }
