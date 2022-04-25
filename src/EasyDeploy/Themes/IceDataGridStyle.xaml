@@ -34,16 +34,16 @@
 
     <Style x:Key="DataGridRowStyle" TargetType="{x:Type DataGridRow}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Height" Value="auto" />
+        <Setter Property="Height" Value="40" />
         <Setter Property="BorderThickness" Value="0"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource MainFontColor}" />
+        <Setter Property="Foreground" Value="White" />
         <Style.Triggers>
             <!--隔行换色-->
             <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                <Setter Property="Background" Value="#FFFFFF" />
+                <Setter Property="Background" Value="#414347"/>
             </Trigger>
             <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                <Setter Property="Background" Value="#F5F5F5" />
+                <Setter Property="Background" Value="#3b3c40" />
             </Trigger>
 
             <Trigger Property="IsMouseOver" Value="True">
@@ -51,7 +51,7 @@
             </Trigger>
 
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="#A2BAFF" />
+                <!--<Setter Property="Background" Value="#A2BAFF" />-->
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -70,7 +70,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Foreground" Value="#FF000000" />
+                <!--<Setter Property="Foreground" Value="#FF000000" />-->
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -81,7 +81,7 @@
 
     <Style TargetType="{x:Type control:IceDataGrid}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="#9C9C9C"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
