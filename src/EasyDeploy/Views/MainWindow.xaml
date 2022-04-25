@@ -84,14 +84,16 @@
                                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                                             <control:IceButton x:Name="Start" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Start" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"/>
+                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"
+                                                                               Command="{Binding Path=DataContext.StartService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
                                                             <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Browse" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"
                                                                                Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
                                                             <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Shell" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"/>
+                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"
+                                                                               Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
                                                             <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Edit" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"

@@ -92,6 +92,20 @@ namespace EasyDeploy.ViewModels
         }
 
         /// <summary>
+        /// 启动关闭服务
+        /// </summary>
+        public DelegateCommand<ServiceModel> StartService
+        {
+            get
+            {
+                return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
+                {
+
+                });
+            }
+        }
+
+        /// <summary>
         /// 浏览服务文件夹
         /// </summary>
         public DelegateCommand<ServiceModel> BrowseService
@@ -109,6 +123,20 @@ namespace EasyDeploy.ViewModels
                             System.Diagnostics.Process.Start("explorer.exe", vDirectory);
                         }
                     }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开服务输出窗口
+        /// </summary>
+        public DelegateCommand<ServiceModel> ShellService
+        {
+            get
+            {
+                return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
+                {
+
                 });
             }
         }
