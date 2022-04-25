@@ -81,7 +81,15 @@
                                                             <Ellipse.Style>
                                                                 <Style TargetType="Ellipse">
                                                                     <Style.Triggers>
-
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}},Path=ServiceState}" Value="None">
+                                                                            <Setter Property="Fill" Value="Gray"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}},Path=ServiceState}" Value="Start">
+                                                                            <Setter Property="Fill" Value="Green"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=ServiceState}" Value="Error">
+                                                                            <Setter Property="Fill" Value="Red"/>
+                                                                        </DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Ellipse.Style>
