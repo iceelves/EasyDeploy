@@ -76,8 +76,8 @@
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="40,0">
-                                <CheckBox x:Name="AutoStart" Content="AutoStart" Foreground="White"/>
-                                <CheckBox x:Name="AutoReStart" Content="AutoReStart" Foreground="White" Margin="20,0"/>
+                                <CheckBox x:Name="AutoStart" Content="AutoStart" Foreground="White" ToolTip="Follow software startup"/>
+                                <CheckBox x:Name="AutoReStart" Content="AutoReStart" Foreground="White" Margin="20,0" ToolTip="Auto restart in case of abnormality"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
                                 <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="Save" 
