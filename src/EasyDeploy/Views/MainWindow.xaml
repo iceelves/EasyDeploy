@@ -74,7 +74,21 @@
                                 <Grid Grid.Row="1">
                                     <control:IceDataGrid x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Services}">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="State" IsReadOnly="True" Width="*"/>
+                                            <DataGridTemplateColumn Header="State" IsReadOnly="True" Width="60">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Ellipse x:Name="ServiceType" Width="14" Height="14" Fill="Gray">
+                                                            <Ellipse.Style>
+                                                                <Style TargetType="Ellipse">
+                                                                    <Style.Triggers>
+
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Ellipse.Style>
+                                                        </Ellipse>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn Header="Service" IsReadOnly="True" Width="*" Binding="{Binding ServiceName}"/>
                                             <DataGridTextColumn Header="PID" IsReadOnly="True" Width="*"/>
                                             <DataGridTextColumn Header="Port" IsReadOnly="True" Width="*"/>
