@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Timers;
 using System.Windows;
 
 namespace EasyDeploy.ViewModels
@@ -59,7 +60,12 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 服务信息集合
         /// </summary>
-        public ObservableCollection<ServiceModel> Services { get; set; }
+        public ObservableCollection<ServiceModel> Services { get; set; } = new ObservableCollection<ServiceModel>();
+
+        /// <summary>
+        /// 服务运行时资源
+        /// </summary>
+        public Dictionary<string, ServiceResourcesModel> ServicesResources { get; set; } = new Dictionary<string, ServiceResourcesModel>();
 
         /// <summary>
         /// 新增服务
@@ -76,10 +82,6 @@ namespace EasyDeploy.ViewModels
                     if (vServiceModel != null)
                     {
                         // 填充数据
-                        if (Services == null)
-                        {
-                            Services = new ObservableCollection<ServiceModel>();
-                        }
                         Services.Add(vServiceModel);
                         // 保存数据集
                         var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
@@ -100,9 +102,45 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
-                    if (Service.ServiceState == ServiceState.None)
+                    if (Service.ServiceState == ServiceState.None || Service.ServiceState == ServiceState.Error)
                     {
                         Service.ServiceState = ServiceState.Start;
+                        // 启动服务
+                        string strGuid = new Guid().ToString();
+                        Service.Guid = strGuid;
+                        ServiceResourcesModel serviceResources = new ServiceResourcesModel();
+                        if (string.IsNullOrEmpty(Service.Parameter))
+                        {
+                            serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath));
+                        }
+                        else
+                        {
+                            serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath), Service.Parameter.Split(' '));
+                        }
+                        serviceResources.CliWrap.Start();
+                        // 通过返回的进程 ID 判断是否运行成功
+                        Timer timer = new Timer(2000);
+                        timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+                        {
+                            timer.Enabled = false;
+                            if (serviceResources.CliWrap.threadID > 0)
+                            {
+                                // 启动成功
+                                Service.Pid = $"{serviceResources.CliWrap.threadID}";
+                                var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
+                                if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                                {
+                                    Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
+                                }
+                            }
+                            else
+                            {
+                                // 启动失败
+                                Service.ServiceState = ServiceState.Error;
+                            }
+                        };
+                        timer.Enabled = true;
+                        ServicesResources.Add(strGuid, serviceResources);
                     }
                 });
             }
@@ -120,6 +158,15 @@ namespace EasyDeploy.ViewModels
                     if (Service.ServiceState == ServiceState.Start)
                     {
                         Service.ServiceState = ServiceState.None;
+                        // 关闭服务
+                        PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
+                        if (ServicesResources.ContainsKey(Service.Guid))
+                        {
+                            ServicesResources.Remove(Service.Guid);
+                        }
+                        Service.Pid = null;
+                        Service.Port = null;
+                        Service.Guid = null;
                     }
                 });
             }

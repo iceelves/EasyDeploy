@@ -52,7 +52,7 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// 启动线程 ID
         /// </summary>
-        private int _threadID { get; set; }
+        public int threadID { get; set; }
 
         /// <summary>
         /// 启动命令事件
@@ -82,10 +82,13 @@ namespace EasyDeploy.Helpers
         {
             if (!string.IsNullOrEmpty(_applicationName))
             {
-                _cmd = Cli.Wrap($"{_workingDirectory}{_applicationName}");
                 if (!string.IsNullOrEmpty(_workingDirectory))
                 {
-                    _cmd = _cmd.WithWorkingDirectory(_workingDirectory);
+                    _cmd = Cli.Wrap($"{_workingDirectory}\\{_applicationName}").WithWorkingDirectory($"{_workingDirectory}"); ;
+                }
+                else
+                {
+                    _cmd = Cli.Wrap($"{_applicationName}");
                 }
                 if (_withArguments != null)
                 {
@@ -99,7 +102,7 @@ namespace EasyDeploy.Helpers
                           {
                               case StartedCommandEvent started:
                                   //Console.WriteLine($"Process started; ID: {started.ProcessId}");
-                                  _threadID = started.ProcessId;
+                                  threadID = started.ProcessId;
                                   StartedCommandEvent?.Invoke($"{started.ProcessId}");
                                   break;
                               case StandardOutputCommandEvent stdOut:
@@ -130,7 +133,7 @@ namespace EasyDeploy.Helpers
         /// </summary>
         public void Stop()
         {
-            PidHelper.KillProcessAndChildren(_threadID);
+            PidHelper.KillProcessAndChildren(threadID);
         }
     }
 }

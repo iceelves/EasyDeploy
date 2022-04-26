@@ -49,13 +49,20 @@ namespace EasyDeploy.Models
         /// 进程 PID
         /// </summary>
         [JsonIgnore]
-        public int Pid { get; set; }
+        public string Pid { get; set; }
 
         /// <summary>
         /// 端口号
         /// </summary>
         [JsonIgnore]
         public string Port { get; set; }
+
+        /// <summary>
+        /// 点击运行时随机生成的主键
+        /// 用于关联控制台资源
+        /// </summary>
+        [JsonIgnore]
+        public string Guid { get; set; }
     }
 
     /// <summary>

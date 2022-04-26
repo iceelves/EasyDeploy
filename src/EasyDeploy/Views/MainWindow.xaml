@@ -99,7 +99,13 @@
                                             </DataGridTemplateColumn>
                                             <DataGridTextColumn Header="Service" IsReadOnly="True" Width="*" Binding="{Binding ServiceName}"/>
                                             <DataGridTextColumn Header="PID" IsReadOnly="True" Width="*" Binding="{Binding Pid}"/>
-                                            <DataGridTextColumn Header="Port" IsReadOnly="True" Width="*" Binding="{Binding Port}"/>
+                                            <DataGridTemplateColumn Header="Port" IsReadOnly="True" Width="*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Foreground="White" Content="{Binding Port}" ToolTip="{Binding Port}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                             <DataGridTemplateColumn Header="Actions" Width="300">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
