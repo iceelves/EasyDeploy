@@ -54,19 +54,7 @@ namespace EasyDeploy.ViewModels
         /// <param name="e"></param>
         private void OnProcessExit(object sender, EventArgs e)
         {
-            if (ServicesResources != null && ServicesResources.Count >= 1)
-            {
-                // 有未关闭的服务，关闭所有服务
-                MessageBoxResult result = IceMessageBox.ShowDialogBox($"There are services that have not been closed. Do you want to close them?", "Tips", MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
-                {
-                    foreach (var item in ServicesResources)
-                    {
-                        PidHelper.KillProcessAndChildren(item.Value.CliWrap.threadID);
-                    }
-                    ServicesResources = null;
-                }
-            }
+            StopAllService();
         }
 
         /// <summary>
@@ -273,6 +261,57 @@ namespace EasyDeploy.ViewModels
                         }
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// 关闭窗体
+        /// </summary>
+        public DelegateCommand Close
+        {
+            get
+            {
+                return new DelegateCommand(delegate ()
+                {
+                    if (ServicesResources != null && ServicesResources.Count >= 1)
+                    {
+                        MessageBoxResult result = IceMessageBox.ShowDialogBox($"There are services that have not been closed. Do you want to close them?", "Tips", MessageBoxButton.OKCancel);
+                        if (result == MessageBoxResult.OK)
+                        {
+                            StopAllService();
+
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    this.window.Close();
+                });
+            }
+        }
+
+        /// <summary>
+        /// 关闭所有服务
+        /// </summary>
+        public void StopAllService()
+        {
+            if (ServicesResources != null && ServicesResources.Count >= 1)
+            {
+                // 停止所有正在运行的服务
+                foreach (var item in ServicesResources)
+                {
+                    PidHelper.KillProcessAndChildren(item.Value.CliWrap.threadID);
+                }
+                ServicesResources = null;
+                // 清空关联数据
+                foreach (var item in Services)
+                {
+                    item.ServiceState = ServiceState.None;
+                    item.Pid = null;
+                    item.Port = null;
+                    item.Guid = null;
+                }
             }
         }
     }
