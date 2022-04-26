@@ -171,7 +171,7 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
-                    MessageBoxResult result = IceMessageBox.ShowDialogBox($"Delete {Service.ServiceName} ?", "Tips", MessageBoxButton.OKCancel);
+                    MessageBoxResult result = IceMessageBox.ShowDialogBox($"Confirm Delete of Service: {Service.ServiceName} ?", "Tips", MessageBoxButton.OKCancel);
                     if (result == MessageBoxResult.OK)
                     {
                         Services.Remove(Service);
