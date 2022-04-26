@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyDeploy.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -27,23 +28,12 @@ namespace EasyDeploy.Views
             InitializeComponent();
 
             // 加载和退出
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             this.TitleBar.MouseDown += TitleBar_MouseDown;
             this.TitleBar.MouseLeftButtonDown += TitleBar_MouseLeftButtonDown;
 
             // 主窗体拖动和缩放
             this.SourceInitialized += MainWindow_SourceInitialized;
             this.MouseMove += MainWindow_MouseMove;
-        }
-
-        /// <summary>
-        /// OnLoaded
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnProcessExit(object sender, EventArgs e)
-        {
-
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace EasyDeploy.ViewModels
     {
         public MainWindowViewModel()
         {
-
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
 
         /// <summary>
@@ -44,6 +44,28 @@ namespace EasyDeploy.ViewModels
                         // TODO:未查到配置文件
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// OnLoaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnProcessExit(object sender, EventArgs e)
+        {
+            if (ServicesResources != null && ServicesResources.Count >= 1)
+            {
+                // 有未关闭的服务，关闭所有服务
+                MessageBoxResult result = IceMessageBox.ShowDialogBox($"There are services that have not been closed. Do you want to close them?", "Tips", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    foreach (var item in ServicesResources)
+                    {
+                        PidHelper.KillProcessAndChildren(item.Value.CliWrap.threadID);
+                    }
+                    ServicesResources = null;
+                }
             }
         }
 
