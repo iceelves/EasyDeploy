@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Tips" Height="180" Width="320" WindowStartupLocation="CenterScreen" 
         WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize" Topmost="True" Background="Transparent">
-    <Border SnapsToDevicePixels="True" CornerRadius="5" Margin="10" Background="Transparent" BorderBrush="#92CAF4" BorderThickness="1">
+    <Border SnapsToDevicePixels="True" Margin="10" Background="Transparent" CornerRadius="5" BorderBrush="#92CAF4" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
