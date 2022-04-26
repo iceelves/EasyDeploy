@@ -10,32 +10,36 @@
     <Border SnapsToDevicePixels="True" CornerRadius="5" Margin="10" Background="Transparent" BorderBrush="#92CAF4" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/> 
+                <RowDefinition Height="35"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" MouseLeftButtonDown="Canvas_MouseLeftButtonDown" Background="#4C4A48">
-                <TextBlock x:Name="Caption" Text="{Binding ElementName=iceMessageBox,Path=Title}" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="12" Foreground="White"/>
-                <local:SvgButton x:Name="aboutClose" Width="30" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1" ImageMargin="5"
-                                ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
-                                NormalFill="White" IsMouseOverFill="#FFE6E6E6" IsMouseOverBackground="#D8605A" Click="Button_Click"/>
-            </Grid>
-            <Grid Grid.Row="1" Margin="0,0,0,0" Background="#35363A">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="40"/>
-                </Grid.RowDefinitions>
-                <TextBlock x:Name="Message" Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:IceButton x:Name="OK" Content="OK" Margin="5" Height="25" Width="50" Background="#1A92ED" IsMouseOverFill="#1783D4" ButtonCornerRadius="4"
-                                        Foreground="White" BorderThickness="0" FontWeight="Bold" Click="OK_Click" IsDefault="True"/>
-                    <local:IceButton x:Name="Yes" Content="Yes" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="#1A92ED" IsMouseOverFill="#1783D4" ButtonCornerRadius="4"
-                                        Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Yes_Click" IsDefault="True"/>
-                    <local:IceButton x:Name="No" Content="No" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="Gray" IsMouseOverFill="DimGray" ButtonCornerRadius="4"
-                                        Foreground="White" BorderThickness="0" FontWeight="Bold" Click="NO_Click" IsDefault="True"/>
-                    <local:IceButton x:Name="Cancel" Content="Cancel" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="Gray" IsMouseOverFill="DimGray" ButtonCornerRadius="4"
-                                        Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Cancel_Click" IsDefault="True"/>
-                </StackPanel>
-            </Grid>
+            <Border Grid.Row="0" MouseLeftButtonDown="Canvas_MouseLeftButtonDown" Background="#4C4A48" CornerRadius="5,5,0,0">
+                <Grid>
+                    <TextBlock x:Name="Caption" Text="{Binding ElementName=iceMessageBox,Path=Title}" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="12" Foreground="White"/>
+                    <local:SvgButton x:Name="aboutClose" Width="30" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1" ImageMargin="5"
+                                    ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
+                                    NormalFill="White" IsMouseOverFill="#FFE6E6E6" IsMouseOverBackground="#D8605A" Click="Button_Click"/>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" Margin="0,0,0,0" Background="#35363A" CornerRadius="0,0,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="Message" Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <local:IceButton x:Name="OK" Content="OK" Margin="5" Height="25" Width="50" Background="#1A92ED" IsMouseOverFill="#1783D4" ButtonCornerRadius="4"
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="OK_Click" IsDefault="True"/>
+                        <local:IceButton x:Name="Yes" Content="Yes" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="#1A92ED" IsMouseOverFill="#1783D4" ButtonCornerRadius="4"
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Yes_Click" IsDefault="True"/>
+                        <local:IceButton x:Name="No" Content="No" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="Gray" IsMouseOverFill="DimGray" ButtonCornerRadius="4"
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="NO_Click" IsDefault="True"/>
+                        <local:IceButton x:Name="Cancel" Content="Cancel" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="Gray" IsMouseOverFill="DimGray" ButtonCornerRadius="4"
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Cancel_Click" IsDefault="True"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </Grid>
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
