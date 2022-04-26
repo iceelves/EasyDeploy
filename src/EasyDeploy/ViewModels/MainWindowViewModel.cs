@@ -128,7 +128,7 @@ namespace EasyDeploy.ViewModels
                     {
                         Service.ServiceState = ServiceState.Start;
                         // 启动服务
-                        string strGuid = new Guid().ToString();
+                        string strGuid = Guid.NewGuid().ToString();
                         Service.Guid = strGuid;
                         ServiceResourcesModel serviceResources = new ServiceResourcesModel();
                         if (string.IsNullOrEmpty(Service.Parameter))
