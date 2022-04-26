@@ -92,7 +92,7 @@ namespace EasyDeploy.ViewModels
         }
 
         /// <summary>
-        /// 启动关闭服务
+        /// 启动服务
         /// </summary>
         public DelegateCommand<ServiceModel> StartService
         {
@@ -100,7 +100,27 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
+                    if (Service.ServiceState == ServiceState.None)
+                    {
+                        Service.ServiceState = ServiceState.Start;
+                    }
+                });
+            }
+        }
 
+        /// <summary>
+        /// 关闭服务
+        /// </summary>
+        public DelegateCommand<ServiceModel> StopService
+        {
+            get
+            {
+                return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
+                {
+                    if (Service.ServiceState == ServiceState.Start)
+                    {
+                        Service.ServiceState = ServiceState.None;
+                    }
                 });
             }
         }
