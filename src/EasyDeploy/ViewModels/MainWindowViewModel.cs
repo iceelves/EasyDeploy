@@ -75,7 +75,7 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 服务运行时资源
         /// </summary>
-        public Dictionary<string, ServiceResourcesModel> ServicesResources { get; set; } = new Dictionary<string, ServiceResourcesModel>();
+        public ObservableDictionary<string, ServiceResourcesModel> ServicesResources { get; set; } = new ObservableDictionary<string, ServiceResourcesModel>();
 
         /// <summary>
         /// 新增服务
@@ -142,6 +142,7 @@ namespace EasyDeploy.ViewModels
                                 {
                                     Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
                                 }
+                                ServicesResources.Add(strGuid, serviceResources);
                             }
                             else
                             {
@@ -150,7 +151,6 @@ namespace EasyDeploy.ViewModels
                             }
                         };
                         timer.Enabled = true;
-                        ServicesResources.Add(strGuid, serviceResources);
                     }
                 });
             }

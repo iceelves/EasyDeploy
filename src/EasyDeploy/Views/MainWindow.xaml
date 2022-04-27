@@ -7,6 +7,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         xmlns:local="clr-namespace:EasyDeploy.Views"
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
@@ -66,7 +67,17 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-                                    <Label Content="Deploy Service :" Foreground="White" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Deploy Service" Foreground="White" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0"/>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0">
+                                            <Label Content="All :" Foreground="White" FontSize="12" />
+                                            <Label Content="{c:Binding Services.Count}" Foreground="White" FontSize="12"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0">
+                                            <Label Content="Start :" Foreground="White" FontSize="12" />
+                                            <Label Content="{c:Binding ServicesResources.Count}" Foreground="White" FontSize="12" />
+                                        </StackPanel>
+                                    </StackPanel>
                                     <control:IceButton x:Name="AddService" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="Add" 
                                                        Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                        Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Command="{Binding AddService}"/>
