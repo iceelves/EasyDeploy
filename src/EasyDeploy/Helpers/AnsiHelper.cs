@@ -14,12 +14,12 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// 匹配 Ansi 头
         /// </summary>
-        private static char AnsiStart = '\u001b';
+        public static char AnsiStart = '\u001b';
 
         /// <summary>
         /// 匹配 Ansi 正则
         /// </summary>
-        private static string AnsiRegex = @"\u001b\[\d+m";
+        public static string AnsiRegex = @"\u001b\[\d+m";
 
         /// <summary>
         /// 去除字符串中的 ANSI 序列

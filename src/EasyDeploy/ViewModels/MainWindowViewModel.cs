@@ -77,6 +77,24 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         public ObservableDictionary<string, ServiceResourcesModel> ServicesResources { get; set; } = new ObservableDictionary<string, ServiceResourcesModel>();
 
+        #region 用户控件
+        private IceRichTextBox _iceRichTextBox;
+        /// <summary>
+        /// 界面富文本输出窗口
+        /// </summary>
+        public IceRichTextBox IceRichTextBox
+        {
+            get
+            {
+                if (_iceRichTextBox == null)
+                {
+                    _iceRichTextBox = window.FindName("richText") as IceRichTextBox;
+                }
+                return _iceRichTextBox;
+            }
+        }
+        #endregion
+
         /// <summary>
         /// 新增服务
         /// </summary>

@@ -206,7 +206,7 @@
                                 <TabControl Background="Transparent" BorderThickness="0">
                                     <TabItem Header="Test0">
                                         <Grid>
-                                            <control:IceRichTextBox x:Name="richText" IsReadOnly="False" BorderThickness="0" Background="#0C0C0C" Foreground="White" FontSize="14" FontFamily="Cascadia Mono" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                            <control:IceRichTextBox x:Name="richText" IsReadOnly="False" BorderThickness="0" Background="#0C0C0C" Foreground="White" FontSize="14" FontFamily="Cascadia Mono" MaxRows="5000" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                         </Grid>
                                     </TabItem>
                                     <TabItem Header="Test1">
