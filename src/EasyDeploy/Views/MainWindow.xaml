@@ -196,7 +196,44 @@
                                 <TabControl Background="Transparent" BorderThickness="0">
                                     <TabItem Header="Test0">
                                         <Grid>
-                                            <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" IsReadOnly="True" BorderThickness="0" Background="#0C0C0C" Foreground="White" FontSize="16" Text="Windows PowerShell 版权所有 (C) Microsoft Corporation。保留所有权利。"/>
+                                            <!--<TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" IsReadOnly="True" BorderThickness="0" Background="#0C0C0C" Foreground="White" FontSize="16" Text="Windows PowerShell 版权所有 (C) Microsoft Corporation。保留所有权利。"/>-->
+                                            <RichTextBox IsReadOnly="False" BorderThickness="0" Background="#0C0C0C" Foreground="White" FontSize="14" FontFamily="Cascadia Mono" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                                <RichTextBox.Resources>
+                                                    <Style TargetType="{x:Type Paragraph}">
+                                                        <Setter Property="Margin" Value="2"/>
+                                                    </Style>
+                                                </RichTextBox.Resources>
+                                                <FlowDocument>
+                                                    <Paragraph>
+                                                        <Run Foreground="#CCCCCC" Text="Windows PowerShell"/>
+                                                    </Paragraph>
+                                                    <Paragraph>
+                                                        <Run Foreground="#CCCCCC" Text="版权所有 (C) Microsoft Corporation。保留所有权利。"/>
+                                                    </Paragraph>
+                                                    <Paragraph/>
+                                                    <Paragraph>
+                                                        <Run Foreground="#CCCCCC" Text="尝试新的跨平台 PowerShell "/>
+                                                        <Hyperlink>https://aka.ms/pscore6</Hyperlink>
+                                                    </Paragraph>
+                                                    <Paragraph/>
+                                                    <Paragraph>
+                                                        <Run Foreground="#CCCCCC" Text="PS C:\Users\Administrator>"/>
+                                                        <Run Foreground="Red" Text="R"/>
+                                                        <Run Foreground="Green" Text="G"/>
+                                                        <Run Foreground="Blue" Text="B"/>
+                                                    </Paragraph>
+                                                    <Paragraph>
+                                                        <Run Foreground="#CCCCCC" Text="PS C:\Users\Administrator>"/>
+                                                        <Run Text="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"/>
+                                                        <Run Text="2222222222222222"/>
+                                                    </Paragraph>
+                                                    <Paragraph>
+                                                        <Run Foreground="#808080" Text="2022/04/27 10:38:13 "/>
+                                                        <Run Foreground="#008000" Text="INF"/>
+                                                        <Run Text=" rtsp-simple-server v0.18.0"/>
+                                                    </Paragraph>
+                                                </FlowDocument>
+                                            </RichTextBox>
                                         </Grid>
                                     </TabItem>
                                     <TabItem Header="Test1">
