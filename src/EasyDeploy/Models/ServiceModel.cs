@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 
 namespace EasyDeploy.Models
@@ -63,6 +64,19 @@ namespace EasyDeploy.Models
         /// </summary>
         [JsonIgnore]
         public string Guid { get; set; }
+
+        /// <summary>
+        /// 是否允许打开文件目录
+        /// </summary>
+        [JsonIgnore]
+        public bool AllowDirectoryToOpen
+        {
+            get
+            {
+                var vDirectory = Path.GetDirectoryName(ServicePath);
+                return !string.IsNullOrEmpty(vDirectory) && Directory.Exists(vDirectory);
+            }
+        }
     }
 
     /// <summary>
