@@ -18,6 +18,9 @@
     <Page Update="Controls\IceMessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\IceRichTextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AddService.xaml">
       <SubType>Designer</SubType>
     </Page>
