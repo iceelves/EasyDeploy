@@ -108,8 +108,20 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Header="Service" IsReadOnly="True" Width="*" Binding="{Binding ServiceName}"/>
-                                            <DataGridTextColumn Header="PID" IsReadOnly="True" Width="*" Binding="{Binding Pid}"/>
+                                            <DataGridTemplateColumn Header="Service" IsReadOnly="True" Width="*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Foreground="White" Content="{Binding ServiceName}" ToolTip="{Binding ServiceName}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Header="PID" IsReadOnly="True" Width="*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Label Foreground="White" Content="{Binding Pid}" ToolTip="{Binding Pid}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                             <DataGridTemplateColumn Header="Port" IsReadOnly="True" Width="*">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
