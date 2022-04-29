@@ -36,7 +36,7 @@ namespace EasyDeploy.ViewModels
                     this.window = window;
 
                     // 加载日志控件
-                    ServicesShell.Add(new TabControlTerminalModel()
+                    ServicesShell.Add("-1", new TabControlTerminalModel()
                     {
                         Header = "Log",
                         Control = CreateBlankRichTextBox()
@@ -89,7 +89,7 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 服务控制台绑定控件
         /// </summary>
-        public ObservableCollection<TabControlTerminalModel> ServicesShell { get; set; } = new ObservableCollection<TabControlTerminalModel>();
+        public ObservableDictionary<string, TabControlTerminalModel> ServicesShell { get; set; } = new ObservableDictionary<string, TabControlTerminalModel>();
 
         /// <summary>
         /// 选择服务控制台第几项

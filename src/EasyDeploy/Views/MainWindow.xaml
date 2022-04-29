@@ -206,12 +206,12 @@
                                 <TabControl Background="Transparent" BorderThickness="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
                                     <TabControl.ItemTemplate>
                                         <DataTemplate>
-                                            <ContentPresenter Content="{Binding Header}"/>
+                                            <ContentPresenter Content="{Binding Value.Header}"/>
                                         </DataTemplate>
                                     </TabControl.ItemTemplate>
                                     <TabControl.ContentTemplate>
                                         <DataTemplate>
-                                            <ContentControl Content="{Binding Control}"/>
+                                            <ContentControl Content="{Binding Value.Control}"/>
                                         </DataTemplate>
                                     </TabControl.ContentTemplate>
                                 </TabControl>
