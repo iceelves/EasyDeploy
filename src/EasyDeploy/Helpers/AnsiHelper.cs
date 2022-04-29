@@ -65,7 +65,7 @@ namespace EasyDeploy.Helpers
                 iSubscript += vMatches[i].Value.Length;
 
                 // 添加其他数据
-                int iSubCount = (indexs.Count > i + 1 ? indexs[i + 1] : text.Length - 1) - iSubscript;
+                int iSubCount = (indexs.Count > i + 1 ? indexs[i + 1] : text.Length) - iSubscript;
                 if (iSubCount > 0)
                 {
                     listAnsiSplit.Add(text.Substring(iSubscript, iSubCount));

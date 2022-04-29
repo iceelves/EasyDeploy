@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -36,21 +37,34 @@ namespace EasyDeploy.ViewModels
                     this.window = window;
 
                     // 加载日志控件
-                    ServicesShell.Add("-1", new TabControlTerminalModel()
+                    ServicesShell.Add(LogShellGuid, new TabControlTerminalModel()
                     {
                         Header = "Log",
                         Control = CreateBlankRichTextBox()
                     });
+                    SetLog("Easy Deploy Start!");
 
                     // 加载配置文件
                     if (File.Exists(ServiceSavePath))
                     {
                         var vServiceJson = File.ReadAllText(ServiceSavePath);
+                        SetLog($"Load Config File: {ServiceSavePath}");
                         Services = JsonConvert.DeserializeObject<ObservableCollection<ServiceModel>>(vServiceJson);
+                        SetLog($"Get {Services.Count} Services!");
+
+                        // 启动自动运行项
+                        if (Services != null && Services.Count >= 1)
+                        {
+                            foreach (var item in Services.Where(o => o.AutoStart))
+                            {
+                                StartServiceCore(item, true);
+                            }
+                        }
                     }
                     else
                     {
-                        // TODO:未查到配置文件
+                        // 未查到配置文件
+                        SetLog("Not Found Config File!");
                     }
                 });
             }
@@ -92,27 +106,14 @@ namespace EasyDeploy.ViewModels
         public ObservableDictionary<string, TabControlTerminalModel> ServicesShell { get; set; } = new ObservableDictionary<string, TabControlTerminalModel>();
 
         /// <summary>
+        /// 日志 Shell Guid
+        /// </summary>
+        public string LogShellGuid { get; set; } = Guid.NewGuid().ToString();
+
+        /// <summary>
         /// 选择服务控制台第几项
         /// </summary>
         public int ServicesShellIndex { get; set; } = 0;
-
-        #region 用户控件
-        private IceRichTextBox _iceRichTextBox;
-        /// <summary>
-        /// 界面富文本输出窗口
-        /// </summary>
-        public IceRichTextBox IceRichTextBox
-        {
-            get
-            {
-                if (_iceRichTextBox == null)
-                {
-                    _iceRichTextBox = window.FindName("richText") as IceRichTextBox;
-                }
-                return _iceRichTextBox;
-            }
-        }
-        #endregion
 
         /// <summary>
         /// 新增服务
@@ -128,6 +129,7 @@ namespace EasyDeploy.ViewModels
                     var vServiceModel = window.ServiceModel;
                     if (vServiceModel != null)
                     {
+                        SetLog($"Add Service: {vServiceModel.ServiceName}");
                         // 填充数据
                         Services.Add(vServiceModel);
                         // 保存数据集
@@ -143,58 +145,91 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 启动服务
         /// </summary>
+        /// <param name="Service">服务信息</param>
+        /// <param name="IsAuto">是否自动触发</param>
+        private void StartServiceCore(ServiceModel Service, bool IsAuto)
+        {
+            SetLog($"{(IsAuto ? "Auto " : "")}Start Service: {Service.ServiceName}");
+            if (Service.ServiceState == ServiceState.None || Service.ServiceState == ServiceState.Error)
+            {
+                Service.ServiceState = ServiceState.Start;
+                // 启动服务
+                string strGuid = Guid.NewGuid().ToString();
+                Service.Guid = strGuid;
+                ServiceResourcesModel serviceResources = new ServiceResourcesModel();
+                if (string.IsNullOrEmpty(Service.Parameter))
+                {
+                    serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath));
+                }
+                else
+                {
+                    serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath), Service.Parameter.Split(' '));
+                }
+                serviceResources.CliWrap.Start();
+                // 通过返回的进程 ID 判断是否运行成功
+                Timer timer = new Timer(2000);
+                timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+                {
+                    timer.Enabled = false;
+                    if (serviceResources.CliWrap.threadID > 0)
+                    {
+                        // 启动成功
+                        Service.Pid = $"{serviceResources.CliWrap.threadID}";
+                        var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
+                        if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                        {
+                            Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
+                        }
+                        ServicesResources.Add(strGuid, serviceResources);
+                    }
+                    else
+                    {
+                        // 启动失败
+                        Service.ServiceState = ServiceState.Error;
+                    }
+                };
+                timer.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// 启动服务 按键触发
+        /// </summary>
         public DelegateCommand<ServiceModel> StartService
         {
             get
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
-                    if (Service.ServiceState == ServiceState.None || Service.ServiceState == ServiceState.Error)
-                    {
-                        Service.ServiceState = ServiceState.Start;
-                        // 启动服务
-                        string strGuid = Guid.NewGuid().ToString();
-                        Service.Guid = strGuid;
-                        ServiceResourcesModel serviceResources = new ServiceResourcesModel();
-                        if (string.IsNullOrEmpty(Service.Parameter))
-                        {
-                            serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath));
-                        }
-                        else
-                        {
-                            serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath), Service.Parameter.Split(' '));
-                        }
-                        serviceResources.CliWrap.Start();
-                        // 通过返回的进程 ID 判断是否运行成功
-                        Timer timer = new Timer(2000);
-                        timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
-                        {
-                            timer.Enabled = false;
-                            if (serviceResources.CliWrap.threadID > 0)
-                            {
-                                // 启动成功
-                                Service.Pid = $"{serviceResources.CliWrap.threadID}";
-                                var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
-                                if (vProcessPorts != null && vProcessPorts.Count >= 1)
-                                {
-                                    Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
-                                }
-                                ServicesResources.Add(strGuid, serviceResources);
-                            }
-                            else
-                            {
-                                // 启动失败
-                                Service.ServiceState = ServiceState.Error;
-                            }
-                        };
-                        timer.Enabled = true;
-                    }
+                    StartServiceCore(Service, false);
                 });
             }
         }
 
         /// <summary>
-        /// 关闭服务
+        /// 停止服务
+        /// </summary>
+        /// <param name="Service">服务信息</param>
+        private void StopServiceCore(ServiceModel Service)
+        {
+            SetLog($"Stop Service: {Service.ServiceName}");
+            if (Service.ServiceState == ServiceState.Start)
+            {
+                Service.ServiceState = ServiceState.None;
+                // 关闭服务
+                PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
+                if (ServicesResources.ContainsKey(Service.Guid))
+                {
+                    ServicesResources.Remove(Service.Guid);
+                }
+                Service.Pid = null;
+                Service.Port = null;
+                Service.Guid = null;
+            }
+        }
+
+        /// <summary>
+        /// 停止服务
         /// </summary>
         public DelegateCommand<ServiceModel> StopService
         {
@@ -202,19 +237,7 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
-                    if (Service.ServiceState == ServiceState.Start)
-                    {
-                        Service.ServiceState = ServiceState.None;
-                        // 关闭服务
-                        PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
-                        if (ServicesResources.ContainsKey(Service.Guid))
-                        {
-                            ServicesResources.Remove(Service.Guid);
-                        }
-                        Service.Pid = null;
-                        Service.Port = null;
-                        Service.Guid = null;
-                    }
+                    StopServiceCore(Service);
                 });
             }
         }
@@ -234,6 +257,7 @@ namespace EasyDeploy.ViewModels
                         var vDirectory = Path.GetDirectoryName(vPath);
                         if (Directory.Exists(vDirectory))
                         {
+                            SetLog($"Open Directory: {vDirectory}");
                             System.Diagnostics.Process.Start("explorer.exe", vDirectory);
                         }
                     }
@@ -250,7 +274,7 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
-
+                    SetLog($"Open Shell: {Service.ServiceName}");
                 });
             }
         }
@@ -264,6 +288,7 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
+                    SetLog($"Edge Service: {Service.ServiceName}");
                     AddService window = new AddService(Service);
                     window.ShowDialog();
                     Service = window.ServiceModel;
@@ -294,7 +319,13 @@ namespace EasyDeploy.ViewModels
                         MessageBoxResult result = IceMessageBox.ShowDialogBox($"Confirm Delete of Service: {Service.ServiceName} ?", "Tips", MessageBoxButton.OKCancel);
                         if (result == MessageBoxResult.OK)
                         {
+                            SetLog($"Remove Service: {Service.ServiceName}");
                             Services.Remove(Service);
+                            // 保存数据集
+                            var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
+                            StreamWriter sw = new StreamWriter(ServiceSavePath);
+                            sw.WriteLine(vServiceJson);
+                            sw.Close();
                         }
                     }
                 });
@@ -316,7 +347,6 @@ namespace EasyDeploy.ViewModels
                         if (result == MessageBoxResult.OK)
                         {
                             StopAllService();
-
                         }
                         else
                         {
@@ -358,7 +388,7 @@ namespace EasyDeploy.ViewModels
         /// <returns></returns>
         private IceRichTextBox CreateBlankRichTextBox()
         {
-            return new IceRichTextBox()
+            var vRichText = new IceRichTextBox()
             {
                 IsReadOnly = true,
                 BorderThickness = new Thickness(0),
@@ -368,6 +398,20 @@ namespace EasyDeploy.ViewModels
                 FontFamily = new FontFamily("Cascadia Mono"),
                 MaxRows = 5000
             };
+            vRichText.ClearText();
+            return vRichText;
+        }
+
+        /// <summary>
+        /// 写入日志
+        /// </summary>
+        /// <param name="log"></param>
+        private void SetLog(string log)
+        {
+            if (ServicesShell != null && ServicesShell.Count >= 1 && ServicesShell.ContainsKey(LogShellGuid))
+            {
+                ServicesShell[LogShellGuid]?.Control?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
+            }
         }
     }
 }

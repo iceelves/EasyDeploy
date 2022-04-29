@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyDeploy.Controls;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +18,6 @@ namespace EasyDeploy.Models
         /// <summary>
         /// Terminal Control
         /// </summary>
-        public object Control { get; set; }
+        public IceRichTextBox Control { get; set; }
     }
 }
