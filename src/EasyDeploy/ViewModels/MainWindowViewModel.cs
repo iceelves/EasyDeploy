@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 using System.Timers;
 using System.Windows;
+using System.Windows.Media;
 
 namespace EasyDeploy.ViewModels
 {
@@ -33,6 +34,14 @@ namespace EasyDeploy.ViewModels
                 return new DelegateCommand<Window>(delegate (Window window)
                 {
                     this.window = window;
+
+                    // 加载日志控件
+                    ServicesShell.Add(new TabControlTerminalModel()
+                    {
+                        Header = "Log",
+                        Control = CreateBlankRichTextBox()
+                    });
+
                     // 加载配置文件
                     if (File.Exists(ServiceSavePath))
                     {
@@ -76,6 +85,16 @@ namespace EasyDeploy.ViewModels
         /// 服务运行时资源
         /// </summary>
         public ObservableDictionary<string, ServiceResourcesModel> ServicesResources { get; set; } = new ObservableDictionary<string, ServiceResourcesModel>();
+
+        /// <summary>
+        /// 服务控制台绑定控件
+        /// </summary>
+        public ObservableCollection<TabControlTerminalModel> ServicesShell { get; set; } = new ObservableCollection<TabControlTerminalModel>();
+
+        /// <summary>
+        /// 选择服务控制台第几项
+        /// </summary>
+        public int ServicesShellIndex { get; set; } = 0;
 
         #region 用户控件
         private IceRichTextBox _iceRichTextBox;
@@ -312,7 +331,7 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 关闭所有服务
         /// </summary>
-        public void StopAllService()
+        private void StopAllService()
         {
             if (ServicesResources != null && ServicesResources.Count >= 1)
             {
@@ -331,6 +350,24 @@ namespace EasyDeploy.ViewModels
                     item.Guid = null;
                 }
             }
+        }
+
+        /// <summary>
+        /// 创建空白富文本控件
+        /// </summary>
+        /// <returns></returns>
+        private IceRichTextBox CreateBlankRichTextBox()
+        {
+            return new IceRichTextBox()
+            {
+                IsReadOnly = true,
+                BorderThickness = new Thickness(0),
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0C0C0C")),
+                Foreground = Brushes.White,
+                FontSize = 14,
+                FontFamily = new FontFamily("Cascadia Mono"),
+                MaxRows = 5000
+            };
         }
     }
 }

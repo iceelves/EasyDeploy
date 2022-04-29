@@ -203,32 +203,17 @@
                             </Grid>
                             <!--控制台信息-->
                             <Grid Grid.Column="1">
-                                <TabControl Background="Transparent" BorderThickness="0">
-                                    <TabItem Header="Test0">
-                                        <Grid>
-                                            <control:IceRichTextBox x:Name="richText" IsReadOnly="False" BorderThickness="0" Background="#0C0C0C" Foreground="White" FontSize="14" FontFamily="Cascadia Mono" MaxRows="5000" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-                                        </Grid>
-                                    </TabItem>
-                                    <TabItem Header="Test1">
-                                        <Grid Background="Red" Opacity="0.2">
-
-                                        </Grid>
-                                    </TabItem>
-                                    <TabItem Header="Test2">
-                                        <Grid Background="Blue" Opacity="0.2">
-
-                                        </Grid>
-                                    </TabItem>
-                                    <TabItem Header="Test3">
-                                        <Grid Background="Yellow" Opacity="0.2">
-
-                                        </Grid>
-                                    </TabItem>
-                                    <TabItem Header="Test4">
-                                        <Grid Background="Green" Opacity="0.2">
-
-                                        </Grid>
-                                    </TabItem>
+                                <TabControl Background="Transparent" BorderThickness="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
+                                    <TabControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentPresenter Content="{Binding Header}"/>
+                                        </DataTemplate>
+                                    </TabControl.ItemTemplate>
+                                    <TabControl.ContentTemplate>
+                                        <DataTemplate>
+                                            <ContentControl Content="{Binding Control}"/>
+                                        </DataTemplate>
+                                    </TabControl.ContentTemplate>
                                 </TabControl>
                             </Grid>
                         </Grid>
