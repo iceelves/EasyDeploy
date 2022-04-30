@@ -215,8 +215,7 @@
                             </Grid>
                             <!--控制台信息-->
                             <Grid Grid.Column="1">
-                                <TabControl Background="Transparent" BorderThickness="0" Padding="0"
-                                                       ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
+                                <TabControl Background="Transparent" BorderThickness="0" Padding="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
                                     <TabControl.ItemTemplate>
                                         <DataTemplate>
                                             <ContentPresenter Content="{Binding Value.Header}"/>
