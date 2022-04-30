@@ -42,6 +42,16 @@ namespace EasyDeploy.ViewModels
                         Header = "Log",
                         Control = CreateBlankRichTextBox()
                     });
+                    ServicesShell.Add("1", new TabControlTerminalModel()
+                    {
+                        Header = "Log2",
+                        Control = CreateBlankRichTextBox()
+                    });
+                    ServicesShell.Add("2", new TabControlTerminalModel()
+                    {
+                        Header = "Log3",
+                        Control = CreateBlankRichTextBox()
+                    });
                     SetLog("Easy Deploy Start!");
 
                     // 加载配置文件

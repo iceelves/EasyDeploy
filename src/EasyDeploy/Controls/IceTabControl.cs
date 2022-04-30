@@ -7,8 +7,8 @@ using System.Windows.Controls;
 namespace EasyDeploy.Controls
 {
     [TemplatePart(Name = "Part_Path", Type = typeof(FrameworkElement))]
-    public class IceDataGrid : DataGrid
+    public class IceTabControl : TabControl
     {
-        static IceDataGrid() => DefaultStyleKeyProperty.OverrideMetadata(typeof(IceDataGrid), new FrameworkPropertyMetadata(typeof(IceDataGrid)));
+        static IceTabControl() => DefaultStyleKeyProperty.OverrideMetadata(typeof(IceTabControl), new FrameworkPropertyMetadata(typeof(IceTabControl)));
     }
 }
