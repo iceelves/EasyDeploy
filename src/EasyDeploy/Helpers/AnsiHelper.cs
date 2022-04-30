@@ -51,25 +51,34 @@ namespace EasyDeploy.Helpers
                 }
             }
             // 遍历拆分数据
-            int iSubscript = 0;
-            for (int i = 0; i < indexs.Count; i++)
+            if (indexs.Count == 0)
             {
-                if (i == 0 && indexs[i] > 0)
+                // 无颜色数据
+                listAnsiSplit.Add(text);
+            }
+            else
+            {
+                // 解析颜色数据
+                int iSubscript = 0;
+                for (int i = 0; i < indexs.Count; i++)
                 {
-                    // 如果大于起始位置，先把起始数据赋值
-                    listAnsiSplit.Add(text.Substring(0, indexs[i]));
-                    iSubscript += indexs[i];
-                }
-                // 添加 Ansi 数据
-                listAnsiSplit.Add(vMatches[i].Value);
-                iSubscript += vMatches[i].Value.Length;
+                    if (i == 0 && indexs[i] > 0)
+                    {
+                        // 如果大于起始位置，先把起始数据赋值
+                        listAnsiSplit.Add(text.Substring(0, indexs[i]));
+                        iSubscript += indexs[i];
+                    }
+                    // 添加 Ansi 数据
+                    listAnsiSplit.Add(vMatches[i].Value);
+                    iSubscript += vMatches[i].Value.Length;
 
-                // 添加其他数据
-                int iSubCount = (indexs.Count > i + 1 ? indexs[i + 1] : text.Length) - iSubscript;
-                if (iSubCount > 0)
-                {
-                    listAnsiSplit.Add(text.Substring(iSubscript, iSubCount));
-                    iSubscript += iSubCount;
+                    // 添加其他数据
+                    int iSubCount = (indexs.Count > i + 1 ? indexs[i + 1] : text.Length) - iSubscript;
+                    if (iSubCount > 0)
+                    {
+                        listAnsiSplit.Add(text.Substring(iSubscript, iSubCount));
+                        iSubscript += iSubCount;
+                    }
                 }
             }
             return listAnsiSplit;

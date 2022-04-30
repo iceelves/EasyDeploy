@@ -42,16 +42,6 @@ namespace EasyDeploy.ViewModels
                         Header = "Log",
                         Control = CreateBlankRichTextBox()
                     });
-                    ServicesShell.Add("1", new TabControlTerminalModel()
-                    {
-                        Header = "Log2",
-                        Control = CreateBlankRichTextBox()
-                    });
-                    ServicesShell.Add("2", new TabControlTerminalModel()
-                    {
-                        Header = "Log3",
-                        Control = CreateBlankRichTextBox()
-                    });
                     SetLog("Easy Deploy Start!");
 
                     // 加载配置文件
@@ -175,6 +165,9 @@ namespace EasyDeploy.ViewModels
                 {
                     serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath), Service.Parameter.Split(' '));
                 }
+                // 加载终端 Shell
+                serviceResources.Terminal = CreateBlankRichTextBox();
+                serviceResources.MonitorShell();
                 serviceResources.CliWrap.Start();
                 // 通过返回的进程 ID 判断是否运行成功
                 Timer timer = new Timer(2000);
@@ -190,6 +183,7 @@ namespace EasyDeploy.ViewModels
                         {
                             Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
                         }
+                        // 添加到服务运行时资源列表
                         ServicesResources.Add(strGuid, serviceResources);
                     }
                     else
@@ -231,6 +225,10 @@ namespace EasyDeploy.ViewModels
                 if (ServicesResources.ContainsKey(Service.Guid))
                 {
                     ServicesResources.Remove(Service.Guid);
+                }
+                if (ServicesShell.ContainsKey(Service.Guid))
+                {
+                    ServicesShell.Remove(Service.Guid);
                 }
                 Service.Pid = null;
                 Service.Port = null;
@@ -285,6 +283,21 @@ namespace EasyDeploy.ViewModels
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
                     SetLog($"Open Shell: {Service.ServiceName}");
+                    if (Service != null && !string.IsNullOrEmpty(Service.Guid))
+                    {
+                        if (ServicesResources.ContainsKey(Service.Guid))
+                        {
+                            if (ServicesShell.ContainsKey(Service.Guid))
+                            {
+                                // TODO: 切换分页
+
+                            }
+                            else
+                            {
+                                ServicesShell.Add(Service.Guid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = ServicesResources[Service.Guid].Terminal });
+                            }
+                        }
+                    }
                 });
             }
         }
@@ -398,17 +411,21 @@ namespace EasyDeploy.ViewModels
         /// <returns></returns>
         private IceRichTextBox CreateBlankRichTextBox()
         {
-            var vRichText = new IceRichTextBox()
+            IceRichTextBox vRichText = null;
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                IsReadOnly = true,
-                BorderThickness = new Thickness(0),
-                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0C0C0C")),
-                Foreground = Brushes.White,
-                FontSize = 14,
-                FontFamily = new FontFamily("Cascadia Mono"),
-                MaxRows = 5000
-            };
-            vRichText.ClearText();
+                vRichText = new IceRichTextBox()
+                {
+                    IsReadOnly = true,
+                    BorderThickness = new Thickness(0),
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0C0C0C")),
+                    Foreground = Brushes.White,
+                    FontSize = 14,
+                    FontFamily = new FontFamily("Cascadia Mono"),
+                    MaxRows = 5000
+                };
+                vRichText.ClearText();
+            });
             return vRichText;
         }
 
