@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:EasyDeploy"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-
+        <ResourceDictionary Source="/Themes/Generic.xaml"/>
     </Application.Resources>
 </Application>

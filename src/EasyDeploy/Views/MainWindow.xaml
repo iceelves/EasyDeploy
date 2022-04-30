@@ -215,7 +215,8 @@
                             </Grid>
                             <!--控制台信息-->
                             <Grid Grid.Column="1">
-                                <control:IceTabControl Background="Transparent" BorderThickness="0" Padding="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
+                                <TabControl Background="Transparent" BorderThickness="0" Padding="0"
+                                                       ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
                                     <TabControl.ItemTemplate>
                                         <DataTemplate>
                                             <ContentPresenter Content="{Binding Value.Header}"/>
@@ -226,7 +227,7 @@
                                             <ContentControl Content="{Binding Value.Control}"/>
                                         </DataTemplate>
                                     </TabControl.ContentTemplate>
-                                </control:IceTabControl>
+                                </TabControl>
                             </Grid>
                         </Grid>
                         <!--右下角拖动块-->

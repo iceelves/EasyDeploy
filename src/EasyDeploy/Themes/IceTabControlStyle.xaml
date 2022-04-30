@@ -4,7 +4,7 @@
 
     <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#848484"/>
     <SolidColorBrush x:Key="TabItem.Selected.Border" Color="Transparent"/>
-    <Style TargetType="{x:Type control:IceTabControl}">
+    <Style TargetType="{x:Type TabControl}">
         <Setter Property="Padding" Value="2"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
