@@ -185,6 +185,11 @@ namespace EasyDeploy.ViewModels
                         }
                         // 添加到服务运行时资源列表
                         ServicesResources.Add(strGuid, serviceResources);
+                        // 添加到服务控制台绑定控件
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            ServicesShell.Add(strGuid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = serviceResources.Terminal });
+                        });
                     }
                     else
                     {
@@ -289,20 +294,17 @@ namespace EasyDeploy.ViewModels
                         {
                             if (ServicesShell.ContainsKey(Service.Guid))
                             {
-                                // TODO: 切换分页
+                                // 切换分页
                                 for (int i = 0; i < ServicesShell.Count; i++)
                                 {
                                     if (ServicesShell.ElementAt(i).Key.Equals(Service.Guid))
                                     {
                                         ServicesShellIndex = i;
+                                        // 滚动条切至底部
+                                        ServicesShell.ElementAt(i).Value.Control.ScrollToEnd();
                                         break;
                                     }
                                 }
-                            }
-                            else
-                            {
-                                ServicesShell.Add(Service.Guid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = ServicesResources[Service.Guid].Terminal });
-                                ServicesShellIndex = ServicesShell.Count - 1;
                             }
                         }
                     }
