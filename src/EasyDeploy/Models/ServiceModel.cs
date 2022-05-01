@@ -89,6 +89,11 @@ namespace EasyDeploy.Models
         [Description("Service Start")]
         Start = 1,
         [Description("Service Error")]
-        Error = 2
+        Error = 2,
+        /// <summary>
+        /// 由按钮操作的等待，最多不会超过两秒，不允许点击启动关闭
+        /// </summary>
+        [Description("Service Wait")]
+        Wait = 3
     }
 }

@@ -152,7 +152,7 @@ namespace EasyDeploy.ViewModels
             SetLog($"{(IsAuto ? "Auto " : "")}Start Service: {Service.ServiceName}");
             if (Service.ServiceState == ServiceState.None || Service.ServiceState == ServiceState.Error)
             {
-                Service.ServiceState = ServiceState.Start;
+                Service.ServiceState = ServiceState.Wait;
                 // 启动服务
                 string strGuid = Guid.NewGuid().ToString();
                 Service.Guid = strGuid;
@@ -170,7 +170,7 @@ namespace EasyDeploy.ViewModels
                 serviceResources.MonitorShell();
                 serviceResources.CliWrap.Start();
                 // 通过返回的进程 ID 判断是否运行成功
-                Timer timer = new Timer(2000);
+                Timer timer = new Timer(1000);
                 timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
@@ -190,6 +190,7 @@ namespace EasyDeploy.ViewModels
                         {
                             ServicesShell.Add(strGuid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = serviceResources.Terminal });
                         });
+                        Service.ServiceState = ServiceState.Start;
                     }
                     else
                     {
@@ -222,22 +223,58 @@ namespace EasyDeploy.ViewModels
         private void StopServiceCore(ServiceModel Service)
         {
             SetLog($"Stop Service: {Service.ServiceName}");
-            if (Service.ServiceState == ServiceState.Start)
+            if (Service.ServiceState == ServiceState.Start && !string.IsNullOrEmpty(Service.Guid))
             {
-                Service.ServiceState = ServiceState.None;
-                // 关闭服务
-                PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
-                if (ServicesResources.ContainsKey(Service.Guid))
+                Service.ServiceState = ServiceState.Wait;
+                if (!string.IsNullOrEmpty(Service.Pid))
                 {
-                    ServicesResources.Remove(Service.Guid);
+                    // 关闭服务
+                    PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
+                    // 移除运行时资源
+                    if (ServicesResources.ContainsKey(Service.Guid))
+                    {
+                        ServicesResources.Remove(Service.Guid);
+                    }
+                    if (ServicesShell.ContainsKey(Service.Guid))
+                    {
+                        ServicesShell.Remove(Service.Guid);
+                    }
+                    Service.Pid = null;
+                    Service.Port = null;
+                    Service.Guid = null;
+                    Service.ServiceState = ServiceState.None;
                 }
-                if (ServicesShell.ContainsKey(Service.Guid))
+                else
                 {
-                    ServicesShell.Remove(Service.Guid);
+                    // 未成功启动
+                    // 等待两秒后再次检查是否获取到 PID,以 PID结束进程或
+                    Timer timer = new Timer(2000);
+                    timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+                    {
+                        timer.Enabled = false;
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            if (!string.IsNullOrEmpty(Service.Pid))
+                            {
+                                PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
+                            }
+                            // 移除运行时资源
+                            if (ServicesResources.ContainsKey(Service.Guid))
+                            {
+                                ServicesResources.Remove(Service.Guid);
+                            }
+                            if (ServicesShell.ContainsKey(Service.Guid))
+                            {
+                                ServicesShell.Remove(Service.Guid);
+                            }
+                            Service.Pid = null;
+                            Service.Port = null;
+                            Service.Guid = null;
+                            Service.ServiceState = ServiceState.None;
+                        });
+                    };
+                    timer.Enabled = true;
                 }
-                Service.Pid = null;
-                Service.Port = null;
-                Service.Guid = null;
             }
         }
 

@@ -95,9 +95,6 @@
                                                                         <DataTrigger Binding="{Binding ServiceState}" Value="0">
                                                                             <Setter Property="Fill" Value="Gray"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                            <Setter Property="Fill" Value="Red"/>
-                                                                        </DataTrigger>
                                                                         <MultiDataTrigger>
                                                                             <MultiDataTrigger.Conditions>
                                                                                 <Condition Binding="{Binding ServiceState}" Value="1"/>
@@ -112,6 +109,13 @@
                                                                             </MultiDataTrigger.Conditions>
                                                                             <Setter Property="Fill" Value="Orange"/>
                                                                         </MultiDataTrigger>
+                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="2">
+                                                                            <Setter Property="Fill" Value="Red"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="3">
+                                                                            <Setter Property="Fill" Value="Orange"/>
+                                                                        </DataTrigger>
+
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Ellipse.Style>
@@ -157,11 +161,13 @@
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="1">
                                                                                 <Setter Property="IsEnabled" Value="False"/>
-                                                                                <Setter Property="Foreground" Value="White"/>
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="2">
                                                                                 <Setter Property="IsEnabled" Value="True"/>
                                                                                 <Setter Property="Foreground" Value="LimeGreen"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
+                                                                                <Setter Property="IsEnabled" Value="False"/>
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -176,7 +182,6 @@
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="0">
                                                                                 <Setter Property="IsEnabled" Value="False"/>
-                                                                                <Setter Property="Foreground" Value="White"/>
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="1">
                                                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -184,20 +189,8 @@
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="2">
                                                                                 <Setter Property="IsEnabled" Value="False"/>
-                                                                                <Setter Property="Foreground" Value="White"/>
                                                                             </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </control:IceButton.Style>
-                                                            </control:IceButton>
-                                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Browse" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="#FFE589" BorderThickness="0" FontWeight="Bold" IsDefault="True"
-                                                                               Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                                <control:IceButton.Style>
-                                                                    <Style TargetType="control:IceButton">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding AllowDirectoryToOpen}" Value="False">
+                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
                                                                                 <Setter Property="IsEnabled" Value="False"/>
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
@@ -212,6 +205,20 @@
                                                                     <Style TargetType="control:IceButton">
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{c:Binding '(Pid == null)'}" Value="True">
+                                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </control:IceButton.Style>
+                                                            </control:IceButton>
+                                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Browse" 
+                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
+                                                                               Foreground="#FFE589" BorderThickness="0" FontWeight="Bold" IsDefault="True"
+                                                                               Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
+                                                                <control:IceButton.Style>
+                                                                    <Style TargetType="control:IceButton">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding AllowDirectoryToOpen}" Value="False">
                                                                                 <Setter Property="IsEnabled" Value="False"/>
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
