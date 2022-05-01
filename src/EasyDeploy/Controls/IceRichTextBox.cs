@@ -16,6 +16,7 @@ namespace EasyDeploy.Controls
 
         /// <summary>
         /// 最大行数
+        /// 先删除后打印，所以实际会比限制多一行
         /// </summary>
         public int MaxRows
         {
@@ -40,6 +41,29 @@ namespace EasyDeploy.Controls
         /// <param name="Text"></param>
         public void SetText(string Text)
         {
+            // 根据最大显示行数删除
+            if (this.Document.Blocks.Count >= MaxRows)
+            {
+                int iRempveNumber = this.Document.Blocks.Count - MaxRows;
+                List<Paragraph> listRemoveTemp = new List<Paragraph>();
+                foreach (var item in this.Document.Blocks)
+                {
+                    if (iRempveNumber > 0)
+                    {
+                        iRempveNumber--;
+                        listRemoveTemp.Add(item as Paragraph);
+                    }
+                }
+                if (listRemoveTemp != null && listRemoveTemp.Count >= 1)
+                {
+                    foreach (var item in listRemoveTemp)
+                    {
+                        this.Document.Blocks.Remove(item);
+                    }
+                }
+            }
+
+            // 添加文本
             string ansiColor = null;
             Paragraph paragraph = new Paragraph();
             foreach (var item in AnsiHelper.GetAnsiSplit(Text))
