@@ -15,6 +15,7 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace EasyDeploy.ViewModels
 {
@@ -472,8 +473,38 @@ namespace EasyDeploy.ViewModels
                     MaxRows = 5000
                 };
                 vRichText.ClearText();
+                vRichText.PreviewMouseWheel += VRichText_PreviewMouseWheel;
             });
             return vRichText;
+        }
+
+        /// <summary>
+        /// 富文本框关联 Ctrl + 鼠标滑轮缩放
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VRichText_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                var vControl = sender as IceRichTextBox;
+                if (e.Delta < 0)
+                {
+                    if (vControl.FontSize >= 6)
+                    {
+                        // 字号最小为 5
+                        vControl.FontSize -= 1;
+                    }
+                }
+                else
+                {
+                    if (vControl.FontSize <= 31)
+                    {
+                        // 字号最大为 32
+                        vControl.FontSize += 1;
+                    }
+                }
+            }
         }
 
         /// <summary>
