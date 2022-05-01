@@ -45,7 +45,7 @@ namespace EasyDeploy.Models
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Terminal?.SetText(obj);
+                Terminal?.SetText($"Start Service PID:{obj}");
             });
         }
 
@@ -81,7 +81,7 @@ namespace EasyDeploy.Models
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Terminal?.SetText(obj);
+                Terminal?.SetText($"Stop Service:{obj}");
             });
         }
     }

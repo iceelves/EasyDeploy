@@ -55,6 +55,12 @@ namespace EasyDeploy.Controls
                 }
             }
             this.Document.Blocks.Add(paragraph);
+
+            // 滚动条超过 80% 或滚动条小于一倍控件高度 滚动到底部
+            if (this.VerticalOffset / (this.ExtentHeight - this.ActualHeight) >= 0.8 || (this.ExtentHeight - this.ActualHeight) <= this.ActualHeight)
+            {
+                this.ScrollToEnd();
+            }
         }
 
         /// <summary>
