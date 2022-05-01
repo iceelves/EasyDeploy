@@ -95,12 +95,23 @@
                                                                         <DataTrigger Binding="{Binding ServiceState}" Value="0">
                                                                             <Setter Property="Fill" Value="Gray"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="1">
-                                                                            <Setter Property="Fill" Value="Lime"/>
-                                                                        </DataTrigger>
                                                                         <DataTrigger Binding="{Binding ServiceState}" Value="2">
                                                                             <Setter Property="Fill" Value="Red"/>
                                                                         </DataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
+                                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="False"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Fill" Value="Lime"/>
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
+                                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="True"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Fill" Value="Orange"/>
+                                                                        </MultiDataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Ellipse.Style>
@@ -196,7 +207,17 @@
                                                             <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Shell" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"
-                                                                               Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
+                                                                               Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
+                                                                <control:IceButton.Style>
+                                                                    <Style TargetType="control:IceButton">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{c:Binding '(Pid == null)'}" Value="True">
+                                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </control:IceButton.Style>
+                                                            </control:IceButton>
                                                             <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Edit" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True"
