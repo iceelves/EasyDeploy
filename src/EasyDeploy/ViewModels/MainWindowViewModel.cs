@@ -290,11 +290,19 @@ namespace EasyDeploy.ViewModels
                             if (ServicesShell.ContainsKey(Service.Guid))
                             {
                                 // TODO: 切换分页
-
+                                for (int i = 0; i < ServicesShell.Count; i++)
+                                {
+                                    if (ServicesShell.ElementAt(i).Key.Equals(Service.Guid))
+                                    {
+                                        ServicesShellIndex = i;
+                                        break;
+                                    }
+                                }
                             }
                             else
                             {
                                 ServicesShell.Add(Service.Guid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = ServicesResources[Service.Guid].Terminal });
+                                ServicesShellIndex = ServicesShell.Count - 1;
                             }
                         }
                     }
