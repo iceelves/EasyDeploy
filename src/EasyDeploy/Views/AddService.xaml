@@ -56,7 +56,7 @@
                             <Label Width="120" Content="Service Path:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="White"/>
                             <TextBox x:Name="ServicePath" Width="250" Height="25" Margin="15,0" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
                             <control:IceButton x:Name="Select" Width="50" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="…" 
-                                           Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4"
+                                           Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                            Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Select_Click"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="30" Margin="0,10,0,0">
@@ -80,10 +80,10 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
                             <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="Save" 
-                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4"
+                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                        Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Save_Click"/>
                             <control:IceButton x:Name="Close" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="Close" 
-                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4"
+                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                        Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Close_Click"/>
                         </StackPanel>
                     </Grid>

@@ -30,13 +30,13 @@
                     <TextBlock x:Name="Message" Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                         <local:IceButton x:Name="OK" Content="OK" Margin="5" Height="25" Width="50" Background="#1A92ED" IsMouseOverFill="#1783D4" ButtonCornerRadius="4"
-                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="OK_Click" IsDefault="True"/>
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="OK_Click" IsDefault="True" Cursor="Hand"/>
                         <local:IceButton x:Name="Yes" Content="Yes" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="#1A92ED" IsMouseOverFill="#1783D4" ButtonCornerRadius="4"
-                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Yes_Click" IsDefault="True"/>
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Yes_Click" IsDefault="True" Cursor="Hand"/>
                         <local:IceButton x:Name="No" Content="No" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="Gray" IsMouseOverFill="DimGray" ButtonCornerRadius="4"
-                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="NO_Click" IsDefault="True"/>
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="NO_Click" IsDefault="True" Cursor="Hand"/>
                         <local:IceButton x:Name="Cancel" Content="Cancel" Margin="5" Height="25" Width="50" Visibility="Collapsed" Background="Gray" IsMouseOverFill="DimGray" ButtonCornerRadius="4"
-                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Cancel_Click" IsDefault="True"/>
+                                            Foreground="White" BorderThickness="0" FontWeight="Bold" Click="Cancel_Click" IsDefault="True" Cursor="Hand"/>
                     </StackPanel>
                 </Grid>
             </Border>

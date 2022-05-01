@@ -106,7 +106,7 @@ namespace EasyDeploy.Views
         /// <param name="e"></param>
         private void MoreMenus_Click(object sender, RoutedEventArgs e)
         {
-
+            popup_Menu.IsOpen = !popup_Menu.IsOpen;
         }
 
         #region 修改主窗体大小
