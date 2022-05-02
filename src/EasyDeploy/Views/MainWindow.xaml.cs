@@ -1,4 +1,5 @@
-﻿using EasyDeploy.ViewModels;
+﻿using EasyDeploy.Helpers;
+using EasyDeploy.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace EasyDeploy.Views
             // 主窗体拖动和缩放
             this.SourceInitialized += MainWindow_SourceInitialized;
             this.MouseMove += MainWindow_MouseMove;
+
+            // 初始化系统语言
+            SystemConfigHelper.SetLanguage();
         }
 
         /// <summary>

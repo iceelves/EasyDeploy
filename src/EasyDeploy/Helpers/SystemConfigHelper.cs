@@ -1,7 +1,11 @@
-﻿using System;
+﻿using EasyDeploy.Models;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace EasyDeploy.Helpers
 {
@@ -45,6 +49,28 @@ namespace EasyDeploy.Helpers
         /// </summary>
         public const string TERMINAL_FONTSIZE = "FontSize";
 
+        private static List<LanguageModel> _listLanguage;
+        /// <summary>
+        /// 语言资源集合
+        /// </summary>
+        public static List<LanguageModel> ListLanguage
+        {
+            get
+            {
+                if (_listLanguage == null)
+                {
+                    _listLanguage = new List<LanguageModel>();
+                    _listLanguage.Add(new LanguageModel() { FileName = "en-US", Language = "English", Resource = new ResourceDictionary() { Source = new Uri("/EasyDeploy;component/Language/en-US.xaml", UriKind.RelativeOrAbsolute) } });
+                    _listLanguage.Add(new LanguageModel() { FileName = "zh-CN", Language = "简体中文", Resource = new ResourceDictionary() { Source = new Uri("/EasyDeploy;component/Language/zh-CN.xaml", UriKind.RelativeOrAbsolute) } });
+                }
+                return _listLanguage;
+            }
+            set
+            {
+                _listLanguage = value;
+            }
+        }
+
         /// <summary>
         /// 系统配置文件路径
         /// </summary>
@@ -66,7 +92,9 @@ namespace EasyDeploy.Helpers
                     NLogHelper.SaveDebug($"系统配置文件({Path.GetFileName(strPath)})不存在，自动创建！");
                     // 创建默认系统配置信息
                     INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, SYSTEM_START_WITH_WINDOWS, "false");
-                    INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, "Language", "en-US");
+                    // 获取系统语言，默认如果是中文加载中文，其余加载英文
+                    var vLanguage = CultureInfo.InstalledUICulture.Name.Equals("zh-CN") ? "zh-CN" : "en-US";
+                    INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, "Language", vLanguage);
                     // 创建默认终端配置信息
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_BACKGROUND, "#0C0C0C");
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_FOREGROUND, "#FFFFFF");
@@ -122,6 +150,43 @@ namespace EasyDeploy.Helpers
                 NLogHelper.SaveDebug("记录配置文件 SystemConfig 失败！");
                 NLogHelper.SaveError(ex.ToString());
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// 设置语言
+        /// </summary>
+        /// <param name="language"></param>
+        public static void SetLanguage(string language = null)
+        {
+            // 把要修改的语言放置资源最后
+            List<ResourceDictionary> dictionaryList = new List<ResourceDictionary>();
+            foreach (ResourceDictionary dictionary in Application.Current.Resources.MergedDictionaries)
+            {
+                dictionaryList.Add(dictionary);
+            }
+            if (string.IsNullOrEmpty(language))
+            {
+                var vSystemConfigInfo_Language = GetSystemConfigInfo(SECTION_SYSTEM, SYSTEM_LANGUAGE);
+                foreach (var item in ListLanguage)
+                {
+                    if (item.FileName.Equals(vSystemConfigInfo_Language))
+                    {
+                        language = item.Resource.Source.OriginalString;
+                        break;
+                    }
+                }
+            }
+            if (!string.IsNullOrEmpty(language))
+            {
+                var resourceDictionary = dictionaryList.FirstOrDefault(o => o.Source.OriginalString.Equals(language));
+                if (resourceDictionary != null)
+                {
+                    Application.Current.Resources.BeginInit();
+                    Application.Current.Resources.MergedDictionaries.Remove(resourceDictionary);
+                    Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
+                    Application.Current.Resources.EndInit();
+                }
             }
         }
     }

@@ -36,24 +36,21 @@ namespace EasyDeploy.Views
         /// <param name="e"></param>
         private void SettingsWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // 初始化语言
-            List<LanguageModel> listLanguage = new List<LanguageModel>();
-            listLanguage.Add(new LanguageModel() { FileName = "en-US", Language = "English", Resource = new ResourceDictionary() { Source = new Uri("/EasyDeploy;component/Language/en-US.xaml", UriKind.RelativeOrAbsolute) } });
-            listLanguage.Add(new LanguageModel() { FileName = "zh-CN", Language = "简体中文", Resource = new ResourceDictionary() { Source = new Uri("/EasyDeploy;component/Language/zh-CN.xaml", UriKind.RelativeOrAbsolute) } });
-            Language.ItemsSource = listLanguage;
-
             // 获取系统配置信息
             // 系统 - 自动启动
             var vSystemConfigInfo_StartWithWindows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_START_WITH_WINDOWS);
             var vStartWithWindows = !string.IsNullOrEmpty(vSystemConfigInfo_StartWithWindows) && bool.Parse(vSystemConfigInfo_StartWithWindows);
             _initialConfig.Add(SystemConfigHelper.SYSTEM_START_WITH_WINDOWS, vStartWithWindows);
             StartWithWindows.IsChecked = vStartWithWindows;
+
+            // 初始化语言
+            Language.ItemsSource = SystemConfigHelper.ListLanguage;
             // 系统 - 语言
             var vSystemConfigInfo_Language = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE);
             _initialConfig.Add(SystemConfigHelper.SYSTEM_LANGUAGE, vSystemConfigInfo_Language);
-            for (int i = 0; i < listLanguage.Count; i++)
+            for (int i = 0; i < SystemConfigHelper.ListLanguage.Count; i++)
             {
-                if (listLanguage[i].FileName.Equals(vSystemConfigInfo_Language))
+                if (SystemConfigHelper.ListLanguage[i].FileName.Equals(vSystemConfigInfo_Language))
                 {
                     Language.SelectedIndex = i;
                 }
@@ -134,18 +131,7 @@ namespace EasyDeploy.Views
             if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_LANGUAGE) && !_initialConfig[SystemConfigHelper.SYSTEM_LANGUAGE].ToString().Equals(vSelectedLanguage.FileName))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE, vSelectedLanguage.FileName);
-                // 把要修改的语言放置资源最后
-                List<ResourceDictionary> dictionaryList = new List<ResourceDictionary>();
-                foreach (ResourceDictionary dictionary in Application.Current.Resources.MergedDictionaries)
-                {
-                    dictionaryList.Add(dictionary);
-                }
-                string requestedCulture = vSelectedLanguage.Resource.Source.OriginalString;
-                var resourceDictionary = dictionaryList.FirstOrDefault(o => o.Source.OriginalString.Equals(requestedCulture));
-                Application.Current.Resources.BeginInit();
-                Application.Current.Resources.MergedDictionaries.Remove(resourceDictionary);
-                Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
-                Application.Current.Resources.EndInit();
+                SystemConfigHelper.SetLanguage(vSelectedLanguage.Resource.Source.OriginalString);
             }
             #endregion
 
