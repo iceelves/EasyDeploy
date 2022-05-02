@@ -9,7 +9,7 @@
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabControlStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabItemStyle.xaml"/>
         <!--设置语言-->
-        <ResourceDictionary Source="/EasyDeploy;component/Language/zh-CN.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Language/en-US.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <!--通用默认样式-->
     <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}" />

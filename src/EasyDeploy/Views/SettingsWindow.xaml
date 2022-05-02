@@ -37,15 +37,17 @@
                             <StackPanel Orientation="Vertical" Margin="20,0">
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="Start with Windows:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <CheckBox x:Name="StartWithWindows" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Click="StartWithWindows_Click"/>
+                                    <CheckBox x:Name="StartWithWindows" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="Language:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <ComboBox Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,5">
-                                    <Label Content="Theme style:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <ComboBox Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0"/>
+                                    <ComboBox x:Name="Language" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <ComboBoxItem Content="{Binding Language}" Tag="{Binding FileName}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
