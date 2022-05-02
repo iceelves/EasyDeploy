@@ -44,7 +44,7 @@
                                     <ComboBox x:Name="Language" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <ComboBoxItem Content="{Binding Language}" Tag="{Binding FileName}"/>
+                                                <ContentPresenter Content="{Binding Language}"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
