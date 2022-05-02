@@ -5,4 +5,6 @@
     <System:String x:Key="Title">Easy Deploy</System:String>
     <System:String x:Key="DeployService">Deploy Service</System:String>
     <System:String x:Key="Add">Add</System:String>
+
+    <System:String x:Key="Setting">Setting</System:String>
 </ResourceDictionary>

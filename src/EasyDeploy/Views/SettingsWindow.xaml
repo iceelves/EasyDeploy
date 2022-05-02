@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
-        Title="Setting" Height="400" Width="600" Icon="/Images/terminal.png">
+        Title="{DynamicResource Setting}" Height="400" Width="600" Icon="/Images/terminal.png">
     <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10" Background="Transparent" CornerRadius="5" BorderBrush="#92CAF4" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>

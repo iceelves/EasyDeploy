@@ -5,4 +5,6 @@
     <System:String x:Key="Title">轻松部署</System:String>
     <System:String x:Key="DeployService">部署服务</System:String>
     <System:String x:Key="Add">新增</System:String>
+
+    <System:String x:Key="Setting">设置</System:String>
 </ResourceDictionary>
