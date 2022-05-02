@@ -383,11 +383,13 @@ namespace EasyDeploy.ViewModels
                 {
                     if (Service.ServiceState == ServiceState.Start)
                     {
-                        IceMessageBox.ShowDialogBox($"Close Service Before Delete : {Service.ServiceName} !");
+                        IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "删除前需要关闭服务" : "Close Service Before Delete")} : {Service.ServiceName} !",
+                            $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}");
                     }
                     else
                     {
-                        MessageBoxResult result = IceMessageBox.ShowDialogBox($"Confirm Delete of Service: {Service.ServiceName} ?", "Tips", MessageBoxButton.OKCancel);
+                        MessageBoxResult result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "是否删除服务" : "Confirm Delete of Service")} : {Service.ServiceName} ?",
+                            $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
                         if (result == MessageBoxResult.OK)
                         {
                             SetLog($"Remove Service: {Service.ServiceName}");
@@ -414,7 +416,8 @@ namespace EasyDeploy.ViewModels
                 {
                     if (ServicesResources != null && ServicesResources.Count >= 1)
                     {
-                        MessageBoxResult result = IceMessageBox.ShowDialogBox($"There are services that have not been closed. Do you want to close them?", "Tips", MessageBoxButton.OKCancel);
+                        MessageBoxResult result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "存在尚未关闭的服务，确定关闭么" : "There are services that have not been closed. Do you want to close them")} ?",
+                            $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
                         if (result == MessageBoxResult.OK)
                         {
                             StopAllService();

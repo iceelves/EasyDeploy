@@ -28,6 +28,7 @@
     <System:String x:Key="Edit">编辑</System:String>
 
     <!--添加编辑服务-->
+    <System:String x:Key="AddService">新增服务</System:String>
     <System:String x:Key="ServiceName">服务名称:</System:String>
     <System:String x:Key="ServicePath">服务路径:</System:String>
     <System:String x:Key="ServicePathType">服务路径类型:</System:String>

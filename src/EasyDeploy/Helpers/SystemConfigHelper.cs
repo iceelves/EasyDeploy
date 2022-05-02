@@ -154,6 +154,16 @@ namespace EasyDeploy.Helpers
         }
 
         /// <summary>
+        /// 获取当前配置文件是否为中文
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsChinese()
+        {
+            var vSystemConfigInfo_Language = GetSystemConfigInfo(SECTION_SYSTEM, SYSTEM_LANGUAGE);
+            return !string.IsNullOrEmpty(vSystemConfigInfo_Language) && vSystemConfigInfo_Language.Equals("zh-CN");
+        }
+
+        /// <summary>
         /// 设置语言
         /// </summary>
         /// <param name="language"></param>

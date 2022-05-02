@@ -28,6 +28,7 @@
     <System:String x:Key="Edit">Edit</System:String>
 
     <!--添加编辑服务-->
+    <System:String x:Key="AddService">Add Service</System:String>
     <System:String x:Key="ServiceName">Service Name:</System:String>
     <System:String x:Key="ServicePath">Service Path:</System:String>
     <System:String x:Key="ServicePathType">Service Path Type:</System:String>
