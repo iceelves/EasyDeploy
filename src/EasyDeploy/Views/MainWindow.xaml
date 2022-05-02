@@ -49,6 +49,12 @@
                 <Trigger SourceName="Tb" Property="Text" Value="About">
                     <Setter TargetName="Part_Path" Property="Data" Value="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m-59.072-512v236.32a54.144 54.144 0 1 0 108.288 0V480a54.144 54.144 0 1 0-108.288 0z m53.76-226.464c-14.72 0-27.232 4.544-37.568 15.136-11.04 9.856-16.192 22.72-16.192 38.656 0 15.136 5.152 28 16.192 38.624 10.336 10.592 22.848 15.904 37.6 15.904a57.6 57.6 0 0 0 39.04-15.168c10.304-10.592 15.456-23.456 15.456-39.36s-5.12-28.8-15.456-38.656c-10.304-10.56-23.584-15.136-39.04-15.136z" />
                 </Trigger>
+                <Trigger SourceName="Tb" Property="Text" Value="设置">
+                    <Setter TargetName="Part_Path" Property="Data" Value="M960 414.72l-81.92-18.432c-6.144-20.48-14.848-39.936-24.576-58.88l44.544-74.24c16.384-26.624 25.088-65.536 0-90.624l-45.056-45.056c-12.288-11.776-28.16-17.92-45.056-17.408-16.896 0-34.304 5.632-47.616 14.336l-72.192 46.08c-18.944-9.728-38.4-17.92-58.368-24.576l-18.432-82.944C605.696 32.768 579.072 0 543.744 0H479.744c-35.328 0-56.832 33.28-64 64l-20.48 81.92c-21.504 6.656-42.496 15.872-62.464 26.112l-73.728-47.104c-13.824-9.216-30.72-14.336-47.616-14.336-16.896-0.512-32.768 5.632-45.056 17.408l-45.056 45.056c-25.088 25.088-16.384 64 0 90.624l46.592 77.824c-8.704 17.92-16.384 35.84-22.528 54.784l-81.92 18.432C32.768 420.352 0 446.976 0 482.304v64c0 35.328 33.28 56.832 64 64l82.944 20.48c5.632 17.408 12.8 34.304 20.992 51.2l-46.592 77.824c-16.384 26.624-25.088 65.536 0 90.624l45.056 45.056c12.288 12.288 28.672 17.408 45.056 17.408 16.896 0 34.304-5.632 47.616-14.336l73.728-47.104c19.968 10.752 40.96 19.456 62.464 26.112l20.48 81.92c7.168 30.72 28.672 64 64 64h64c35.328 0 61.952-32.768 67.584-63.488l18.432-83.456c19.968-6.656 39.424-14.848 57.856-24.064l72.192 46.08c12.8 8.704 30.208 14.336 47.616 14.336 16.896 0.512 33.28-5.632 45.056-17.408l45.056-45.056c25.088-25.088 16.384-64 0-90.624l-44.544-74.24c8.704-17.408 16.896-35.84 23.04-54.784l82.944-20.48c30.72-7.168 64-28.672 64-64V482.304c0.512-35.328-32.768-61.952-62.976-67.584z m-447.488 251.904c-85.504 0-154.624-69.12-154.624-154.112 0-85.504 69.12-154.624 154.624-154.624s154.624 69.12 154.624 154.624c0 84.992-69.12 154.112-154.624 154.112z" />
+                </Trigger>
+                <Trigger SourceName="Tb" Property="Text" Value="关于">
+                    <Setter TargetName="Part_Path" Property="Data" Value="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m-59.072-512v236.32a54.144 54.144 0 1 0 108.288 0V480a54.144 54.144 0 1 0-108.288 0z m53.76-226.464c-14.72 0-27.232 4.544-37.568 15.136-11.04 9.856-16.192 22.72-16.192 38.656 0 15.136 5.152 28 16.192 38.624 10.336 10.592 22.848 15.904 37.6 15.904a57.6 57.6 0 0 0 39.04-15.168c10.304-10.592 15.456-23.456 15.456-39.36s-5.12-28.8-15.456-38.656c-10.304-10.56-23.584-15.136-39.04-15.136z" />
+                </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
         <Style x:Key="Button_Message" TargetType="{x:Type Button}">
@@ -100,8 +106,8 @@
                                     <Border BorderBrush="#92CAF4" BorderThickness="1" Opacity="0.5"></Border>
                                     <Border Background="#35363A" Margin="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                                     <StackPanel Margin="1">
-                                        <Button Content="Setting" Style="{StaticResource Button_Message}" Command="{Binding Settings}"/>
-                                        <Button Content="About" Style="{StaticResource Button_Message}" Command="{Binding About}"/>
+                                        <Button Content="{DynamicResource Setting}" Style="{StaticResource Button_Message}" Command="{Binding Settings}"/>
+                                        <Button Content="{DynamicResource About}" Style="{StaticResource Button_Message}" Command="{Binding About}"/>
                                     </StackPanel>
                                 </Grid>
                             </Popup.Child>
@@ -125,11 +131,11 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Label Content="{DynamicResource DeployService}" Foreground="White" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0"/>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0">
-                                            <Label Content="All :" Foreground="White" FontSize="12" />
+                                            <Label Content="{DynamicResource All}" Foreground="White" FontSize="12" />
                                             <Label Content="{c:Binding Services.Count}" Foreground="White" FontSize="12"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0">
-                                            <Label Content="Start :" Foreground="White" FontSize="12" />
+                                            <Label Content="{DynamicResource StartState}" Foreground="White" FontSize="12" />
                                             <Label Content="{c:Binding ServicesResources.Count}" Foreground="White" FontSize="12" />
                                         </StackPanel>
                                     </StackPanel>
@@ -140,7 +146,10 @@
                                 <Grid Grid.Row="1">
                                     <control:IceDataGrid x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Services}">
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn Header="State" IsReadOnly="True" Width="60">
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="60">
+                                                <DataGridTemplateColumn.Header>
+                                                    <TextBlock Text="{DynamicResource State}" />
+                                                </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Ellipse x:Name="ServiceType" Width="14" Height="14">
@@ -178,32 +187,44 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn Header="Service" IsReadOnly="True" Width="*">
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                                                <DataGridTemplateColumn.Header>
+                                                    <TextBlock Text="{DynamicResource Service}" />
+                                                </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Label Foreground="White" Content="{Binding ServiceName}" ToolTip="{Binding ServiceName}"/>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn Header="PID" IsReadOnly="True" Width="*">
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                                                <DataGridTemplateColumn.Header>
+                                                    <TextBlock Text="{DynamicResource Pid}" />
+                                                </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Label Foreground="White" Content="{Binding Pid}" ToolTip="{Binding Pid}"/>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn Header="Port" IsReadOnly="True" Width="*">
+                                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                                                <DataGridTemplateColumn.Header>
+                                                    <TextBlock Text="{DynamicResource Port}" />
+                                                </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Label Foreground="White" Content="{Binding Port}" ToolTip="{Binding Port}"/>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn Header="Actions" Width="300">
+                                            <DataGridTemplateColumn Width="300">
+                                                <DataGridTemplateColumn.Header>
+                                                    <TextBlock Text="{DynamicResource Actions}" />
+                                                </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                            <control:IceButton x:Name="Start" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Start"
+                                                            <control:IceButton x:Name="Start" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Start}"
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.StartService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
@@ -228,7 +249,7 @@
                                                                     </Style>
                                                                 </control:IceButton.Style>
                                                             </control:IceButton>
-                                                            <control:IceButton x:Name="Stop" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Stop"
+                                                            <control:IceButton x:Name="Stop" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Stop}"
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.StopService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
@@ -252,7 +273,7 @@
                                                                     </Style>
                                                                 </control:IceButton.Style>
                                                             </control:IceButton>
-                                                            <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Shell" 
+                                                            <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Shell}" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
@@ -266,7 +287,7 @@
                                                                     </Style>
                                                                 </control:IceButton.Style>
                                                             </control:IceButton>
-                                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Browse" 
+                                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Browse}" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="#FFE589" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
@@ -280,7 +301,7 @@
                                                                     </Style>
                                                                 </control:IceButton.Style>
                                                             </control:IceButton>
-                                                            <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="Edit" 
+                                                            <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Edit}" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.EditService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>

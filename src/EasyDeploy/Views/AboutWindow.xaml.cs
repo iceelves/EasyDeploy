@@ -34,15 +34,9 @@ namespace EasyDeploy.Views
         private void AboutWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //初始化界面信息
-            //获取系统名称
-            SystemTitle.Content = "Easy Deploy";
             //获取系统版本号
-            var vCurrentClient = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            var vCurrentClient = Assembly.GetExecutingAssembly().GetName().Version;
             SystemVersion.Content = $"V{vCurrentClient}";
-            //获取公司名称
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            AssemblyCompanyAttribute asmcpn = (AssemblyCompanyAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCompanyAttribute));
-            Company.Content = asmcpn.Company;
             //获取版权声明
             Copyright.Content = $"Copyright © 2019 - {DateTime.Now.Year}";
         }

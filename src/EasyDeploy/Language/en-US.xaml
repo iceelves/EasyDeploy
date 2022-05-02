@@ -1,10 +1,55 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System ="clr-namespace:System;assembly=mscorlib">
+    
+    <!--公共-->
+    <System:String x:Key="Save">Save</System:String>
+    <System:String x:Key="Close">Close</System:String>
+    <System:String x:Key="OK">OK</System:String>
+    <System:String x:Key="Yes">Yes</System:String>
+    <System:String x:Key="No">No</System:String>
+    <System:String x:Key="Cancel">Cancel</System:String>
 
+    <!--主界面-->
     <System:String x:Key="Title">Easy Deploy</System:String>
     <System:String x:Key="DeployService">Deploy Service</System:String>
     <System:String x:Key="Add">Add</System:String>
+    <System:String x:Key="All">All:</System:String>
+    <System:String x:Key="StartState">Start:</System:String>
+    <System:String x:Key="State">State</System:String>
+    <System:String x:Key="Service">Service</System:String>
+    <System:String x:Key="Pid">PID</System:String>
+    <System:String x:Key="Port">Port</System:String>
+    <System:String x:Key="Actions">Actions</System:String>
+    <System:String x:Key="Start">Start</System:String>
+    <System:String x:Key="Stop">Stop</System:String>
+    <System:String x:Key="Shell">Shell</System:String>
+    <System:String x:Key="Browse">Browse</System:String>
+    <System:String x:Key="Edit">Edit</System:String>
 
+    <!--添加编辑服务-->
+    <System:String x:Key="ServiceName">Service Name:</System:String>
+    <System:String x:Key="ServicePath">Service Path:</System:String>
+    <System:String x:Key="ServicePathType">Service Path Type:</System:String>
+    <System:String x:Key="AbsolutePath">AbsolutePath</System:String>
+    <System:String x:Key="RelativePath">RelativePath</System:String>
+    <System:String x:Key="Parameter">Parameter:</System:String>
+    <System:String x:Key="AutoStart">AutoStart</System:String>
+    <System:String x:Key="AutoStartToolTip">Follow software startup</System:String>
+    <System:String x:Key="AutoReStart">AutoReStart</System:String>
+    <System:String x:Key="AutoReStartToolTip">Auto restart in case of abnormality</System:String>
+
+    <!--设置-->
     <System:String x:Key="Setting">Setting</System:String>
+    <System:String x:Key="SystemSettings">System Settings</System:String>
+    <System:String x:Key="StartWithWindows">Start with Windows:</System:String>
+    <System:String x:Key="Language">Language:</System:String>
+    <System:String x:Key="TerminalSettings">Terminal Settings</System:String>
+    <System:String x:Key="Background">Background:</System:String>
+    <System:String x:Key="Foreground">Foreground:</System:String>
+    <System:String x:Key="FontSize">FontSize:</System:String>
+    
+    <!--关于-->
+    <System:String x:Key="About">About</System:String>
+    <System:String x:Key="Company">Beijing BingYun Information Technology Co., Ltd.</System:String>
 </ResourceDictionary>

@@ -2,9 +2,54 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System ="clr-namespace:System;assembly=mscorlib">
 
+    <!--公共-->
+    <System:String x:Key="Save">保存</System:String>
+    <System:String x:Key="Close">取消</System:String>
+    <System:String x:Key="OK">确定</System:String>
+    <System:String x:Key="Yes">是</System:String>
+    <System:String x:Key="No">否</System:String>
+    <System:String x:Key="Cancel">取消</System:String>
+
+    <!--主界面-->
     <System:String x:Key="Title">轻松部署</System:String>
     <System:String x:Key="DeployService">部署服务</System:String>
     <System:String x:Key="Add">新增</System:String>
+    <System:String x:Key="All">全部:</System:String>
+    <System:String x:Key="StartState">启动:</System:String>
+    <System:String x:Key="State">状态</System:String>
+    <System:String x:Key="Service">服务</System:String>
+    <System:String x:Key="Pid">PID</System:String>
+    <System:String x:Key="Port">端口号</System:String>
+    <System:String x:Key="Actions">功能</System:String>
+    <System:String x:Key="Start">启动</System:String>
+    <System:String x:Key="Stop">停止</System:String>
+    <System:String x:Key="Shell">Shell</System:String>
+    <System:String x:Key="Browse">浏览</System:String>
+    <System:String x:Key="Edit">编辑</System:String>
 
+    <!--添加编辑服务-->
+    <System:String x:Key="ServiceName">服务名称:</System:String>
+    <System:String x:Key="ServicePath">服务路径:</System:String>
+    <System:String x:Key="ServicePathType">服务路径类型:</System:String>
+    <System:String x:Key="AbsolutePath">绝对路径</System:String>
+    <System:String x:Key="RelativePath">相对路径</System:String>
+    <System:String x:Key="Parameter">参数:</System:String>
+    <System:String x:Key="AutoStart">自动启动</System:String>
+    <System:String x:Key="AutoStartToolTip">跟随软件启动</System:String>
+    <System:String x:Key="AutoReStart">自动重启</System:String>
+    <System:String x:Key="AutoReStartToolTip">异常情况下自动重启</System:String>
+
+    <!--设置-->
     <System:String x:Key="Setting">设置</System:String>
+    <System:String x:Key="SystemSettings">系统设置</System:String>
+    <System:String x:Key="StartWithWindows">自动启动:</System:String>
+    <System:String x:Key="Language">语言:</System:String>
+    <System:String x:Key="TerminalSettings">终端设置</System:String>
+    <System:String x:Key="Background">背景色:</System:String>
+    <System:String x:Key="Foreground">文字颜色:</System:String>
+    <System:String x:Key="FontSize">文字大小:</System:String>
+
+    <!--关于-->
+    <System:String x:Key="About">关于</System:String>
+    <System:String x:Key="Company">北京冰云信息科技有限公司</System:String>
 </ResourceDictionary>
