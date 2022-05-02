@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
-        Title="Setting" Height="450" Width="800" Icon="/Images/terminal.png">
+        Title="Setting" Height="400" Width="600" Icon="/Images/terminal.png">
     <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10" Background="Transparent" CornerRadius="5" BorderBrush="#92CAF4" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -32,6 +32,48 @@
             </Border>
             <Border Grid.Row="1" Background="#35363A" CornerRadius="0,0,5,5">
                 <Grid>
+                    <StackPanel Orientation="Vertical" Margin="30,10">
+                        <GroupBox Header="System Settings" Foreground="White" BorderThickness="0.4">
+                            <StackPanel Orientation="Vertical" Margin="20,0">
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="Start with Windows:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
+                                    <CheckBox x:Name="StartWithWindows" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Click="StartWithWindows_Click"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="Language:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
+                                    <ComboBox Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="Theme style:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
+                                    <ComboBox Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Terminal Settings" Foreground="White" BorderThickness="0.4" Margin="0,10,0,0">
+                            <StackPanel Orientation="Vertical" Margin="20,0">
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="Background:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
+                                    <TextBox Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="Foreground:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
+                                    <TextBox Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="FontSize:" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
+                                    <TextBox Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
+                        <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="Save" 
+                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
+                                       Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Save_Click"/>
+                        <control:IceButton x:Name="Close" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="Close" 
+                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
+                                       Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Close_Click"/>
+                    </StackPanel>
                 </Grid>
             </Border>
         </Grid>
