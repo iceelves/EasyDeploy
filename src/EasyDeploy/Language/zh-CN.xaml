@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:System ="clr-namespace:System;assembly=mscorlib">
+
+    <System:String x:Key="Title">轻松部署</System:String>
+    <System:String x:Key="DeployService">部署服务</System:String>
+    <System:String x:Key="Add">新增</System:String>
+</ResourceDictionary>
