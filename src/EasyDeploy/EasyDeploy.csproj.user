@@ -10,7 +10,13 @@
     <Compile Update="Controls\IceMessageBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AboutWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AddService.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SettingsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -25,6 +31,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\IceTabItemStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AddService.xaml">
@@ -46,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\SvgButtonStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

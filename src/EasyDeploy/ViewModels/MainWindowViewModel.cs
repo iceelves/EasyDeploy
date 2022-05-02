@@ -430,6 +430,36 @@ namespace EasyDeploy.ViewModels
         }
 
         /// <summary>
+        /// 设置
+        /// </summary>
+        public DelegateCommand Settings
+        {
+            get
+            {
+                return new DelegateCommand(delegate ()
+                {
+                    SettingsWindow settingsWindow = new SettingsWindow();
+                    settingsWindow.ShowDialog();
+                });
+            }
+        }
+
+        /// <summary>
+        /// 关于
+        /// </summary>
+        public DelegateCommand About
+        {
+            get
+            {
+                return new DelegateCommand(delegate ()
+                {
+                    AboutWindow aboutWindow = new AboutWindow();
+                    aboutWindow.ShowDialog();
+                });
+            }
+        }
+
+        /// <summary>
         /// 关闭所有服务
         /// </summary>
         private void StopAllService()

@@ -1,0 +1,65 @@
+﻿<Window x:Class="EasyDeploy.Views.AboutWindow" x:Name="aboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:control="clr-namespace:EasyDeploy.Controls"
+        xmlns:local="clr-namespace:EasyDeploy.Views"
+        mc:Ignorable="d"
+        AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
+        Title="About" Height="400" Width="500" Icon="/Images/terminal.png">
+    <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10" Background="Transparent" CornerRadius="5" BorderBrush="#92CAF4" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--标题栏-->
+            <Border x:Name="TitleBar" Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding ElementName=aboutWindow,Path=Icon}" Width="20" Margin="10,0,5,0"/>
+                        <Label Content="{Binding ElementName=aboutWindow,Path=Title}" Foreground="#FEFEFE" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1">
+                        <control:SvgButton x:Name="mainClose" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
+                                           ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
+                                           NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
+                                           Click="Close_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1" Background="#35363A" CornerRadius="0,0,5,5">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Vertical" Margin="0,25">
+                        <Image Source="{Binding ElementName=aboutWindow,Path=Icon}" Height="100" Width="100"/>
+                        <Label x:Name="SystemTitle" Content="SystemTitle" Foreground="White" FontSize="22" HorizontalAlignment="Center"/>
+                        <Label x:Name="SystemVersion" Content="SystemVersion" Foreground="White" FontSize="22" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Vertical" Margin="0,10">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Hyperlink Foreground="White" NavigateUri="https://github.com/iceelves/EasyDeploy" Click="Hyperlink_Click">
+                                https://github.com/iceelves/EasyDeploy
+                            </Hyperlink>
+                        </TextBlock>
+                        <Label x:Name="Company" Content="Company" Foreground="White" HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label x:Name="Copyright" Content="Copyright" Foreground="White" HorizontalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Hyperlink Foreground="White" NavigateUri="http://iceelves.com" Click="Hyperlink_Click">
+                                    www.iceelves.com
+                                </Hyperlink>
+                            </TextBlock>
+                            <Label Content="All Rights Reserved" Foreground="White" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.1" />
+        </Border.Effect>
+    </Border>
+</Window>

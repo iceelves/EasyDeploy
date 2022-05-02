@@ -5,6 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>terminal.ico</ApplicationIcon>
+    <Version>1.0.0.1</Version>
+    <Authors>Beijing BingYun Information Technology Co., Ltd.</Authors>
+    <Company>Beijing BingYun Information Technology Co., Ltd.</Company>
+    <Copyright>Copyright ©  2022</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
