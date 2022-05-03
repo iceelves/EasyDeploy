@@ -495,15 +495,30 @@ namespace EasyDeploy.ViewModels
             IceRichTextBox vRichText = null;
             Application.Current.Dispatcher.Invoke(() =>
             {
+                // 获取配置
+                // 终端 - 最大行数
+                var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
+                var vMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
+                // 终端 - 背景颜色
+                var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
+                var vBackground = !string.IsNullOrEmpty(vTerminalConfigInfo_Background) ? vTerminalConfigInfo_Background : "#0C0C0C";
+                // 终端 - 文字颜色
+                var vTerminalConfigInfo_Foreground = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND);
+                var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
+                // 终端 - 字号
+                var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
+                var vFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
+
+                // 创建控件
                 vRichText = new IceRichTextBox()
                 {
                     IsReadOnly = true,
                     BorderThickness = new Thickness(0),
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0C0C0C")),
-                    Foreground = Brushes.White,
-                    FontSize = 14,
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground)),
+                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground)),
+                    FontSize = vFontSize,
                     FontFamily = new FontFamily("Cascadia Mono"),
-                    MaxRows = 5000
+                    MaxRows = vMaxRows
                 };
                 vRichText.ClearText();
                 vRichText.PreviewMouseWheel += VRichText_PreviewMouseWheel;

@@ -60,21 +60,25 @@ namespace EasyDeploy.Views
             // 终端 - 最大行数
             var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
             var vMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
+            _initialConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, vMaxRows);
             MaxRows.Text = $"{vMaxRows}";
 
             // 终端 - 背景颜色
             var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
             var vBackground = !string.IsNullOrEmpty(vTerminalConfigInfo_Background) ? vTerminalConfigInfo_Background : "#0C0C0C";
+            _initialConfig.Add(SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
             Background.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground));
 
             // 终端 - 文字颜色
             var vTerminalConfigInfo_Foreground = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND);
             var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
+            _initialConfig.Add(SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
             Foreground.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
 
             // 终端 - 字号
             var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
             var vFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
+            _initialConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, vFontSize);
             FontSize.Text = $"{vFontSize}";
         }
 
@@ -113,6 +117,7 @@ namespace EasyDeploy.Views
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            #region 系统设置
             #region 自动启动
             if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_START_WITH_WINDOWS) && (bool)_initialConfig[SystemConfigHelper.SYSTEM_START_WITH_WINDOWS] != (bool)StartWithWindows.IsChecked)
             {
@@ -154,6 +159,39 @@ namespace EasyDeploy.Views
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE, vSelectedLanguage.FileName);
                 SystemConfigHelper.SetLanguage(vSelectedLanguage.Resource.Source.OriginalString);
             }
+            #endregion
+            #endregion
+
+            #region 终端设置
+            #region 最大行数
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS) && !_initialConfig[SystemConfigHelper.TERMINAL_MAXROWS].ToString().Equals(MaxRows.Text))
+            {
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
+            }
+            #endregion
+
+            #region 背景颜色
+            var vBackground = Background.SelectColor.Color.ToString();
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_BACKGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_BACKGROUND].ToString().Equals(vBackground))
+            {
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
+            }
+            #endregion
+
+            #region 文字颜色
+            var vForeground = Foreground.SelectColor.Color.ToString();
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FOREGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_FOREGROUND].ToString().Equals(vForeground))
+            {
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
+            }
+            #endregion
+
+            #region 文字大小
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(FontSize.Text))
+            {
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
+            }
+            #endregion
             #endregion
 
             this.Close();

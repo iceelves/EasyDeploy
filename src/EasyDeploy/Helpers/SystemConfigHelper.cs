@@ -102,8 +102,8 @@ namespace EasyDeploy.Helpers
                     INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, "Language", vLanguage);
                     // 创建默认终端配置信息
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_MAXROWS, "5000");
-                    INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_BACKGROUND, "#0C0C0C");
-                    INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_FOREGROUND, "#FFFFFF");
+                    INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_BACKGROUND, "#FF0C0C0C");
+                    INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_FOREGROUND, "#FFFFFFFF");
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_FONTSIZE, "14");
                 }
                 return strPath;

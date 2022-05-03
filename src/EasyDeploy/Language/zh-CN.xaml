@@ -47,7 +47,7 @@
     <System:String x:Key="Language">语言:</System:String>
     <System:String x:Key="TerminalSettings">终端设置</System:String>
     <System:String x:Key="MaxRows">最大行数:</System:String>
-    <System:String x:Key="Background">背景色:</System:String>
+    <System:String x:Key="Background">背景颜色:</System:String>
     <System:String x:Key="Foreground">文字颜色:</System:String>
     <System:String x:Key="FontSize">文字大小:</System:String>
 
