@@ -5,6 +5,7 @@
         <ResourceDictionary Source="/EasyDeploy;component/Themes/SvgButtonStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceButtonStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceDataGridStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/IceCheckBoxStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceRichTextBoxStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabControlStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabItemStyle.xaml"/>
