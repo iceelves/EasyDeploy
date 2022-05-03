@@ -41,7 +41,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Language}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <ComboBox x:Name="Language" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0">
+                                    <ComboBox x:Name="Language" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Foreground="White">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <ContentPresenter Content="{Binding Language}"/>

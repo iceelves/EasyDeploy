@@ -33,6 +33,9 @@
     <Page Update="Themes\IceCheckBoxStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\IceComboBoxStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\IceRichTextBoxStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
