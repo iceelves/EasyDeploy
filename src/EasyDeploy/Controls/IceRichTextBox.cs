@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -95,73 +96,85 @@ namespace EasyDeploy.Controls
         /// <returns></returns>
         private Run SetColorFromAnsi(Run run, string ansiColor)
         {
-            switch (ansiColor)
+            if (string.IsNullOrEmpty(ansiColor))
             {
-                // Black
-                case "\u001b[30m": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0)); break;
-                case "\u001b[40m": run.Background = new SolidColorBrush(Color.FromRgb(0, 0, 0)); break;
+                return run;
+            }
+            var vMatches = Regex.Matches(ansiColor, AnsiHelper.AnsiRegex);
+            if (vMatches != null && vMatches.Count >= 1 && vMatches[0].Groups != null && vMatches[0].Groups.Count >= 2)
+            {
+                var vSplit = vMatches[0].Groups[1].Value.Split(';');
+                foreach (var item in vSplit)
+                {
+                    switch (item)
+                    {
+                        // Black
+                        case "30": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0)); break;
+                        case "40": run.Background = new SolidColorBrush(Color.FromRgb(0, 0, 0)); break;
 
-                // Red
-                case "\u001b[31m": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 0, 0)); break;
-                case "\u001b[41m": run.Background = new SolidColorBrush(Color.FromRgb(128, 0, 0)); break;
+                        // Red
+                        case "31": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 0, 0)); break;
+                        case "41": run.Background = new SolidColorBrush(Color.FromRgb(128, 0, 0)); break;
 
-                // Green
-                case "\u001b[32m": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 128, 0)); break;
-                case "\u001b[42m": run.Background = new SolidColorBrush(Color.FromRgb(0, 128, 0)); break;
+                        // Green
+                        case "32": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 128, 0)); break;
+                        case "42": run.Background = new SolidColorBrush(Color.FromRgb(0, 128, 0)); break;
 
-                // Yellow
-                case "\u001b[33m": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 128, 0)); break;
-                case "\u001b[43m": run.Background = new SolidColorBrush(Color.FromRgb(128, 128, 0)); break;
+                        // Yellow
+                        case "33": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 128, 0)); break;
+                        case "43": run.Background = new SolidColorBrush(Color.FromRgb(128, 128, 0)); break;
 
-                // Blue
-                case "\u001b[34m": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 128)); break;
-                case "\u001b[44m": run.Background = new SolidColorBrush(Color.FromRgb(0, 0, 128)); break;
+                        // Blue
+                        case "34": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 128)); break;
+                        case "44": run.Background = new SolidColorBrush(Color.FromRgb(0, 0, 128)); break;
 
-                // Magenta
-                case "\u001b[35m": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 0, 128)); break;
-                case "\u001b[45m": run.Background = new SolidColorBrush(Color.FromRgb(128, 0, 128)); break;
+                        // Magenta
+                        case "35": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 0, 128)); break;
+                        case "45": run.Background = new SolidColorBrush(Color.FromRgb(128, 0, 128)); break;
 
-                // Cyan
-                case "\u001b[36m": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 128, 128)); break;
-                case "\u001b[46m": run.Background = new SolidColorBrush(Color.FromRgb(0, 128, 128)); break;
+                        // Cyan
+                        case "36": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 128, 128)); break;
+                        case "46": run.Background = new SolidColorBrush(Color.FromRgb(0, 128, 128)); break;
 
-                // White
-                case "\u001b[37m": run.Foreground = new SolidColorBrush(Color.FromRgb(192, 192, 192)); break;
-                case "\u001b[47m": run.Background = new SolidColorBrush(Color.FromRgb(192, 192, 192)); break;
+                        // White
+                        case "37": run.Foreground = new SolidColorBrush(Color.FromRgb(192, 192, 192)); break;
+                        case "47": run.Background = new SolidColorBrush(Color.FromRgb(192, 192, 192)); break;
 
-                // Bright Black (Gray)
-                case "\u001b[90m": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 128, 128)); break;
-                case "\u001b[100m": run.Background = new SolidColorBrush(Color.FromRgb(128, 128, 128)); break;
+                        // Bright Black (Gray)
+                        case "90": run.Foreground = new SolidColorBrush(Color.FromRgb(128, 128, 128)); break;
+                        case "100": run.Background = new SolidColorBrush(Color.FromRgb(128, 128, 128)); break;
 
-                // Bright Red
-                case "\u001b[91m": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)); break;
-                case "\u001b[101m": run.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0)); break;
+                        // Bright Red
+                        case "91": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)); break;
+                        case "101": run.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0)); break;
 
-                // Bright Green
-                case "\u001b[92m": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 255, 0)); break;
-                case "\u001b[102m": run.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); break;
+                        // Bright Green
+                        case "92": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 255, 0)); break;
+                        case "102": run.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); break;
 
-                // Bright Yellow
-                case "\u001b[93m": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 0)); break;
-                case "\u001b[103m": run.Background = new SolidColorBrush(Color.FromRgb(255, 255, 0)); break;
+                        // Bright Yellow
+                        case "93": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 0)); break;
+                        case "103": run.Background = new SolidColorBrush(Color.FromRgb(255, 255, 0)); break;
 
-                // Bright Blue
-                case "\u001b[94m": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 255)); break;
-                case "\u001b[104m": run.Background = new SolidColorBrush(Color.FromRgb(0, 0, 255)); break;
+                        // Bright Blue
+                        case "94": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 255)); break;
+                        case "104": run.Background = new SolidColorBrush(Color.FromRgb(0, 0, 255)); break;
 
-                // Bright Magenta
-                case "\u001b[95m": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 255)); break;
-                case "\u001b[105m": run.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255)); break;
+                        // Bright Magenta
+                        case "95": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 255)); break;
+                        case "105": run.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255)); break;
 
-                // Bright Cyan
-                case "\u001b[96m": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 255, 255)); break;
-                case "\u001b[106m": run.Background = new SolidColorBrush(Color.FromRgb(0, 255, 255)); break;
+                        // Bright Cyan
+                        case "96": run.Foreground = new SolidColorBrush(Color.FromRgb(0, 255, 255)); break;
+                        case "106": run.Background = new SolidColorBrush(Color.FromRgb(0, 255, 255)); break;
 
-                // Bright White
-                case "\u001b[97m": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)); break;
-                case "\u001b[107m": run.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); break;
-                default:
-                    break;
+                        // Bright White
+                        case "97": run.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)); break;
+                        case "107": run.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); break;
+                        default:
+                            break;
+                    }
+                }
             }
             return run;
         }

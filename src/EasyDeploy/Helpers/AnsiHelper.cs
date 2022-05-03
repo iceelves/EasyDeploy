@@ -19,7 +19,7 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// 匹配 Ansi 正则
         /// </summary>
-        public static string AnsiRegex = @"\u001b\[\d+m";
+        public static string AnsiRegex = @"\u001b\[(.*?)m";
 
         /// <summary>
         /// 去除字符串中的 ANSI 序列
