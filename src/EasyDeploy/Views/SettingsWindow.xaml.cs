@@ -101,6 +101,11 @@ namespace EasyDeploy.Views
         private Dictionary<string, object> _initialConfig = new Dictionary<string, object>();
 
         /// <summary>
+        /// 返回配置
+        /// </summary>
+        public Dictionary<string, object> OutConfig = new Dictionary<string, object>();
+
+        /// <summary>
         /// 系统名称
         /// </summary>
         private string _systemName = Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName);
@@ -167,6 +172,7 @@ namespace EasyDeploy.Views
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS) && !_initialConfig[SystemConfigHelper.TERMINAL_MAXROWS].ToString().Equals(MaxRows.Text))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
+                OutConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
             }
             #endregion
 
@@ -175,6 +181,7 @@ namespace EasyDeploy.Views
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_BACKGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_BACKGROUND].ToString().Equals(vBackground))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
+                OutConfig.Add(SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
             }
             #endregion
 
@@ -183,6 +190,7 @@ namespace EasyDeploy.Views
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FOREGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_FOREGROUND].ToString().Equals(vForeground))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
+                OutConfig.Add(SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
             }
             #endregion
 
@@ -190,6 +198,7 @@ namespace EasyDeploy.Views
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(FontSize.Text))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
+                OutConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
             }
             #endregion
             #endregion

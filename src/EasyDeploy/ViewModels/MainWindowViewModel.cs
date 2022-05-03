@@ -16,6 +16,8 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Data;
+using System.Windows.Controls;
 
 namespace EasyDeploy.ViewModels
 {
@@ -45,7 +47,23 @@ namespace EasyDeploy.ViewModels
                     });
                     SetLog("Easy Deploy Start!");
 
-                    // 加载配置文件
+                    // 加载系统配置文件
+                    // 终端 - 最大行数
+                    var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
+                    TerminalMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
+                    // 终端 - 背景颜色
+                    var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
+                    var vBackground = !string.IsNullOrEmpty(vTerminalConfigInfo_Background) ? vTerminalConfigInfo_Background : "#0C0C0C";
+                    TerminalBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground));
+                    // 终端 - 文字颜色
+                    var vTerminalConfigInfo_Foreground = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND);
+                    var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
+                    TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
+                    // 终端 - 字号
+                    var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
+                    TerminalFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
+
+                    // 加载服务配置文件
                     if (File.Exists(ServiceSavePath))
                     {
                         var vServiceJson = File.ReadAllText(ServiceSavePath);
@@ -115,6 +133,28 @@ namespace EasyDeploy.ViewModels
         /// 选择服务控制台第几项
         /// </summary>
         public int ServicesShellIndex { get; set; } = 0;
+
+        #region 终端相关配置
+        /// <summary>
+        /// 最大行数
+        /// </summary>
+        public int TerminalMaxRows { get; set; }
+
+        /// <summary>
+        /// 背景颜色
+        /// </summary>
+        public SolidColorBrush TerminalBackground { get; set; }
+
+        /// <summary>
+        /// 文字颜色
+        /// </summary>
+        public SolidColorBrush TerminalForeground { get; set; }
+
+        /// <summary>
+        /// 文字大小
+        /// </summary>
+        public int TerminalFontSize { get; set; }
+        #endregion
 
         /// <summary>
         /// 新增服务
@@ -443,6 +483,40 @@ namespace EasyDeploy.ViewModels
                 {
                     SettingsWindow settingsWindow = new SettingsWindow();
                     settingsWindow.ShowDialog();
+                    if (settingsWindow.OutConfig != null && settingsWindow.OutConfig.Count >= 1)
+                    {
+                        // 终端 - 最大行数
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS))
+                        {
+                            var vTerminalMaxRows = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_MAXROWS]}";
+                            var vMaxRows = !string.IsNullOrEmpty(vTerminalMaxRows) && int.Parse(vTerminalMaxRows) >= 1 ? int.Parse(vTerminalMaxRows) : 1;
+                            TerminalMaxRows = vMaxRows;
+                        }
+
+                        // 终端 - 背景颜色
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_BACKGROUND))
+                        {
+                            var vTerminalBackground = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_BACKGROUND]}";
+                            var vBackground = !string.IsNullOrEmpty(vTerminalBackground) ? vTerminalBackground : "#0C0C0C";
+                            TerminalBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground)); ;
+                        }
+
+                        // 终端 - 文字颜色
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_FOREGROUND))
+                        {
+                            var vTerminalForeground = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FOREGROUND]}";
+                            var vForeground = !string.IsNullOrEmpty(vTerminalForeground) ? vTerminalForeground : "#FFFFFF";
+                            TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground)); ;
+                        }
+
+                        // 终端 - 字号
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE))
+                        {
+                            var vTerminalFontSize = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FONTSIZE]}";
+                            var vFontSize = !string.IsNullOrEmpty(vTerminalFontSize) && int.Parse(vTerminalFontSize) >= 1 ? int.Parse(vTerminalFontSize) : 1;
+                            TerminalFontSize = vFontSize;
+                        }
+                    }
                 });
             }
         }
@@ -495,31 +569,19 @@ namespace EasyDeploy.ViewModels
             IceRichTextBox vRichText = null;
             Application.Current.Dispatcher.Invoke(() =>
             {
-                // 获取配置
-                // 终端 - 最大行数
-                var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
-                var vMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
-                // 终端 - 背景颜色
-                var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
-                var vBackground = !string.IsNullOrEmpty(vTerminalConfigInfo_Background) ? vTerminalConfigInfo_Background : "#0C0C0C";
-                // 终端 - 文字颜色
-                var vTerminalConfigInfo_Foreground = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND);
-                var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
-                // 终端 - 字号
-                var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
-                var vFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
-
                 // 创建控件
                 vRichText = new IceRichTextBox()
                 {
                     IsReadOnly = true,
                     BorderThickness = new Thickness(0),
-                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground)),
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground)),
-                    FontSize = vFontSize,
-                    FontFamily = new FontFamily("Cascadia Mono"),
-                    MaxRows = vMaxRows
+                    FontFamily = new FontFamily("Cascadia Mono")
                 };
+                vRichText.SetBinding(IceRichTextBox.MaxRowsProperty, new Binding("TerminalMaxRows") { Source = this });
+                vRichText.SetBinding(Control.BackgroundProperty, new Binding("TerminalBackground") { Source = this });
+                vRichText.SetBinding(Control.ForegroundProperty, new Binding("TerminalForeground") { Source = this });
+                vRichText.SetBinding(Control.FontSizeProperty, new Binding("TerminalFontSize") { Source = this });
+
+                // 创建后处理
                 vRichText.ClearText();
                 vRichText.PreviewMouseWheel += VRichText_PreviewMouseWheel;
             });
