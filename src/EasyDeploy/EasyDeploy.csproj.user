@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\IceColorPicker.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\IceMessageBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -21,6 +24,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\IceColorPicker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\IceMessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>

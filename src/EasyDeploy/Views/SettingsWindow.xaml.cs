@@ -65,10 +65,12 @@ namespace EasyDeploy.Views
             // 终端 - 背景颜色
             var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
             var vBackground = !string.IsNullOrEmpty(vTerminalConfigInfo_Background) ? vTerminalConfigInfo_Background : "#0C0C0C";
+            Background.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground));
 
             // 终端 - 文字颜色
             var vTerminalConfigInfo_Foreground = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND);
             var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
+            Foreground.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
 
             // 终端 - 字号
             var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);

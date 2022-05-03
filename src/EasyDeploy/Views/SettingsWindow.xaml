@@ -59,11 +59,11 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Background}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <TextBox x:Name="Background" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
+                                    <control:IceColorPicker x:Name="Background" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="20,0"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Foreground}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <TextBox x:Name="Foreground" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
+                                    <control:IceColorPicker x:Name="Foreground" Width="150" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="20,0"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource FontSize}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
