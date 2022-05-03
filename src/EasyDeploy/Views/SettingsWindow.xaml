@@ -37,7 +37,7 @@
                             <StackPanel Orientation="Vertical" Margin="20,0">
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource StartWithWindows}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <control:IceCheckBox x:Name="StartWithWindows" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0"/>
+                                    <CheckBox x:Name="StartWithWindows" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Language}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>

@@ -32,7 +32,7 @@
     <SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD"/>
     <SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="White"/>
     <SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="White"/>
-    <Style TargetType="{x:Type control:IceCheckBox}">
+    <Style TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{StaticResource OptionMark.Static.Border}"/>
@@ -40,7 +40,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type control:IceCheckBox}">
+                <ControlTemplate TargetType="{x:Type CheckBox}">
                     <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
