@@ -46,6 +46,7 @@
     <System:String x:Key="StartWithWindows">Start with Windows:</System:String>
     <System:String x:Key="Language">Language:</System:String>
     <System:String x:Key="TerminalSettings">Terminal Settings</System:String>
+    <System:String x:Key="MaxRows">MaxRows:</System:String>
     <System:String x:Key="Background">Background:</System:String>
     <System:String x:Key="Foreground">Foreground:</System:String>
     <System:String x:Key="FontSize">FontSize:</System:String>

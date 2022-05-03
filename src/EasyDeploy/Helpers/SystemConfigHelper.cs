@@ -35,6 +35,11 @@ namespace EasyDeploy.Helpers
         public const string SECTION_TERMINAL = "Terminal";
 
         /// <summary>
+        /// 最大行数
+        /// </summary>
+        public const string TERMINAL_MAXROWS = "MaxRows";
+
+        /// <summary>
         /// 终端默认背景颜色
         /// </summary>
         public const string TERMINAL_BACKGROUND = "Background";
@@ -96,6 +101,7 @@ namespace EasyDeploy.Helpers
                     var vLanguage = CultureInfo.InstalledUICulture.Name.Equals("zh-CN") ? "zh-CN" : "en-US";
                     INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, "Language", vLanguage);
                     // 创建默认终端配置信息
+                    INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_MAXROWS, "5000");
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_BACKGROUND, "#0C0C0C");
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_FOREGROUND, "#FFFFFF");
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_FONTSIZE, "14");
