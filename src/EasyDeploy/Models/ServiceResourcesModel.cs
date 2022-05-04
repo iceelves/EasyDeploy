@@ -64,7 +64,7 @@ namespace EasyDeploy.Models
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Terminal?.SetText($"Start Service PID:{obj}");
+                SetLog($"Start Service PID:{obj}");
                 Pid = obj;
                 // 获取到 PID 后启动健康检查
                 timerPerSecond = new DispatcherTimer()
@@ -87,6 +87,7 @@ namespace EasyDeploy.Models
             {
                 if (!PidHelper.GetProcessIsOnline(int.Parse(Pid)))
                 {
+                    SetLog($"Error Stop Service:{Pid}");
                     timerPerSecond?.Stop();
                     CliWrap = null;
                     Service.ServiceState = ServiceState.Error;
@@ -138,7 +139,7 @@ namespace EasyDeploy.Models
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Terminal?.SetText($"Stop Service:{obj}");
+                SetLog($"Stop Service:{obj}");
                 timerPerSecond?.Stop();
                 CliWrap = null;
                 Service.ServiceState = ServiceState.Error;
@@ -150,6 +151,7 @@ namespace EasyDeploy.Models
         /// </summary>
         private void ReCliWrap()
         {
+            SetLog($"Test Re Start Service");
             Service.ServiceState = ServiceState.Wait;
             if (string.IsNullOrEmpty(Service.Parameter))
             {
@@ -187,6 +189,21 @@ namespace EasyDeploy.Models
                 }
             };
             timer.Enabled = true;
+        }
+
+        /// <summary>
+        /// 写入系统日志
+        /// </summary>
+        /// <param name="log"></param>
+        private void SetLog(string log)
+        {
+            if (Terminal != null)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Terminal?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
+                });
+            }
         }
     }
 }
