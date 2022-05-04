@@ -191,13 +191,14 @@ namespace EasyDeploy.ViewModels
         private void StartServiceCore(ServiceModel Service, bool IsAuto)
         {
             SetLog($"{(IsAuto ? "Auto " : "")}Start Service: {Service.ServiceName}");
-            if (Service.ServiceState == ServiceState.None || Service.ServiceState == ServiceState.Error)
+            if (Service.ServiceState == ServiceState.None)
             {
                 Service.ServiceState = ServiceState.Wait;
                 // 启动服务
                 string strGuid = Guid.NewGuid().ToString();
                 Service.Guid = strGuid;
                 ServiceResourcesModel serviceResources = new ServiceResourcesModel();
+                serviceResources.Service = Service;
                 if (string.IsNullOrEmpty(Service.Parameter))
                 {
                     serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath));
@@ -264,7 +265,7 @@ namespace EasyDeploy.ViewModels
         private void StopServiceCore(ServiceModel Service)
         {
             SetLog($"Stop Service: {Service.ServiceName}");
-            if (Service.ServiceState == ServiceState.Start && !string.IsNullOrEmpty(Service.Guid))
+            if ((Service.ServiceState == ServiceState.Start || Service.ServiceState == ServiceState.Error) && !string.IsNullOrEmpty(Service.Guid))
             {
                 Service.ServiceState = ServiceState.Wait;
                 if (!string.IsNullOrEmpty(Service.Pid))
@@ -274,6 +275,7 @@ namespace EasyDeploy.ViewModels
                     // 移除运行时资源
                     if (ServicesResources.ContainsKey(Service.Guid))
                     {
+                        ServicesResources[Service.Guid].StopTimer();
                         ServicesResources.Remove(Service.Guid);
                     }
                     if (ServicesShell.ContainsKey(Service.Guid))
@@ -302,6 +304,7 @@ namespace EasyDeploy.ViewModels
                             // 移除运行时资源
                             if (ServicesResources.ContainsKey(Service.Guid))
                             {
+                                ServicesResources[Service.Guid].StopTimer();
                                 ServicesResources.Remove(Service.Guid);
                             }
                             if (ServicesShell.ContainsKey(Service.Guid))

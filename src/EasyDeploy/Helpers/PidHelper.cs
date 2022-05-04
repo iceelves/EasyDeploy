@@ -41,6 +41,22 @@ namespace EasyDeploy.Helpers
         }
 
         /// <summary>
+        /// 获取进程是否在线
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public static bool GetProcessIsOnline(int pid)
+        {
+            if (pid == 0)
+            {
+                return false;
+            }
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectCollection moc = searcher.Get();
+            return moc != null && moc.Count >= 1;
+        }
+
+        /// <summary>
         /// 获取所有进程信息
         /// </summary>
         public static Dictionary<int, string> GetAllProcess()

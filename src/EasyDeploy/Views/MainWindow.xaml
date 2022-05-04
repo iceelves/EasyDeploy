@@ -239,7 +239,7 @@
                                                                                 <Setter Property="IsEnabled" Value="False"/>
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                                <Setter Property="IsEnabled" Value="True"/>
+                                                                                <Setter Property="IsEnabled" Value="False"/>
                                                                                 <Setter Property="Foreground" Value="LimeGreen"/>
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="3">
@@ -264,7 +264,8 @@
                                                                                 <Setter Property="Foreground" Value="Tomato"/>
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                                                <Setter Property="IsEnabled" Value="True"/>
+                                                                                <Setter Property="Foreground" Value="Tomato"/>
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding ServiceState}" Value="3">
                                                                                 <Setter Property="IsEnabled" Value="False"/>
