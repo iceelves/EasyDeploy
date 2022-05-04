@@ -216,7 +216,7 @@ namespace EasyDeploy.ViewModels
                 timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
-                    if (serviceResources.CliWrap.threadID > 0)
+                    if (serviceResources.CliWrap != null && serviceResources.CliWrap.threadID > 0)
                     {
                         // 启动成功
                         Service.Pid = $"{serviceResources.CliWrap.threadID}";
@@ -226,7 +226,14 @@ namespace EasyDeploy.ViewModels
                             Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
                         }
                         // 添加到服务运行时资源列表
-                        ServicesResources.Add(strGuid, serviceResources);
+                        if (ServicesResources.ContainsKey(strGuid))
+                        {
+                            ServicesResources[strGuid] = serviceResources;
+                        }
+                        else
+                        {
+                            ServicesResources.Add(strGuid, serviceResources);
+                        }
                         // 添加到服务控制台绑定控件
                         Application.Current.Dispatcher.Invoke(() =>
                         {

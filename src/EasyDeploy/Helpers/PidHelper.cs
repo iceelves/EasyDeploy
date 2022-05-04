@@ -51,9 +51,14 @@ namespace EasyDeploy.Helpers
             {
                 return false;
             }
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid);
-            ManagementObjectCollection moc = searcher.Get();
-            return moc != null && moc.Count >= 1;
+            foreach (var item in GetAllProcess())
+            {
+                if (item.Key.Equals(pid))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>

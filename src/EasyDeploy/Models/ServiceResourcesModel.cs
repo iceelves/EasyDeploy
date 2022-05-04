@@ -69,7 +69,7 @@ namespace EasyDeploy.Models
                 // 获取到 PID 后启动健康检查
                 timerPerSecond = new DispatcherTimer()
                 {
-                    IsEnabled = true
+                    IsEnabled = false
                 };
                 timerPerSecond.Interval = TimeSpan.FromSeconds(30);
                 timerPerSecond.Tick += TimerPerSecondCallback;
@@ -89,8 +89,10 @@ namespace EasyDeploy.Models
                 {
                     SetLog($"Error Stop Service:{Pid}");
                     timerPerSecond?.Stop();
-                    CliWrap = null;
                     Service.ServiceState = ServiceState.Error;
+                    // 尝试重启
+                    CliWrap?.Stop();
+                    CliWrap = null;
                     if (Service.AutoReStart)
                     {
                         ReCliWrap();
@@ -141,8 +143,14 @@ namespace EasyDeploy.Models
             {
                 SetLog($"Stop Service:{obj}");
                 timerPerSecond?.Stop();
-                CliWrap = null;
                 Service.ServiceState = ServiceState.Error;
+                // 尝试重启
+                CliWrap?.Stop();
+                CliWrap = null;
+                if (Service.AutoReStart)
+                {
+                    ReCliWrap();
+                }
             });
         }
 
@@ -168,7 +176,7 @@ namespace EasyDeploy.Models
             timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
             {
                 timer.Enabled = false;
-                if (CliWrap.threadID > 0)
+                if (CliWrap != null && CliWrap.threadID > 0)
                 {
                     // 启动成功
                     Service.Pid = $"{CliWrap.threadID}";
@@ -184,7 +192,8 @@ namespace EasyDeploy.Models
                     // 启动失败
                     Service.ServiceState = ServiceState.Error;
                     // 等待片刻后重新尝试启动
-                    System.Threading.Thread.Sleep(5000);
+                    System.Threading.Thread.Sleep(30000);
+                    CliWrap = null;
                     ReCliWrap();
                 }
             };
