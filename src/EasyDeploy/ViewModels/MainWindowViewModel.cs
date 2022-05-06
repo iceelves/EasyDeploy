@@ -39,14 +39,6 @@ namespace EasyDeploy.ViewModels
                 {
                     this.window = window;
 
-                    // 加载日志控件
-                    ServicesShell.Add(LogShellGuid, new TabControlTerminalModel()
-                    {
-                        Header = "Log",
-                        Control = CreateBlankRichTextBox()
-                    });
-                    SetLog("Easy Deploy Start!");
-
                     // 加载系统配置文件
                     // 终端 - 最大行数
                     var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
@@ -62,6 +54,14 @@ namespace EasyDeploy.ViewModels
                     // 终端 - 字号
                     var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
                     TerminalFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
+
+                    // 加载日志控件
+                    ServicesShell.Add(LogShellGuid, new TabControlTerminalModel()
+                    {
+                        Header = "Log",
+                        Control = CreateBlankRichTextBox()
+                    });
+                    SetLog("Easy Deploy Start!");
 
                     // 加载服务配置文件
                     if (File.Exists(ServiceSavePath))
