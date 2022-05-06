@@ -8,12 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace EasyDeploy.Views
@@ -170,8 +172,14 @@ namespace EasyDeploy.Views
 
             #region 终端设置
             #region 最大行数
+            MaxRows.Text = MaxRows.Text.Replace(" ", "");
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS) && !_initialConfig[SystemConfigHelper.TERMINAL_MAXROWS].ToString().Equals(MaxRows.Text))
             {
+                if (MaxRows.Text.Length > 10 || double.Parse(MaxRows.Text) < 10 || double.Parse(MaxRows.Text) > int.MaxValue)
+                {
+                    BorderFlashing(MaxRows);
+                    return;
+                }
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
                 OutConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
             }
@@ -196,8 +204,14 @@ namespace EasyDeploy.Views
             #endregion
 
             #region 文字大小
+            FontSize.Text = FontSize.Text.Replace(" ", "");
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(FontSize.Text))
             {
+                if (FontSize.Text.Length > 10 || double.Parse(FontSize.Text) < 1 || double.Parse(FontSize.Text) > 32)
+                {
+                    BorderFlashing(FontSize);
+                    return;
+                }
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
                 OutConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
             }
@@ -225,6 +239,28 @@ namespace EasyDeploy.Views
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+        }
+
+        /// <summary>
+        /// 文本框边框闪烁
+        /// 用于错误提示显示
+        /// </summary>
+        /// <param name="containingObject"></param>
+        private void BorderFlashing(FrameworkElement containingObject)
+        {
+            Storyboard _blinkStoryboard = this.TryFindResource("BlinkAnime") as Storyboard;
+            _blinkStoryboard.Begin(containingObject, true);
+
+            Timer timer = new Timer(5000);
+            timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+            {
+                timer.Enabled = false;
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    _blinkStoryboard.Stop(containingObject);
+                }));
+            };
+            timer.Enabled = true;
         }
     }
 }
