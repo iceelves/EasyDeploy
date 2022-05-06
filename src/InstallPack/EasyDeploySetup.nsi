@@ -5,7 +5,7 @@
 
 ; 安装程序初始定义常量
 !define PRODUCT_NAME "EasyDeploy"
-!define PRODUCT_VERSION "1.0.0.1"
+!define PRODUCT_VERSION "1.0.0.2"
 !define PRODUCT_PUBLISHER "北京冰云信息科技有限公司"
 !define PRODUCT_WEB_SITE "iceelves.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\EasyDeploy.exe"
@@ -52,11 +52,11 @@ ShowUnInstDetails show
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File /r "..\EasyDeploy\bin\Release\netcoreapp3.1\*.*"
+  File /r "..\EasyDeploy\bin\Publish\netcoreapp3.1\*.*"
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
-  File "..\EasyDeploy\bin\Release\netcoreapp3.1\EasyDeploy.exe"
+  File "..\EasyDeploy\bin\Publish\netcoreapp3.1\EasyDeploy.exe"
 SectionEnd
 
 Section -AdditionalIcons

@@ -3,7 +3,7 @@
 :: 应用变量
 set ProjectPath=..\EasyDeploy.sln
 set AppVersion=netcoreapp3.1
-set ReleasePath=..\EasyDeploy\bin\Release
+set ReleasePath=..\EasyDeploy\bin\Publish
 
 :: 删除生成文件夹
 rd/s/q %ReleasePath%
@@ -12,12 +12,7 @@ rd/s/q %ReleasePath%
 nuget restore %ProjectPath%
 
 :: 编译代码
-MSBuild %ProjectPath% /property:Configuration=Release
-
-:: 删除多余文件
-del /s %ReleasePath%\%AppVersion%\*.pdb
-del /s %ReleasePath%\%AppVersion%\*.xml
-del /s %ReleasePath%\%AppVersion%\*.txt
+MSBuild %ProjectPath% /t:Build /t:Publish /p:PublishProfile=FolderProfile.pubxml
 
 :: 打包
 makensis.exe EasyDeploySetup.nsi
