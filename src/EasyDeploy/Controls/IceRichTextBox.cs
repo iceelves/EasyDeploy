@@ -42,7 +42,6 @@ namespace EasyDeploy.Controls
         /// <param name="Text"></param>
         public void SetText(string Text)
         {
-            Text += $" {this.Document.Blocks.Count}";
             // 根据最大显示行数删除
             int iRempveNumber = this.Document.Blocks.Count - MaxRows;
             if (iRempveNumber >= 1)
