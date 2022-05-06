@@ -207,7 +207,7 @@ namespace EasyDeploy.Views
             FontSize.Text = FontSize.Text.Replace(" ", "");
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(FontSize.Text))
             {
-                if (FontSize.Text.Length > 10 || double.Parse(FontSize.Text) < 1 || double.Parse(FontSize.Text) > 32)
+                if (FontSize.Text.Length > 10 || double.Parse(FontSize.Text) < 5 || double.Parse(FontSize.Text) > 32)
                 {
                     BorderFlashing(FontSize);
                     return;
