@@ -62,7 +62,7 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_StartedCommandEvent(string obj)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 SetLog($"Start Service PID:{obj}");
                 Pid = obj;
@@ -115,7 +115,7 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_StandardOutputCommandEvent(string obj)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 Terminal?.SetText(obj);
             });
@@ -127,7 +127,7 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_StandardErrorCommandEvent(string obj)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 Terminal?.SetText(obj);
             });
@@ -139,7 +139,7 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_ExitedCommandEvent(string obj)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 SetLog($"Stop Service:{obj}");
                 timerPerSecond?.Stop();
@@ -208,7 +208,7 @@ namespace EasyDeploy.Models
         {
             if (Terminal != null)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     Terminal?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
                 });

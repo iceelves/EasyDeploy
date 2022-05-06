@@ -42,25 +42,20 @@ namespace EasyDeploy.Controls
         /// <param name="Text"></param>
         public void SetText(string Text)
         {
+            Text += $" {this.Document.Blocks.Count}";
             // 根据最大显示行数删除
-            if (this.Document.Blocks.Count >= MaxRows)
+            int iRempveNumber = this.Document.Blocks.Count - MaxRows;
+            if (iRempveNumber >= 1)
             {
-                int iRempveNumber = this.Document.Blocks.Count - MaxRows;
-                List<Paragraph> listRemoveTemp = new List<Paragraph>();
-                foreach (var item in this.Document.Blocks)
+                for (int i = 0; i < iRempveNumber; i++)
                 {
-                    if (iRempveNumber > 0)
+                    Paragraph vRemoveTemp = null;
+                    foreach (var item in this.Document.Blocks)
                     {
-                        iRempveNumber--;
-                        listRemoveTemp.Add(item as Paragraph);
+                        vRemoveTemp = item as Paragraph;
+                        break;
                     }
-                }
-                if (listRemoveTemp != null && listRemoveTemp.Count >= 1)
-                {
-                    foreach (var item in listRemoveTemp)
-                    {
-                        this.Document.Blocks.Remove(item);
-                    }
+                    this.Document.Blocks.Remove(vRemoveTemp);
                 }
             }
 

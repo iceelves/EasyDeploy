@@ -235,7 +235,7 @@ namespace EasyDeploy.ViewModels
                             ServicesResources.Add(strGuid, serviceResources);
                         }
                         // 添加到服务控制台绑定控件
-                        Application.Current.Dispatcher.Invoke(() =>
+                        Application.Current?.Dispatcher?.Invoke(() =>
                         {
                             ServicesShell.Add(strGuid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = serviceResources.Terminal });
                         });
@@ -302,7 +302,7 @@ namespace EasyDeploy.ViewModels
                     timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                     {
                         timer.Enabled = false;
-                        Application.Current.Dispatcher.Invoke(() =>
+                        Application.Current?.Dispatcher?.Invoke(() =>
                         {
                             if (!string.IsNullOrEmpty(Service.Pid))
                             {
@@ -438,8 +438,8 @@ namespace EasyDeploy.ViewModels
                     }
                     else
                     {
-                        MessageBoxResult result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "是否删除服务" : "Confirm Delete of Service")} : {Service.ServiceName} ?",
-                            $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
+                        var result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "是否删除服务" : "Confirm Delete of Service")} : {Service.ServiceName} ?",
+                             $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
                         if (result == MessageBoxResult.OK)
                         {
                             SetLog($"Remove Service: {Service.ServiceName}");
@@ -466,7 +466,7 @@ namespace EasyDeploy.ViewModels
                 {
                     if (ServicesResources != null && ServicesResources.Count >= 1)
                     {
-                        MessageBoxResult result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "存在尚未关闭的服务，确定关闭么" : "There are services that have not been closed. Do you want to close them")} ?",
+                        var result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "存在尚未关闭的服务，确定关闭么" : "There are services that have not been closed. Do you want to close them")} ?",
                             $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
                         if (result == MessageBoxResult.OK)
                         {
@@ -577,7 +577,7 @@ namespace EasyDeploy.ViewModels
         private IceRichTextBox CreateBlankRichTextBox()
         {
             IceRichTextBox vRichText = null;
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 // 创建控件
                 vRichText = new IceRichTextBox()

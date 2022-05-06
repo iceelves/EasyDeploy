@@ -26,42 +26,42 @@ namespace EasyDeploy.Controls
 
         public static void ShowBox(string message)
         {
-            Application.Current.Dispatcher.Invoke(() => InitBox(null, message, "Tips", MessageBoxButton.OK).Show());
+            Application.Current?.Dispatcher?.Invoke(() => InitBox(null, message, "Tips", MessageBoxButton.OK).Show());
         }
 
         public static void ShowBox(string message, string caption)
         {
-            Application.Current.Dispatcher.Invoke(() => InitBox(null, message, caption, MessageBoxButton.OK).Show());
+            Application.Current?.Dispatcher?.Invoke(() => InitBox(null, message, caption, MessageBoxButton.OK).Show());
         }
 
         public static void ShowBox(Window owner, string message, string caption)
         {
-            Application.Current.Dispatcher.Invoke(() => InitBox(owner, message, caption, MessageBoxButton.OK).Show());
+            Application.Current?.Dispatcher?.Invoke(() => InitBox(owner, message, caption, MessageBoxButton.OK).Show());
         }
 
-        public static MessageBoxResult ShowDialogBox(string message)
+        public static MessageBoxResult? ShowDialogBox(string message)
         {
             return ShowDialogBox(null, message, "Tips", MessageBoxButton.OK);
         }
 
-        public static MessageBoxResult ShowDialogBox(string message, string caption)
+        public static MessageBoxResult? ShowDialogBox(string message, string caption)
         {
             return ShowDialogBox(null, message, caption, MessageBoxButton.OK);
         }
 
-        public static MessageBoxResult ShowDialogBox(Window owner, string message, string caption)
+        public static MessageBoxResult? ShowDialogBox(Window owner, string message, string caption)
         {
             return ShowDialogBox(owner, message, caption, MessageBoxButton.OK);
         }
 
-        public static MessageBoxResult ShowDialogBox(string message, string caption, MessageBoxButton button)
+        public static MessageBoxResult? ShowDialogBox(string message, string caption, MessageBoxButton button)
         {
             return ShowDialogBox(null, message, caption, button);
         }
 
-        public static MessageBoxResult ShowDialogBox(Window owner, string message, string caption, MessageBoxButton button)
+        public static MessageBoxResult? ShowDialogBox(Window owner, string message, string caption, MessageBoxButton button)
         {
-            return Application.Current.Dispatcher.Invoke(new Func<MessageBoxResult>(() =>
+            return Application.Current?.Dispatcher?.Invoke(new Func<MessageBoxResult>(() =>
             {
                 IceMessageBox box = InitBox(owner, message, caption, button);
                 box.ShowDialog();
@@ -69,9 +69,9 @@ namespace EasyDeploy.Controls
             }));
         }
 
-        public static MessageBoxResult ShowDialogBox(Window owner, string message, string caption, MessageBoxButton button, string ok = "Tips", string yes = "Yes", string no = "No", string cancel = "Cancel")
+        public static MessageBoxResult? ShowDialogBox(Window owner, string message, string caption, MessageBoxButton button, string ok = "Tips", string yes = "Yes", string no = "No", string cancel = "Cancel")
         {
-            return Application.Current.Dispatcher.Invoke(new Func<MessageBoxResult>(() =>
+            return Application.Current?.Dispatcher?.Invoke(new Func<MessageBoxResult>(() =>
             {
                 IceMessageBox box = InitBox(owner, message, caption, button);
                 box.OK.Content = ok;
