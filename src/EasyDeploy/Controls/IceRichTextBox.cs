@@ -49,13 +49,11 @@ namespace EasyDeploy.Controls
             {
                 for (int i = 0; i < iRempveNumber; i++)
                 {
-                    Paragraph vRemoveTemp = null;
                     foreach (var item in this.Document.Blocks)
                     {
-                        vRemoveTemp = item as Paragraph;
+                        this.Document.Blocks.Remove(item as Paragraph);
                         break;
                     }
-                    this.Document.Blocks.Remove(vRemoveTemp);
                 }
             }
 
