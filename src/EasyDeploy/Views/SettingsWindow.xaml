@@ -55,7 +55,8 @@
                             <StackPanel Orientation="Vertical" Margin="20,0">
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource MaxRows}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <TextBox x:Name="MaxRows" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
+                                    <TextBox x:Name="MaxRows" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"
+                                             InputMethod.IsInputMethodEnabled="False" PreviewTextInput="TextBox_PreviewTextInput"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Background}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
@@ -67,7 +68,8 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource FontSize}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <TextBox x:Name="FontSize" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"/>
+                                    <TextBox x:Name="FontSize" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0" Height="25" VerticalContentAlignment="Center" Background="Transparent" Foreground="White" CaretBrush="White"
+                                             InputMethod.IsInputMethodEnabled="False" PreviewTextInput="TextBox_PreviewTextInput"/>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
