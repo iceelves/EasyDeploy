@@ -11,15 +11,26 @@
         xmlns:local="clr-namespace:EasyDeploy.Views"
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResizeWithGrip"
         Title="{DynamicResource Title}" MinHeight="800" MinWidth="1500" Height="800" Width="1500" Icon="/Images/terminal.png">
-    <i:Interaction.Triggers>
-        <!--Loaded事件-->
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=easyDeploy}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="35" ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
+        <Style x:Key="WindowMainMaximizedStyle" TargetType="{x:Type Border}">
+            <Setter Property="Margin" Value="0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Maximized">
+                    <Setter Property="Margin" Value="7" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Normal">
+                    <Setter Property="Margin" Value="0" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <!--右上角更多菜单下拉样式-->
         <SolidColorBrush x:Key="TreeViewItem.MouseOver.Background" Color="#666666" />
         <SolidColorBrush x:Key="TreeViewItem.MouseOver.Foreground" Color="White" />
@@ -67,303 +78,305 @@
             <Setter Property="Template" Value="{StaticResource Button_Message_Template}" />
         </Style>
     </Window.Resources>
-    <Grid Background="Transparent">
-        <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <!--标题栏-->
-                <Border x:Name="TitleBar" Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
-                    <Grid>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding ElementName=easyDeploy,Path=Icon}" Width="20" Margin="10,0,5,0"/>
-                            <Label Content="{Binding ElementName=easyDeploy,Path=Title}" Foreground="#FEFEFE" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1">
-                            <control:SvgButton x:Name="MoreMenus" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
+
+    <Border x:Name="BaseBorder" Style="{StaticResource WindowMainMaximizedStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--标题栏-->
+            <Border x:Name="TitleBar" Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
+                <Grid VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding ElementName=easyDeploy,Path=Icon}" Width="20" Margin="10,0,5,0"/>
+                        <Label Content="{Binding ElementName=easyDeploy,Path=Title}" Foreground="#FEFEFE" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1">
+                        <control:SvgButton x:Name="MoreMenus" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
                                            ButtonImage="m1002.98416,498.77581l-472.13262,475.50902c-11.25466,11.25464 -29.82483,11.25464 -41.07949,0l-472.13262,-475.50902c-18.00744,-18.00745 -5.06459,-48.95774 20.25837,-48.95774l944.82798,0c25.88571,0 38.82855,30.95029 20.25837,48.95774zm-31.51302,-165.44337l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042zm0,-205.39739l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
                                            Click="MoreMenus_Click"/>
-                            <control:SvgButton x:Name="mainMinimize" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="7"
+                        <control:SvgButton x:Name="mainMinimize" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="7"
                                            ButtonImage="M96 417.984h832v188.032h-832z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
                                            Click="Minimize_Click"/>
-                            <control:SvgButton x:Name="mainMaximization" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
+                        <control:SvgButton x:Name="mainMaximization" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
                                            ButtonImage="M735.786833 62.98859 288.310382 62.98859c-123.567293 0-223.738737 100.164281-223.738737 223.738737l0 447.476451c0 123.555014 100.17042 223.751017 223.738737 223.751017l447.476451 0c123.561154 0 223.738737-100.196003 223.738737-223.751017L959.52557 286.727327C959.52557 163.15287 859.347986 62.98859 735.786833 62.98859zM831.694159 702.260252c0 70.612221-57.238632 127.850853-127.850853 127.850853L320.292793 830.111105c-70.612221 0-127.850853-57.238632-127.850853-127.850853L192.44194 318.708715c0-70.612221 57.238632-127.850853 127.850853-127.850853l383.551536 0c70.612221 0 127.850853 57.238632 127.850853 127.850853L831.695183 702.260252z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
                                            Click="Maximization_Click"/>
-                            <control:SvgButton x:Name="mainClose" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
+                        <control:SvgButton x:Name="mainClose" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
                                            ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
                                            Command="{Binding Close}"/>
-                        </StackPanel>
-                        <Popup x:Name="popup_Menu" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="10" HorizontalOffset="-36" StaysOpen="False"
+                    </StackPanel>
+                    <Popup x:Name="popup_Menu" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="10" HorizontalOffset="-36" StaysOpen="False"
                            IsOpen="False" PlacementTarget="{Binding ElementName=MoreMenus}" Placement="Bottom">
-                            <Popup.Child>
-                                <Grid>
-                                    <Border BorderBrush="#92CAF4" BorderThickness="1" Opacity="0.5"></Border>
-                                    <Border Background="#35363A" Margin="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                                    <StackPanel Margin="1">
-                                        <Button Content="{DynamicResource Setting}" Style="{StaticResource Button_Message}" Command="{Binding Settings}"/>
-                                        <Button Content="{DynamicResource About}" Style="{StaticResource Button_Message}" Command="{Binding About}"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Popup.Child>
-                        </Popup>
+                        <Popup.Child>
+                            <Grid>
+                                <Border BorderBrush="#92CAF4" BorderThickness="1" Opacity="0.5"></Border>
+                                <Border Background="#35363A" Margin="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                <StackPanel Margin="1">
+                                    <Button Content="{DynamicResource Setting}" Style="{StaticResource Button_Message}" Command="{Binding Settings}"/>
+                                    <Button Content="{DynamicResource About}" Style="{StaticResource Button_Message}" Command="{Binding About}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Popup.Child>
+                    </Popup>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1" Background="#35363A">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="570"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--配置列表-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="10 0 10 0">
+                        <DockPanel>
+                            <Label Content="{DynamicResource DeployService}" Foreground="White" FontSize="12" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
+                                <Label Content="{DynamicResource All}" Foreground="White" FontSize="12" />
+                                <Label Content="{c:Binding Services.Count}" Foreground="White" FontSize="12"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
+                                <Label Content="{DynamicResource StartState}" Foreground="White" FontSize="12" />
+                                <Label Content="{c:Binding ServicesResources.Count}" Foreground="White" FontSize="12" />
+                            </StackPanel>
+                        </DockPanel>
+                        <control:IceButton x:Name="AddService" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{DynamicResource Add}" 
+                                                   Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12" Cursor="Hand"
+                                                   Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Command="{Binding AddService}"/>
                     </Grid>
-                </Border>
-                <Border Grid.Row="1" Background="#35363A" CornerRadius="0,0,5,5">
-                    <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="600"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <!--配置列表-->
-                            <Grid Grid.Column="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Content="{DynamicResource DeployService}" Foreground="White" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0"/>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0">
-                                            <Label Content="{DynamicResource All}" Foreground="White" FontSize="12" />
-                                            <Label Content="{c:Binding Services.Count}" Foreground="White" FontSize="12"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0">
-                                            <Label Content="{DynamicResource StartState}" Foreground="White" FontSize="12" />
-                                            <Label Content="{c:Binding ServicesResources.Count}" Foreground="White" FontSize="12" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                    <control:IceButton x:Name="AddService" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Add}" 
-                                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12" Cursor="Hand"
-                                                       Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Command="{Binding AddService}"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <control:IceDataGrid x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Services}">
-                                        <DataGrid.Columns>
-                                            <DataGridTemplateColumn IsReadOnly="True" Width="60">
-                                                <DataGridTemplateColumn.Header>
-                                                    <TextBlock Text="{DynamicResource State}" />
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Ellipse x:Name="ServiceType" Width="14" Height="14">
-                                                            <Ellipse.Style>
-                                                                <Style TargetType="Ellipse">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="0">
-                                                                            <Setter Property="Fill" Value="Gray"/>
-                                                                        </DataTrigger>
-                                                                        <MultiDataTrigger>
-                                                                            <MultiDataTrigger.Conditions>
-                                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
-                                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="False"/>
-                                                                            </MultiDataTrigger.Conditions>
-                                                                            <Setter Property="Fill" Value="Lime"/>
-                                                                        </MultiDataTrigger>
-                                                                        <MultiDataTrigger>
-                                                                            <MultiDataTrigger.Conditions>
-                                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
-                                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="True"/>
-                                                                            </MultiDataTrigger.Conditions>
-                                                                            <Setter Property="Fill" Value="Orange"/>
-                                                                        </MultiDataTrigger>
-                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                            <Setter Property="Fill" Value="Red"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding ServiceState}" Value="3">
-                                                                            <Setter Property="Fill" Value="Orange"/>
-                                                                        </DataTrigger>
+                    <control:IceDataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Services}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn IsReadOnly="True" Width="60">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="{DynamicResource State}" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Ellipse x:Name="ServiceType" Width="14" Height="14">
+                                            <Ellipse.Style>
+                                                <Style TargetType="Ellipse">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ServiceState}" Value="0">
+                                                            <Setter Property="Fill" Value="Gray"/>
+                                                        </DataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
+                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Fill" Value="Lime"/>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
+                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Fill" Value="Orange"/>
+                                                        </MultiDataTrigger>
+                                                        <DataTrigger Binding="{Binding ServiceState}" Value="2">
+                                                            <Setter Property="Fill" Value="Red"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ServiceState}" Value="3">
+                                                            <Setter Property="Fill" Value="Orange"/>
+                                                        </DataTrigger>
 
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Ellipse.Style>
-                                                        </Ellipse>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
-                                                <DataGridTemplateColumn.Header>
-                                                    <TextBlock Text="{DynamicResource Service}" />
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Foreground="White" Content="{Binding ServiceName}" ToolTip="{Binding ServiceName}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
-                                                <DataGridTemplateColumn.Header>
-                                                    <TextBlock Text="{DynamicResource Pid}" />
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Foreground="White" Content="{Binding Pid}" ToolTip="{Binding Pid}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
-                                                <DataGridTemplateColumn.Header>
-                                                    <TextBlock Text="{DynamicResource Port}" />
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Label Foreground="White" Content="{Binding Port}" ToolTip="{Binding Port}"/>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn Width="300">
-                                                <DataGridTemplateColumn.Header>
-                                                    <TextBlock Text="{DynamicResource Actions}" />
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                            <control:IceButton x:Name="Start" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Start}"
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Ellipse.Style>
+                                        </Ellipse>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="{DynamicResource Service}" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Foreground="White" Content="{Binding ServiceName}" ToolTip="{Binding ServiceName}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="{DynamicResource Pid}" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Foreground="White" Content="{Binding Pid}" ToolTip="{Binding Pid}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="{DynamicResource Port}" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Foreground="White" Content="{Binding Port}" ToolTip="{Binding Port}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="315">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="{DynamicResource Actions}" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                            <control:IceButton x:Name="Start" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Start}"
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.StartService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                                <control:IceButton.Style>
-                                                                    <Style TargetType="control:IceButton">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="0">
-                                                                                <Setter Property="IsEnabled" Value="True"/>
-                                                                                <Setter Property="Foreground" Value="LimeGreen"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="1">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                                <Setter Property="Foreground" Value="LimeGreen"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </control:IceButton.Style>
-                                                            </control:IceButton>
-                                                            <control:IceButton x:Name="Stop" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Stop}"
+                                                <control:IceButton.Style>
+                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="0">
+                                                                <Setter Property="IsEnabled" Value="True"/>
+                                                                <Setter Property="Foreground" Value="LimeGreen"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="1">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="2">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                                <Setter Property="Foreground" Value="LimeGreen"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </control:IceButton.Style>
+                                            </control:IceButton>
+                                            <control:IceButton x:Name="Stop" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Stop}"
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.StopService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                                <control:IceButton.Style>
-                                                                    <Style TargetType="control:IceButton">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="0">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="1">
-                                                                                <Setter Property="IsEnabled" Value="True"/>
-                                                                                <Setter Property="Foreground" Value="Tomato"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                                <Setter Property="IsEnabled" Value="True"/>
-                                                                                <Setter Property="Foreground" Value="Tomato"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </control:IceButton.Style>
-                                                            </control:IceButton>
-                                                            <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Shell}" 
+                                                <control:IceButton.Style>
+                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="0">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="1">
+                                                                <Setter Property="IsEnabled" Value="True"/>
+                                                                <Setter Property="Foreground" Value="Tomato"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="2">
+                                                                <Setter Property="IsEnabled" Value="True"/>
+                                                                <Setter Property="Foreground" Value="Tomato"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </control:IceButton.Style>
+                                            </control:IceButton>
+                                            <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Shell}" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                                <control:IceButton.Style>
-                                                                    <Style TargetType="control:IceButton">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{c:Binding '(Pid == null)'}" Value="True">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </control:IceButton.Style>
-                                                            </control:IceButton>
-                                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Browse}" 
+                                                <control:IceButton.Style>
+                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{c:Binding '(Pid == null)'}" Value="True">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </control:IceButton.Style>
+                                            </control:IceButton>
+                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Browse}" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="#FFE589" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                                <control:IceButton.Style>
-                                                                    <Style TargetType="control:IceButton">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding AllowDirectoryToOpen}" Value="False">
-                                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </control:IceButton.Style>
-                                                            </control:IceButton>
-                                                            <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Edit}" 
+                                                <control:IceButton.Style>
+                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding AllowDirectoryToOpen}" Value="False">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </control:IceButton.Style>
+                                            </control:IceButton>
+                                            <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Edit}" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.EditService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
-                                                            <control:IceButton x:Name="Delete" Width="25" Height="24" VerticalAlignment="Center" Margin="2,0" Content="X" 
+                                            <control:IceButton x:Name="Delete" Width="25" Height="24" VerticalAlignment="Center" Margin="2,0" Content="X" 
                                                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
                                                                                Foreground="Tomato" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
                                                                                Command="{Binding Path=DataContext.DeleteService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                        </DataGrid.Columns>
-                                    </control:IceDataGrid>
-                                </Grid>
-                            </Grid>
-                            <!--控制台信息-->
-                            <Grid Grid.Column="1">
-                                <TabControl Background="Transparent" BorderThickness="0" Padding="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
-                                    <TabControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ContentPresenter Content="{Binding Value.Header}"/>
-                                        </DataTemplate>
-                                    </TabControl.ItemTemplate>
-                                    <TabControl.ContentTemplate>
-                                        <DataTemplate>
-                                            <ContentControl Content="{Binding Value.Control}"/>
-                                        </DataTemplate>
-                                    </TabControl.ContentTemplate>
-                                </TabControl>
-                            </Grid>
-                        </Grid>
-                        <!--右下角拖动块-->
-                        <Viewbox x:Name="ReSizeBR" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,1,1" Width="8" Height="8">
-                            <Path x:Name="Part_Path" Data="M0 1024l1024 0L1024 0 0 1024z" Fill="#707070"/>
-                        </Viewbox>
-                    </Grid>
-                </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </control:IceDataGrid>
+                </Grid>
+
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="7">
+                    <GridSplitter.Style>
+                        <Style TargetType="GridSplitter">
+                            <Style.Triggers>
+                                <Trigger Property="VerticalAlignment" Value="Stretch">
+                                    <Setter Property="BorderThickness" Value="1,0,1,0"></Setter>
+                                    <Setter Property="BorderBrush" Value="LightGray"></Setter>
+                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GridSplitter}">
+                                                <Canvas Height="28" Width="7">
+                                                    <Ellipse Width="4" Height="4" Canvas.Left="1" Canvas.Top="0" Fill="LightGray"></Ellipse>
+                                                    <Ellipse Width="4" Height="4" Canvas.Left="1" Canvas.Top="8" Fill="LightGray"></Ellipse>
+                                                    <Ellipse Width="4" Height="4" Canvas.Left="1" Canvas.Top="16" Fill="LightGray"></Ellipse>
+                                                </Canvas>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GridSplitter.Style>
+                </GridSplitter>
+                
+                <!--控制台信息-->
+                <Grid Grid.Column="2">
+                    <TabControl Background="Transparent" BorderThickness="0" Padding="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Value.Header}"/>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding Value.Control}"/>
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
+                </Grid>
             </Grid>
-            <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
-            </Border.Effect>
-        </Border>
-        <Grid x:Name="ReSize">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="10"/>
-            </Grid.ColumnDefinitions>
-            <Rectangle Name="ResizeTopLeft" Fill="Transparent" Grid.Row="0" Grid.Column="0" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
-            <Rectangle Name="ResizeTop" Fill="Transparent" Grid.Row="0" Grid.Column="1" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
-            <Rectangle Name="ResizeTopRight" Fill="Transparent" Grid.Row="0" Grid.Column="2" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
-            <Rectangle Name="ResizeLeft" Fill="Transparent" Grid.Row="1" Grid.Column="0" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
-            <Rectangle Name="ResizeRight" Fill="Transparent" Grid.Row="1" Grid.Column="2" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
-            <Rectangle Name="ResizeBottomLeft" Fill="Transparent" Grid.Row="2" Grid.Column="0" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
-            <Rectangle Name="ResizeBottom" Fill="Transparent" Grid.Row="2" Grid.Column="1" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
-            <Rectangle Name="ResizeBottomRight" Fill="Transparent" Grid.Row="2" Grid.Column="2" MouseMove="ResizePressed" MouseDown="ResizePressed"/>
         </Grid>
-    </Grid>
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
+        </Border.Effect>
+    </Border>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=easyDeploy}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 </Window>
