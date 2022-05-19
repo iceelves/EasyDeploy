@@ -87,7 +87,7 @@
             </Grid.RowDefinitions>
             <!--标题栏-->
             <Border x:Name="TitleBar" Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
-                <Grid VerticalAlignment="Center">
+                <Grid>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding ElementName=easyDeploy,Path=Icon}" Width="20" Margin="10,0,5,0"/>
                         <Label Content="{Binding ElementName=easyDeploy,Path=Title}" Foreground="#FEFEFE" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
@@ -102,9 +102,21 @@
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
                                            Click="Minimize_Click"/>
                         <control:SvgButton x:Name="mainMaximization" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
-                                           ButtonImage="M735.786833 62.98859 288.310382 62.98859c-123.567293 0-223.738737 100.164281-223.738737 223.738737l0 447.476451c0 123.555014 100.17042 223.751017 223.738737 223.751017l447.476451 0c123.561154 0 223.738737-100.196003 223.738737-223.751017L959.52557 286.727327C959.52557 163.15287 859.347986 62.98859 735.786833 62.98859zM831.694159 702.260252c0 70.612221-57.238632 127.850853-127.850853 127.850853L320.292793 830.111105c-70.612221 0-127.850853-57.238632-127.850853-127.850853L192.44194 318.708715c0-70.612221 57.238632-127.850853 127.850853-127.850853l383.551536 0c70.612221 0 127.850853 57.238632 127.850853 127.850853L831.695183 702.260252z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
-                                           Click="Maximization_Click"/>
+                                           Click="Maximization_Click">
+                            <control:SvgButton.Style>
+                                <Style TargetType="{x:Type control:SvgButton}" BasedOn="{StaticResource {x:Type control:SvgButton}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Maximized">
+                                            <Setter Property="ButtonImage" Value="M146.285714 804.571429h731.428572V365.714286H146.285714v438.857143zM1024 164.571429v694.857142c0 50.285714-41.142857 91.428571-91.428571 91.428572h-841.142858A91.684571 91.684571 0 0 1 0 859.428571v-694.857142C0 114.285714 41.142857 73.142857 91.428571 73.142857h841.142858C982.857143 73.142857 1024 114.285714 1024 164.571429z" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Normal">
+                                            <Setter Property="ButtonImage" Value="M735.786833 62.98859 288.310382 62.98859c-123.567293 0-223.738737 100.164281-223.738737 223.738737l0 447.476451c0 123.555014 100.17042 223.751017 223.738737 223.751017l447.476451 0c123.561154 0 223.738737-100.196003 223.738737-223.751017L959.52557 286.727327C959.52557 163.15287 859.347986 62.98859 735.786833 62.98859zM831.694159 702.260252c0 70.612221-57.238632 127.850853-127.850853 127.850853L320.292793 830.111105c-70.612221 0-127.850853-57.238632-127.850853-127.850853L192.44194 318.708715c0-70.612221 57.238632-127.850853 127.850853-127.850853l383.551536 0c70.612221 0 127.850853 57.238632 127.850853 127.850853L831.695183 702.260252z" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </control:SvgButton.Style>
+                        </control:SvgButton>
                         <control:SvgButton x:Name="mainClose" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
                                            ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
@@ -125,9 +137,9 @@
                     </Popup>
                 </Grid>
             </Border>
-            <Grid Grid.Row="1" Background="#35363A">
+            <Grid x:Name="WorkArea" Grid.Row="1" Background="#35363A">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="570"/>
+                    <ColumnDefinition Width="600"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -226,7 +238,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="315">
+                            <DataGridTemplateColumn Width="310">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock Text="{DynamicResource Actions}" />
                                 </DataGridTemplateColumn.Header>
@@ -327,7 +339,7 @@
                     </control:IceDataGrid>
                 </Grid>
 
-                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="7">
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="6">
                     <GridSplitter.Style>
                         <Style TargetType="GridSplitter">
                             <Style.Triggers>
@@ -338,11 +350,15 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type GridSplitter}">
-                                                <Canvas Height="28" Width="7">
-                                                    <Ellipse Width="4" Height="4" Canvas.Left="1" Canvas.Top="0" Fill="LightGray"></Ellipse>
-                                                    <Ellipse Width="4" Height="4" Canvas.Left="1" Canvas.Top="8" Fill="LightGray"></Ellipse>
-                                                    <Ellipse Width="4" Height="4" Canvas.Left="1" Canvas.Top="16" Fill="LightGray"></Ellipse>
-                                                </Canvas>
+                                                <Grid Background="Transparent">
+                                                    <Canvas VerticalAlignment="Center">
+                                                        <StackPanel Orientation="Vertical" >
+                                                            <Ellipse Width="4" Height="4" Fill="LightGray" Margin="1,2"/>
+                                                            <Ellipse Width="4" Height="4" Fill="LightGray" Margin="1,2"/>
+                                                            <Ellipse Width="4" Height="4" Fill="LightGray" Margin="1,2"/>
+                                                        </StackPanel>
+                                                    </Canvas>
+                                                </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
@@ -351,7 +367,7 @@
                         </Style>
                     </GridSplitter.Style>
                 </GridSplitter>
-                
+
                 <!--控制台信息-->
                 <Grid Grid.Column="2">
                     <TabControl Background="Transparent" BorderThickness="0" Padding="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
