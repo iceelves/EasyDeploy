@@ -50,7 +50,9 @@ namespace EasyDeploy.Controls
                 {
                     foreach (var item in this.Document.Blocks)
                     {
+                        this.BeginChange();
                         this.Document.Blocks.Remove(item as Paragraph);
+                        this.EndChange();
                         break;
                     }
                 }
@@ -71,7 +73,9 @@ namespace EasyDeploy.Controls
                     paragraph.Inlines.Add(SetColorFromAnsi(new Run() { Text = item }, ansiColor));
                 }
             }
+            this.BeginChange();
             this.Document.Blocks.Add(paragraph);
+            this.EndChange();
 
             // 如果滚动条不在最底部时继续判断
             // 达到最大行数后滚动条会保持在最底部

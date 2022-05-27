@@ -584,7 +584,8 @@ namespace EasyDeploy.ViewModels
                 {
                     IsReadOnly = true,
                     BorderThickness = new Thickness(0),
-                    FontFamily = new FontFamily("Cascadia Mono")
+                    FontFamily = new FontFamily("Cascadia Mono"),
+                    IsUndoEnabled = false
                 };
                 vRichText.SetBinding(IceRichTextBox.MaxRowsProperty, new Binding("TerminalMaxRows") { Source = this });
                 vRichText.SetBinding(Control.BackgroundProperty, new Binding("TerminalBackground") { Source = this });
