@@ -141,12 +141,12 @@
             </Border>
             <Grid x:Name="WorkArea" Grid.Row="1" Background="#35363A">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="600"/>
+                    <ColumnDefinition Width="600" MinWidth="200" MaxWidth="{c:Binding ElementName=easyDeploy,Path=ActualWidth - 200}"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" MinWidth="200"/>
                 </Grid.ColumnDefinitions>
                 <!--配置列表-->
-                <Grid>
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
@@ -341,6 +341,7 @@
                     </control:IceDataGrid>
                 </Grid>
 
+                <!--网格分隔-->
                 <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="6">
                     <GridSplitter.Style>
                         <Style TargetType="GridSplitter">
