@@ -12,7 +12,9 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResizeWithGrip"
-        Title="{DynamicResource Title}" MinHeight="800" MinWidth="1500" Height="800" Width="1500" Icon="/Images/terminal.png">
+        MinHeight="800" MinWidth="1500" Height="800" Width="1500"
+        MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
+        Title="{DynamicResource Title}" Icon="/Images/terminal.png">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" ResizeBorderThickness="5" />
