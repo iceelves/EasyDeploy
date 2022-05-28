@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helper="clr-namespace:EasyDeploy.Helpers"
              xmlns:local="clr-namespace:EasyDeploy.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -119,7 +120,8 @@
         </Style>
     </UserControl.Resources>
     <RichTextBox x:Name="rtb" IsReadOnly="True" BorderThickness="0" FontFamily="Cascadia Mono" IsUndoEnabled="False"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                 helper:RichTextBoxHelper.DocumentXaml="{Binding TerminalDocument,RelativeSource={RelativeSource AncestorType=UserControl}}"
                  Background="{Binding TerminalBackground,RelativeSource={RelativeSource AncestorType=UserControl}}" 
                  Foreground="{Binding TerminalForeground,RelativeSource={RelativeSource AncestorType=UserControl}}" 
                  FontSize="{Binding TerminalFontSize,RelativeSource={RelativeSource AncestorType=UserControl}}"/>

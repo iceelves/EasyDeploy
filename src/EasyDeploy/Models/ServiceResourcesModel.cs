@@ -115,7 +115,7 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_StandardOutputCommandEvent(string obj)
         {
-            Application.Current?.Dispatcher?.BeginInvoke(DispatcherPriority.Background, (Action)delegate ()
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 Terminal?.SetText(obj);
             });
@@ -127,7 +127,7 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_StandardErrorCommandEvent(string obj)
         {
-            Application.Current?.Dispatcher?.BeginInvoke(DispatcherPriority.Background, (Action)delegate ()
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 Terminal?.SetText(obj);
             });
@@ -176,26 +176,29 @@ namespace EasyDeploy.Models
             timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
             {
                 timer.Enabled = false;
-                if (CliWrap != null && CliWrap.threadID > 0)
+                Application.Current?.Dispatcher?.Invoke(() =>
                 {
-                    // 启动成功
-                    Service.Pid = $"{CliWrap.threadID}";
-                    var vProcessPorts = PidHelper.GetProcessPorts(CliWrap.threadID);
-                    if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                    if (CliWrap != null && CliWrap.threadID > 0)
                     {
-                        Service.Port = string.Join('/', PidHelper.GetProcessPorts(CliWrap.threadID));
+                        // 启动成功
+                        Service.Pid = $"{CliWrap.threadID}";
+                        var vProcessPorts = PidHelper.GetProcessPorts(CliWrap.threadID);
+                        if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                        {
+                            Service.Port = string.Join('/', PidHelper.GetProcessPorts(CliWrap.threadID));
+                        }
+                        Service.ServiceState = ServiceState.Start;
                     }
-                    Service.ServiceState = ServiceState.Start;
-                }
-                else
-                {
-                    // 启动失败
-                    Service.ServiceState = ServiceState.Error;
-                    // 等待片刻后重新尝试启动
-                    System.Threading.Thread.Sleep(30000);
-                    CliWrap = null;
-                    ReCliWrap();
-                }
+                    else
+                    {
+                        // 启动失败
+                        Service.ServiceState = ServiceState.Error;
+                        // 等待片刻后重新尝试启动
+                        System.Threading.Thread.Sleep(30000);
+                        CliWrap = null;
+                        ReCliWrap();
+                    }
+                });
             };
             timer.Enabled = true;
         }
@@ -208,7 +211,7 @@ namespace EasyDeploy.Models
         {
             if (Terminal != null)
             {
-                Application.Current?.Dispatcher?.BeginInvoke(DispatcherPriority.Background, (Action)delegate ()
+                Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     Terminal?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
                 });

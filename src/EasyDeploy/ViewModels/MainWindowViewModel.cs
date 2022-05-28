@@ -76,7 +76,10 @@ namespace EasyDeploy.ViewModels
                         {
                             foreach (var item in Services.Where(o => o.AutoStart))
                             {
-                                StartServiceCore(item, true);
+                                Application.Current?.Dispatcher?.Invoke(() =>
+                                {
+                                    StartServiceCore(item, true);
+                                });
                             }
                         }
                     }
@@ -216,36 +219,36 @@ namespace EasyDeploy.ViewModels
                 timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
-                    if (serviceResources.CliWrap != null && serviceResources.CliWrap.threadID > 0)
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
-                        // 启动成功
-                        Service.Pid = $"{serviceResources.CliWrap.threadID}";
-                        var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
-                        if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                        if (serviceResources.CliWrap != null && serviceResources.CliWrap.threadID > 0)
                         {
-                            Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
-                        }
-                        // 添加到服务运行时资源列表
-                        if (ServicesResources.ContainsKey(strGuid))
-                        {
-                            ServicesResources[strGuid] = serviceResources;
+                            // 启动成功
+                            Service.Pid = $"{serviceResources.CliWrap.threadID}";
+                            var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
+                            if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                            {
+                                Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
+                            }
+                            // 添加到服务运行时资源列表
+                            if (ServicesResources.ContainsKey(strGuid))
+                            {
+                                ServicesResources[strGuid] = serviceResources;
+                            }
+                            else
+                            {
+                                ServicesResources.Add(strGuid, serviceResources);
+                            }
+                            // 添加到服务控制台绑定控件
+                            ServicesShell.Add(strGuid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = serviceResources.Terminal });
+                            Service.ServiceState = ServiceState.Start;
                         }
                         else
                         {
-                            ServicesResources.Add(strGuid, serviceResources);
+                            // 启动失败
+                            Service.ServiceState = ServiceState.Error;
                         }
-                        // 添加到服务控制台绑定控件
-                        Application.Current?.Dispatcher?.Invoke(() =>
-                        {
-                            ServicesShell.Add(strGuid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = serviceResources.Terminal });
-                        });
-                        Service.ServiceState = ServiceState.Start;
-                    }
-                    else
-                    {
-                        // 启动失败
-                        Service.ServiceState = ServiceState.Error;
-                    }
+                    });
                 };
                 timer.Enabled = true;
             }
@@ -260,7 +263,10 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
-                    StartServiceCore(Service, false);
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        StartServiceCore(Service, false);
+                    });
                 });
             }
         }
@@ -338,7 +344,10 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
-                    StopServiceCore(Service);
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        StopServiceCore(Service);
+                    });
                 });
             }
         }
@@ -587,6 +596,7 @@ namespace EasyDeploy.ViewModels
                 vRichText.SetBinding(IceRichTextBox.TerminalFontSizeProperty, new Binding("TerminalFontSize") { Source = this });
 
                 // 创建后处理
+                vRichText.Init();
                 vRichText.ClearText();
                 vRichText.PreviewMouseWheel += VRichText_PreviewMouseWheel;
             });
@@ -629,7 +639,10 @@ namespace EasyDeploy.ViewModels
         {
             if (ServicesShell != null && ServicesShell.Count >= 1 && ServicesShell.ContainsKey(LogShellGuid))
             {
-                ServicesShell[LogShellGuid]?.Control?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    ServicesShell[LogShellGuid]?.Control?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
+                });
             }
         }
     }

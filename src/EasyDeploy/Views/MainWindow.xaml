@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:EasyDeploy.Views"
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResize"
         MinHeight="800" MinWidth="1500" Height="800" Width="1500"
         MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
         Title="{DynamicResource Title}" Icon="/Images/terminal.png">

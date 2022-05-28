@@ -71,6 +71,25 @@ namespace EasyDeploy.Controls
             DependencyProperty.Register("TerminalFontSize", typeof(int), typeof(IceRichTextBox), new PropertyMetadata(default(int)));
 
         /// <summary>
+        /// 终端绑定数据
+        /// </summary>
+        public FlowDocument TerminalDocument
+        {
+            get { return (FlowDocument)GetValue(TerminalDocumentProperty); }
+            set { SetValue(TerminalDocumentProperty, value); }
+        }
+        public static readonly DependencyProperty TerminalDocumentProperty =
+            DependencyProperty.Register("TerminalDocument", typeof(FlowDocument), typeof(IceRichTextBox), new PropertyMetadata(default(FlowDocument)));
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Init()
+        {
+            TerminalDocument = rtb.Document;
+        }
+
+        /// <summary>
         /// 滚动到最底部
         /// </summary>
         public void ScrollToEnd()
@@ -84,7 +103,7 @@ namespace EasyDeploy.Controls
         /// </summary>
         public void ClearText()
         {
-            rtb.Document.Blocks.Clear();
+            TerminalDocument.Blocks.Clear();
         }
 
         /// <summary>
@@ -94,15 +113,15 @@ namespace EasyDeploy.Controls
         public void SetText(string Text)
         {
             // 根据最大显示行数删除
-            int iRempveNumber = rtb.Document.Blocks.Count - MaxRows;
+            int iRempveNumber = TerminalDocument.Blocks.Count - MaxRows;
             if (iRempveNumber >= 1)
             {
                 for (int i = 0; i < iRempveNumber; i++)
                 {
-                    foreach (var item in rtb.Document.Blocks)
+                    foreach (var item in TerminalDocument.Blocks)
                     {
                         rtb.BeginChange();
-                        rtb.Document.Blocks.Remove(item as Paragraph);
+                        TerminalDocument.Blocks.Remove(item as Paragraph);
                         rtb.EndChange();
                         break;
                     }
@@ -125,7 +144,7 @@ namespace EasyDeploy.Controls
                 }
             }
             rtb.BeginChange();
-            rtb.Document.Blocks.Add(paragraph);
+            TerminalDocument.Blocks.Add(paragraph);
             rtb.EndChange();
 
             // 如果滚动条不在最底部时继续判断
