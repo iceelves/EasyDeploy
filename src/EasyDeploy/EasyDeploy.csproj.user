@@ -15,6 +15,9 @@
     <Compile Update="Controls\IceMessageBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\IceRichTextBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -32,6 +35,9 @@
     <Page Update="Controls\IceMessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\IceRichTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Language\en-US.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -42,9 +48,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\IceComboBoxStyle.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Themes\IceRichTextBoxStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\IceTabControlStyle.xaml">

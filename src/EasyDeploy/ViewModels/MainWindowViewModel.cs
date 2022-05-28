@@ -580,17 +580,11 @@ namespace EasyDeploy.ViewModels
             Application.Current?.Dispatcher?.Invoke(() =>
             {
                 // 创建控件
-                vRichText = new IceRichTextBox()
-                {
-                    IsReadOnly = true,
-                    BorderThickness = new Thickness(0),
-                    FontFamily = new FontFamily("Cascadia Mono"),
-                    IsUndoEnabled = false
-                };
+                vRichText = new IceRichTextBox();
                 vRichText.SetBinding(IceRichTextBox.MaxRowsProperty, new Binding("TerminalMaxRows") { Source = this });
-                vRichText.SetBinding(Control.BackgroundProperty, new Binding("TerminalBackground") { Source = this });
-                vRichText.SetBinding(Control.ForegroundProperty, new Binding("TerminalForeground") { Source = this });
-                vRichText.SetBinding(Control.FontSizeProperty, new Binding("TerminalFontSize") { Source = this });
+                vRichText.SetBinding(IceRichTextBox.TerminalBackgroundProperty, new Binding("TerminalBackground") { Source = this });
+                vRichText.SetBinding(IceRichTextBox.TerminalForegroundProperty, new Binding("TerminalForeground") { Source = this });
+                vRichText.SetBinding(IceRichTextBox.TerminalFontSizeProperty, new Binding("TerminalFontSize") { Source = this });
 
                 // 创建后处理
                 vRichText.ClearText();
@@ -608,21 +602,20 @@ namespace EasyDeploy.ViewModels
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
-                var vControl = sender as IceRichTextBox;
                 if (e.Delta < 0)
                 {
-                    if (vControl.FontSize >= 6)
+                    if (TerminalFontSize >= 6)
                     {
                         // 字号最小为 5
-                        vControl.FontSize -= 1;
+                        TerminalFontSize -= 1;
                     }
                 }
                 else
                 {
-                    if (vControl.FontSize <= 31)
+                    if (TerminalFontSize <= 31)
                     {
                         // 字号最大为 32
-                        vControl.FontSize += 1;
+                        TerminalFontSize += 1;
                     }
                 }
             }

@@ -5,15 +5,25 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace EasyDeploy.Controls
 {
-    [TemplatePart(Name = "Part_Path", Type = typeof(FrameworkElement))]
-    public class IceRichTextBox : RichTextBox
+    /// <summary>
+    /// IceRichTextBox.xaml 的交互逻辑
+    /// </summary>
+    public partial class IceRichTextBox : UserControl
     {
-        static IceRichTextBox() => DefaultStyleKeyProperty.OverrideMetadata(typeof(IceRichTextBox), new FrameworkPropertyMetadata(typeof(IceRichTextBox)));
+        public IceRichTextBox()
+        {
+            InitializeComponent();
+        }
 
         /// <summary>
         /// 最大行数
@@ -28,12 +38,53 @@ namespace EasyDeploy.Controls
             DependencyProperty.Register("MaxRows", typeof(int), typeof(IceRichTextBox), new PropertyMetadata(default(int)));
 
         /// <summary>
+        /// 终端背景颜色
+        /// </summary>
+        public Brush TerminalBackground
+        {
+            get { return (Brush)GetValue(TerminalBackgroundProperty); }
+            set { SetValue(TerminalBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty TerminalBackgroundProperty =
+            DependencyProperty.Register("TerminalBackground", typeof(Brush), typeof(IceRichTextBox), new PropertyMetadata(default(Brush)));
+
+        /// <summary>
+        /// 终端文字颜色
+        /// </summary>
+        public Brush TerminalForeground
+        {
+            get { return (Brush)GetValue(TerminalForegroundProperty); }
+            set { SetValue(TerminalForegroundProperty, value); }
+        }
+        public static readonly DependencyProperty TerminalForegroundProperty =
+            DependencyProperty.Register("TerminalForeground", typeof(Brush), typeof(IceRichTextBox), new PropertyMetadata(default(Brush)));
+
+        /// <summary>
+        /// 终端字号大小
+        /// </summary>
+        public int TerminalFontSize
+        {
+            get { return (int)GetValue(TerminalFontSizeProperty); }
+            set { SetValue(TerminalFontSizeProperty, value); }
+        }
+        public static readonly DependencyProperty TerminalFontSizeProperty =
+            DependencyProperty.Register("TerminalFontSize", typeof(int), typeof(IceRichTextBox), new PropertyMetadata(default(int)));
+
+        /// <summary>
+        /// 滚动到最底部
+        /// </summary>
+        public void ScrollToEnd()
+        {
+            rtb.ScrollToEnd();
+        }
+
+        /// <summary>
         /// 清空文本
         /// 第一次写入时需执行
         /// </summary>
         public void ClearText()
         {
-            this.Document.Blocks.Clear();
+            rtb.Document.Blocks.Clear();
         }
 
         /// <summary>
@@ -43,16 +94,16 @@ namespace EasyDeploy.Controls
         public void SetText(string Text)
         {
             // 根据最大显示行数删除
-            int iRempveNumber = this.Document.Blocks.Count - MaxRows;
+            int iRempveNumber = rtb.Document.Blocks.Count - MaxRows;
             if (iRempveNumber >= 1)
             {
                 for (int i = 0; i < iRempveNumber; i++)
                 {
-                    foreach (var item in this.Document.Blocks)
+                    foreach (var item in rtb.Document.Blocks)
                     {
-                        this.BeginChange();
-                        this.Document.Blocks.Remove(item as Paragraph);
-                        this.EndChange();
+                        rtb.BeginChange();
+                        rtb.Document.Blocks.Remove(item as Paragraph);
+                        rtb.EndChange();
                         break;
                     }
                 }
@@ -73,18 +124,18 @@ namespace EasyDeploy.Controls
                     paragraph.Inlines.Add(SetColorFromAnsi(new Run() { Text = item }, ansiColor));
                 }
             }
-            this.BeginChange();
-            this.Document.Blocks.Add(paragraph);
-            this.EndChange();
+            rtb.BeginChange();
+            rtb.Document.Blocks.Add(paragraph);
+            rtb.EndChange();
 
             // 如果滚动条不在最底部时继续判断
             // 达到最大行数后滚动条会保持在最底部
-            if (this.VerticalOffset + this.ActualHeight != this.ExtentHeight)
+            if (rtb.VerticalOffset + this.ActualHeight != rtb.ExtentHeight)
             {
                 // 滚动条超过 80% 或滚动条小于一倍控件高度 滚动到底部
-                if (this.VerticalOffset / (this.ExtentHeight - this.ActualHeight) >= 0.8 || (this.ExtentHeight - this.ActualHeight) <= this.ActualHeight)
+                if (rtb.VerticalOffset / (rtb.ExtentHeight - this.ActualHeight) >= 0.8 || (rtb.ExtentHeight - this.ActualHeight) <= this.ActualHeight)
                 {
-                    this.ScrollToEnd();
+                    rtb.ScrollToEnd();
                 }
             }
         }
