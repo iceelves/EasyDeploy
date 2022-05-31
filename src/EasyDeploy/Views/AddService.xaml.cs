@@ -89,7 +89,7 @@ namespace EasyDeploy.Views
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.DefaultExt = ".exe";
-            dialog.Filter = "EXE File|*.exe|全部文件|*.*";
+            dialog.Filter = "EXE File|*.exe;*.bat|全部文件|*.*";
             if ((bool)dialog.ShowDialog())
             {
                 ServicePath.Text = IsAbsolutePath ? dialog.FileName : PathHelper.AbsoluteToRelative(dialog.FileName);
