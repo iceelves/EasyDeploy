@@ -61,6 +61,7 @@ namespace EasyDeploy.ViewModels
                         Header = "Log",
                         Control = CreateBlankRichTextBox()
                     });
+                    SetLogLogo();
                     SetLog("Easy Deploy Start!");
 
                     // 加载服务配置文件
@@ -565,7 +566,7 @@ namespace EasyDeploy.ViewModels
                 // 停止所有正在运行的服务
                 foreach (var item in ServicesResources)
                 {
-                    PidHelper.KillProcessAndChildren(item.Value.CliWrap.threadID);
+                    PidHelper.KillProcessAndChildren(item.Value?.CliWrap?.threadID);
                 }
                 ServicesResources = null;
                 // 清空关联数据
@@ -644,6 +645,39 @@ namespace EasyDeploy.ViewModels
                     ServicesShell[LogShellGuid]?.Control?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
                 });
             }
+        }
+
+        /// <summary>
+        /// 写入 LOGO
+        /// </summary>
+        private void SetLogLogo()
+        {
+            Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                int l1 = 96;
+                int l2 = 93;
+                int l3 = 92;
+                int l4 = 91;
+                int r1 = 96;
+                int r2 = 93;
+                int r3 = 92;
+                int r4 = 91;
+                int r5 = 96;
+                int r6 = 93;
+                ServicesShell[LogShellGuid]?.Control?.SetText($"");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$$$$$$$\\ \u001b[{l2}m        \u001b[{l3}m           \u001b[{l4}m              \u001b[{r1}m$$$$$$$\\  \u001b[{r2}m          \u001b[{r3}m          \u001b[{r4}m$$\\ \u001b[{r5}m          \u001b[{r6}m          ");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$  _____|\u001b[{l2}m        \u001b[{l3}m           \u001b[{l4}m              \u001b[{r1}m$$  __$$\\ \u001b[{r2}m          \u001b[{r3}m          \u001b[{r4}m$$ |\u001b[{r5}m          \u001b[{r6}m          ");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$ |      \u001b[{l2}m$$$$$$\\ \u001b[{l3}m  $$$$$$$\\ \u001b[{l4}m$$\\   $$\\     \u001b[{r1}m$$ |  $$ |\u001b[{r2}m $$$$$$\\  \u001b[{r3}m $$$$$$\\  \u001b[{r4}m$$ |\u001b[{r5}m $$$$$$\\  \u001b[{r6}m$$\\   $$\\ ");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$$$$\\    \u001b[{l2}m\\____$$\\ \u001b[{l3}m$$  _____|\u001b[{l4}m$$ |  $$ |    \u001b[{r1}m$$ |  $$ |\u001b[{r2}m$$  __$$\\ \u001b[{r3}m$$  __$$\\ \u001b[{r4}m$$ |\u001b[{r5}m$$  __$$\\ \u001b[{r6}m$$ |  $$ |");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$  __|   \u001b[{l2}m$$$$$$$ |\u001b[{l3}m\\$$$$$$\\  \u001b[{l4}m$$ |  $$ |    \u001b[{r1}m$$ |  $$ |\u001b[{r2}m$$$$$$$$ |\u001b[{r3}m$$ /  $$ |\u001b[{r4}m$$ |\u001b[{r5}m$$ /  $$ |\u001b[{r6}m$$ |  $$ |");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$ |     \u001b[{l2}m$$  __$$ |\u001b[{l3}m \\____$$\\ \u001b[{l4}m$$ |  $$ |    \u001b[{r1}m$$ |  $$ |\u001b[{r2}m$$   ____|\u001b[{r3}m$$ |  $$ |\u001b[{r4}m$$ |\u001b[{r5}m$$ |  $$ |\u001b[{r6}m$$ |  $$ |");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$$$$$$$\u001b[{l2}m\\$$$$$$$ |\u001b[{l3}m$$$$$$$  |\u001b[{l4}m\\$$$$$$$ |    \u001b[{r1}m$$$$$$$  |\u001b[{r2}m\\$$$$$$$\\ \u001b[{r3}m$$$$$$$  |\u001b[{r4}m$$ |\u001b[{r5}m\\$$$$$$  |\u001b[{r6}m\\$$$$$$$ |");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m\\________|\u001b[{l2}m\\_______|\u001b[{l3}m\\_______/ \u001b[{l4}m \\____$$ |    \u001b[{r1}m\\_______/ \u001b[{r2}m \\_______|\u001b[{r3}m$$  ____/ \u001b[{r4}m\\__|\u001b[{r5}m \\______/ \u001b[{r6}m \\____$$ |");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m          \u001b[{l2}m         \u001b[{l3}m          \u001b[{l4}m$$\\   $$ |    \u001b[{r1}m          \u001b[{r2}m          \u001b[{r3}m$$ |      \u001b[{r4}m    \u001b[{r5}m          \u001b[{r6}m$$\\   $$ |");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m          \u001b[{l2}m         \u001b[{l3}m          \u001b[{l4}m\\$$$$$$  |    \u001b[{r1}m          \u001b[{r2}m          \u001b[{r3}m$$ |      \u001b[{r4}m    \u001b[{r5}m          \u001b[{r6}m\\$$$$$$  |");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m          \u001b[{l2}m         \u001b[{l3}m          \u001b[{l4}m \\______/     \u001b[{r1}m          \u001b[{r2}m          \u001b[{r3}m\\__|      \u001b[{r4}m    \u001b[{r5}m          \u001b[{r6}m \\______/ ");
+                ServicesShell[LogShellGuid]?.Control?.SetText($"");
+            });
         }
     }
 }
