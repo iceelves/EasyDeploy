@@ -16,10 +16,10 @@ namespace EasyDeploy.Helpers
         /// Kill a process, and all of its children, grandchildren, etc.
         /// </summary>
         /// <param name="pid">Process ID.</param>
-        public static void KillProcessAndChildren(int pid)
+        public static void KillProcessAndChildren(int? pid)
         {
             // Cannot close 'system idle process'.
-            if (pid == 0)
+            if (pid == 0 || pid == null)
             {
                 return;
             }
@@ -31,7 +31,7 @@ namespace EasyDeploy.Helpers
             }
             try
             {
-                Process proc = Process.GetProcessById(pid);
+                Process proc = Process.GetProcessById((int)pid);
                 proc.Kill();
             }
             catch (ArgumentException)
