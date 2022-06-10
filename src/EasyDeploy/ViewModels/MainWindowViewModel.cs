@@ -664,6 +664,7 @@ namespace EasyDeploy.ViewModels
                 int r4 = 91;
                 int r5 = 96;
                 int r6 = 93;
+                // Easy Deploy
                 ServicesShell[LogShellGuid]?.Control?.SetText($"");
                 ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$$$$$$$\\ \u001b[{l2}m        \u001b[{l3}m           \u001b[{l4}m              \u001b[{r1}m$$$$$$$\\  \u001b[{r2}m          \u001b[{r3}m          \u001b[{r4}m$$\\ \u001b[{r5}m          \u001b[{r6}m          ");
                 ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$  _____|\u001b[{l2}m        \u001b[{l3}m           \u001b[{l4}m              \u001b[{r1}m$$  __$$\\ \u001b[{r2}m          \u001b[{r3}m          \u001b[{r4}m$$ |\u001b[{r5}m          \u001b[{r6}m          ");
@@ -676,6 +677,18 @@ namespace EasyDeploy.ViewModels
                 ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m          \u001b[{l2}m         \u001b[{l3}m          \u001b[{l4}m$$\\   $$ |    \u001b[{r1}m          \u001b[{r2}m          \u001b[{r3}m$$ |      \u001b[{r4}m    \u001b[{r5}m          \u001b[{r6}m$$\\   $$ |");
                 ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m          \u001b[{l2}m         \u001b[{l3}m          \u001b[{l4}m\\$$$$$$  |    \u001b[{r1}m          \u001b[{r2}m          \u001b[{r3}m$$ |      \u001b[{r4}m    \u001b[{r5}m          \u001b[{r6}m\\$$$$$$  |");
                 ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m          \u001b[{l2}m         \u001b[{l3}m          \u001b[{l4}m \\______/     \u001b[{r1}m          \u001b[{r2}m          \u001b[{r3}m\\__|      \u001b[{r4}m    \u001b[{r5}m          \u001b[{r6}m \\______/ ");
+
+                // Ice Elves
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$$$$$\\ \u001b[{l2}m         \u001b[{l3}m              \u001b[{r1}m$$$$$$$$\\ \u001b[{r2}m$$\\ \u001b[{r3}m           \u001b[{r4}m          \u001b[{l4}m          ");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m\\_$$  _|\u001b[{l2}m         \u001b[{l3}m              \u001b[{r1}m$$  _____|\u001b[{r2}m$$ |\u001b[{r3}m           \u001b[{r4}m          \u001b[{l4}m          ");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m  $$ |  \u001b[{l2}m$$$$$$$\\ \u001b[{l3}m $$$$$$\\      \u001b[{r1}m$$ |      \u001b[{r2}m$$ |\u001b[{r3}m$$\\    $$\\ \u001b[{r4}m $$$$$$\\  \u001b[{l4}m $$$$$$$\\ ");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m  $$ | \u001b[{l2}m$$  _____|\u001b[{l3}m$$  __$$\\     \u001b[{r1}m$$$$$\\    \u001b[{r2}m$$ |\u001b[{r3}m\\$$\\  $$  |\u001b[{r4}m$$  __$$\\ \u001b[{l4}m$$  _____|");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m  $$ | \u001b[{l2}m$$ /      \u001b[{l3}m$$$$$$$$ |    \u001b[{r1}m$$  __|   \u001b[{r2}m$$ |\u001b[{r3}m \\$$\\$$  / \u001b[{r4}m$$$$$$$$ |\u001b[{l4}m\\$$$$$$\\  ");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m  $$ | \u001b[{l2}m$$ |      \u001b[{l3}m$$   ____|    \u001b[{r1}m$$ |      \u001b[{r2}m$$ |\u001b[{r3}m  \\$$$  /  \u001b[{r4}m$$   ____|\u001b[{l4}m \\____$$\\ ");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m$$$$$$ \u001b[{l2}m\\$$$$$$$\\ \u001b[{l3}m\\$$$$$$$\\     \u001b[{r1}m$$$$$$$$\\ \u001b[{r2}m$$ |\u001b[{r3}m   \\$  /   \u001b[{r4}m\\$$$$$$$\\ \u001b[{l4}m$$$$$$$  |");
+                //ServicesShell[LogShellGuid]?.Control?.SetText($"  \u001b[{l1}m\\______|\u001b[{l2}m\\_______|\u001b[{l3}m \\_______|    \u001b[{r1}m\\________|\u001b[{r2}m\\__|\u001b[{r3}m    \\_/    \u001b[{r4}m \\_______|\u001b[{l4}m\\_______/ ");
+
                 ServicesShell[LogShellGuid]?.Control?.SetText($"");
             });
         }
