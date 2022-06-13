@@ -386,23 +386,19 @@ namespace EasyDeploy.ViewModels
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
                     SetLog($"Open Shell: {Service.ServiceName}");
-                    if (Service != null && !string.IsNullOrEmpty(Service.Guid))
+                    if (Service != null && !string.IsNullOrEmpty(Service.Guid) &&
+                        ServicesResources.ContainsKey(Service.Guid) &&
+                        ServicesShell.ContainsKey(Service.Guid))
                     {
-                        if (ServicesResources.ContainsKey(Service.Guid))
+                        // 切换分页
+                        for (int i = 0; i < ServicesShell.Count; i++)
                         {
-                            if (ServicesShell.ContainsKey(Service.Guid))
+                            if (ServicesShell.ElementAt(i).Key.Equals(Service.Guid))
                             {
-                                // 切换分页
-                                for (int i = 0; i < ServicesShell.Count; i++)
-                                {
-                                    if (ServicesShell.ElementAt(i).Key.Equals(Service.Guid))
-                                    {
-                                        ServicesShellIndex = i;
-                                        // 滚动条切至底部
-                                        ServicesShell.ElementAt(i).Value.Control.ScrollToEnd();
-                                        break;
-                                    }
-                                }
+                                ServicesShellIndex = i;
+                                // 滚动条切至底部
+                                ServicesShell.ElementAt(i).Value.Control.ScrollToEnd();
+                                break;
                             }
                         }
                     }
