@@ -5,6 +5,7 @@
     <!--公共-->
     <System:String x:Key="Save">保存</System:String>
     <System:String x:Key="Close">取消</System:String>
+    <System:String x:Key="Exit">退出</System:String>
     <System:String x:Key="OK">确定</System:String>
     <System:String x:Key="Yes">是</System:String>
     <System:String x:Key="No">否</System:String>

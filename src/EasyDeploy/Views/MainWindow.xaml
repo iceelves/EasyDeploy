@@ -8,6 +8,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:EasyDeploy.Views"
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
@@ -19,6 +20,12 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=easyDeploy}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Window.Resources>
         <Style x:Key="WindowMainMaximizedStyle" TargetType="{x:Type Border}">
@@ -139,6 +146,7 @@
                     </Popup>
                 </Grid>
             </Border>
+            <!--工作区-->
             <Grid x:Name="WorkArea" Grid.Row="1" Background="#35363A">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="600" MinWidth="200" MaxWidth="{c:Binding ElementName=easyDeploy,Path=ActualWidth - 200}"/>
@@ -387,15 +395,19 @@
                     </TabControl>
                 </Grid>
             </Grid>
+            <!--系统托盘图标-->
+            <tb:TaskbarIcon 
+                IconSource="{Binding ElementName=easyDeploy,Path=Icon}" 
+                ToolTipText="{Binding ElementName=easyDeploy,Path=Title}">
+                <tb:TaskbarIcon.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{DynamicResource Exit}" Command="{Binding Close}"/>
+                    </ContextMenu>
+                </tb:TaskbarIcon.ContextMenu>
+            </tb:TaskbarIcon>
         </Grid>
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
         </Border.Effect>
     </Border>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=easyDeploy}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 </Window>

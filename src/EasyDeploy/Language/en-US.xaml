@@ -5,6 +5,7 @@
     <!--公共-->
     <System:String x:Key="Save">Save</System:String>
     <System:String x:Key="Close">Close</System:String>
+    <System:String x:Key="Exit">Exit</System:String>
     <System:String x:Key="OK">OK</System:String>
     <System:String x:Key="Yes">Yes</System:String>
     <System:String x:Key="No">No</System:String>
