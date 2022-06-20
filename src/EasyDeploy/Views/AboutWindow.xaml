@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
-        Title="{DynamicResource About}" Height="400" Width="500" Icon="/Images/terminal.png">
+        Title="{DynamicResource About}" Height="400" Width="500" Icon="pack://application:,,,/Images/terminal.ico">
     <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10" Background="Transparent" CornerRadius="5" BorderBrush="#92CAF4" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -34,7 +34,7 @@
             <Border Grid.Row="1" Background="#35363A" CornerRadius="0,0,5,5">
                 <Grid>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Vertical" Margin="0,25">
-                        <Image Source="{Binding ElementName=aboutWindow,Path=Icon}" Height="100" Width="100"/>
+                        <Image Source="pack://application:,,,/Images/terminal.png" Height="100" Width="100"/>
                         <Label x:Name="SystemTitle" Content="{DynamicResource Title}" Foreground="White" FontSize="22" HorizontalAlignment="Center"/>
                         <Label x:Name="SystemVersion" Content="SystemVersion" Foreground="White" FontSize="22" HorizontalAlignment="Center"/>
                     </StackPanel>

@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>terminal.ico</ApplicationIcon>
+    <ApplicationIcon>./Images/terminal.ico</ApplicationIcon>
     <Version>1.0.0.3</Version>
     <Authors>北京冰云信息科技有限公司</Authors>
     <Company>北京冰云信息科技有限公司</Company>
@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\terminal.ico" />
     <None Remove="Images\terminal.png" />
-    <None Remove="terminal.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\terminal.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\terminal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

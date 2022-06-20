@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
-        Title="{DynamicResource AddService}" Height="300" Width="520" Icon="/Images/terminal.png">
+        Title="{DynamicResource AddService}" Height="300" Width="520" Icon="pack://application:,,,/Images/terminal.ico">
     <Window.Resources>
         <!--文本框边框闪烁-->
         <Storyboard x:Key="BlinkAnime">

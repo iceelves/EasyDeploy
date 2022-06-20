@@ -14,7 +14,7 @@
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResize"
         MinHeight="800" MinWidth="1500" Height="800" Width="1500"
         MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
-        Title="{DynamicResource Title}" Icon="/Images/terminal.png">
+        Title="{DynamicResource Title}" Icon="pack://application:,,,/Images/terminal.ico">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" ResizeBorderThickness="5" />
