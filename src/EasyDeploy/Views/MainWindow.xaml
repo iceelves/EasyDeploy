@@ -210,7 +210,6 @@
                                                         <DataTrigger Binding="{Binding ServiceState}" Value="3">
                                                             <Setter Property="Fill" Value="Orange"/>
                                                         </DataTrigger>
-
                                                     </Style.Triggers>
                                                 </Style>
                                             </Ellipse.Style>
@@ -403,7 +402,14 @@
                 DoubleClickCommand="{Binding ShowWindow}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{DynamicResource ShowOrHide}" Command="{Binding ShowOrHide}"/>
+                        <MenuItem Header="{DynamicResource ShowOrHide}" Command="{Binding ShowOrHide}" IsCheckable="{Binding IsVisible}"/>
+                        <MenuItem Header="{DynamicResource Service}" ItemsSource="{Binding Services}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Header" Value="{Binding ServiceName}"/>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
                         <MenuItem Header="{DynamicResource Exit}" Command="{Binding Close}"/>
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
