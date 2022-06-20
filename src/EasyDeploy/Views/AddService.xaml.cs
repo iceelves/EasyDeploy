@@ -1,4 +1,5 @@
-﻿using EasyDeploy.Helpers;
+﻿using EasyDeploy.Controls;
+using EasyDeploy.Helpers;
 using EasyDeploy.Models;
 using Microsoft.Win32;
 using System;
@@ -92,7 +93,14 @@ namespace EasyDeploy.Views
             dialog.Filter = "EXE File|*.exe;*.bat|全部文件|*.*";
             if ((bool)dialog.ShowDialog())
             {
-                ServicePath.Text = IsAbsolutePath ? dialog.FileName : PathHelper.AbsoluteToRelative(dialog.FileName);
+                try
+                {
+                    ServicePath.Text = IsAbsolutePath ? dialog.FileName : PathHelper.AbsoluteToRelative(dialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    IceMessageBox.ShowDialogBox(ex.Message);
+                }
             }
         }
 
@@ -194,7 +202,14 @@ namespace EasyDeploy.Views
                 IsAbsolutePath = false;
                 if (!string.IsNullOrEmpty(ServicePath.Text))
                 {
-                    ServicePath.Text = PathHelper.AbsoluteToRelative(ServicePath.Text);
+                    try
+                    {
+                        ServicePath.Text = PathHelper.AbsoluteToRelative(ServicePath.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        IceMessageBox.ShowDialogBox(ex.Message);
+                    }
                 }
             }
         }
