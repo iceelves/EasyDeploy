@@ -334,6 +334,11 @@ namespace EasyDeploy.ViewModels
                     timer.Enabled = true;
                 }
             }
+            else
+            {
+                // Guid 都获取不到时恢复到默认状态
+                Service.ServiceState = ServiceState.None;
+            }
         }
 
         /// <summary>
