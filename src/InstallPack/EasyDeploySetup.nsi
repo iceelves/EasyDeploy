@@ -19,7 +19,7 @@ SetCompressor lzma
 
 ; MUI 预定义常量
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\EasyDeploy\terminal.ico"
+!define MUI_ICON "..\EasyDeploy\Images\terminal.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 ; 欢迎页面
