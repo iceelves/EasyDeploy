@@ -553,6 +553,43 @@ namespace EasyDeploy.ViewModels
         }
 
         /// <summary>
+        /// 显示窗体
+        /// </summary>
+        public DelegateCommand ShowWindow
+        {
+            get
+            {
+                return new DelegateCommand(delegate ()
+                {
+                    this.window?.Show();
+                    this.window?.Activate();
+                });
+            }
+        }
+
+        /// <summary>
+        /// 显示或隐藏窗体
+        /// </summary>
+        public DelegateCommand ShowOrHide
+        {
+            get
+            {
+                return new DelegateCommand(delegate ()
+                {
+                    if (this.window.IsVisible)
+                    {
+                        this.window?.Hide();
+                    }
+                    else
+                    {
+                        this.window?.Show();
+                        this.window?.Activate();
+                    }
+                });
+            }
+        }
+
+        /// <summary>
         /// 关闭所有服务
         /// </summary>
         private void StopAllService()

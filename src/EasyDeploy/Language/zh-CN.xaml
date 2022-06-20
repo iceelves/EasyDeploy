@@ -10,6 +10,7 @@
     <System:String x:Key="Yes">是</System:String>
     <System:String x:Key="No">否</System:String>
     <System:String x:Key="Cancel">取消</System:String>
+    <System:String x:Key="ShowOrHide">显示/隐藏</System:String>
 
     <!--主界面-->
     <System:String x:Key="Title">轻松部署</System:String>
