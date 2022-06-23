@@ -68,7 +68,7 @@ namespace EasyDeploy.ViewModels
                     if (File.Exists(ServiceSavePath))
                     {
                         var vServiceJson = File.ReadAllText(ServiceSavePath);
-                        SetLog($"Load Config File: {ServiceSavePath}");
+                        SetLog($"Load Service Config File: {Path.GetFileName(ServiceSavePath)}");
                         Services = JsonConvert.DeserializeObject<ObservableCollection<ServiceModel>>(vServiceJson);
                         SetLog($"Get {Services.Count} Services!");
 
@@ -111,7 +111,7 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 服务配置文件保存路径
         /// </summary>
-        private string ServiceSavePath = "ServiceConfig.json";
+        private string ServiceSavePath = $"{AppDomain.CurrentDomain.BaseDirectory}ServiceConfig.json";
 
         /// <summary>
         /// 服务信息集合
