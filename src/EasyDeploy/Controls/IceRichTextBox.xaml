@@ -118,8 +118,11 @@
                 <StaticResource ResourceKey="{x:Type TextBoxBase}"/>
             </Style.BasedOn>
         </Style>
+
+        <!--字体-->
+        <FontFamily x:Key="CascadiaMono">pack://application:,,,/Fonts/#Cascadia Mono</FontFamily>
     </UserControl.Resources>
-    <RichTextBox x:Name="rtb" IsReadOnly="True" BorderThickness="0" FontFamily="Cascadia Mono" IsUndoEnabled="False"
+    <RichTextBox x:Name="rtb" IsReadOnly="True" BorderThickness="0" FontFamily="{StaticResource CascadiaMono}" IsUndoEnabled="False"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
                  helper:RichTextBoxHelper.DocumentXaml="{Binding TerminalDocument,RelativeSource={RelativeSource AncestorType=UserControl}}"
                  Background="{Binding TerminalBackground,RelativeSource={RelativeSource AncestorType=UserControl}}" 

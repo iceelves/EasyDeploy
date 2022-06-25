@@ -13,6 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\CascadiaMono.ttf" />
+    <None Remove="Fonts\CascadiaMonoItalic.ttf" />
     <None Remove="Images\terminal.ico" />
     <None Remove="Images\terminal.png" />
   </ItemGroup>
@@ -32,6 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\CascadiaMono.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\CascadiaMonoItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\terminal.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
