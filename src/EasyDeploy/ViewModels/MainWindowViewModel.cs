@@ -294,6 +294,7 @@ namespace EasyDeploy.ViewModels
                     }
                     if (ServicesShell.ContainsKey(Service.Guid))
                     {
+                        ServicesShell[Service.Guid].Control.Collect();
                         ServicesShell.Remove(Service.Guid);
                     }
                     Service.Pid = null;
@@ -323,6 +324,7 @@ namespace EasyDeploy.ViewModels
                             }
                             if (ServicesShell.ContainsKey(Service.Guid))
                             {
+                                ServicesShell[Service.Guid].Control.Collect();
                                 ServicesShell.Remove(Service.Guid);
                             }
                             Service.Pid = null;

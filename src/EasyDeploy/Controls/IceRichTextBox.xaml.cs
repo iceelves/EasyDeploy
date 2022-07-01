@@ -107,6 +107,15 @@ namespace EasyDeploy.Controls
         }
 
         /// <summary>
+        /// 垃圾回收
+        /// </summary>
+        public void Collect()
+        {
+            ClearText();
+            GC.Collect();
+        }
+
+        /// <summary>
         /// 添加文本
         /// </summary>
         /// <param name="Text"></param>
