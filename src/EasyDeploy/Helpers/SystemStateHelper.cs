@@ -28,7 +28,7 @@ namespace EasyDeploy.Helpers
                     cpuUsage = cpuUsage <= 0 ? 0 : cpuUsage;
 
                     var ramAvailable = RamCounter.NextValue();
-                    var memUsage = Math.Round((TotalMemoryMBytesCapacity - ramAvailable) / TotalMemoryMBytesCapacity, 2) * 100;
+                    var memUsage = Math.Round((TotalMemoryMBytesCapacity - ramAvailable) / TotalMemoryMBytesCapacity, 4) * 100;
                     memUsage = memUsage >= 100 ? 100 : memUsage;
                     memUsage = memUsage <= 0 ? 0 : memUsage;
 
