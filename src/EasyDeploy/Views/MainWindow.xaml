@@ -102,14 +102,14 @@
                         <Label Content="{Binding ElementName=easyDeploy,Path=Title}" Foreground="#FEFEFE" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </StackPanel>
                     <Border Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="150,0" Background="#2E2E2E" CornerRadius="10">
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                        <StackPanel Orientation="Horizontal" Margin="5,0">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Content="{DynamicResource CPU}" Foreground="White" FontSize="12" />
-                                <Label Content="{Binding CpuCounter}" Width="52" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding CpuCounter}" Width="58" Foreground="White" FontSize="12" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Content="{DynamicResource RAM}" Foreground="White" FontSize="12" />
-                                <Label Content="{Binding RamCounter}" Width="52" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding RamCounter}" Width="58" Foreground="White" FontSize="12" />
                             </StackPanel>
                         </StackPanel>
                     </Border>
