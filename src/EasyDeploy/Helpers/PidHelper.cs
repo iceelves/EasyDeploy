@@ -23,9 +23,8 @@ namespace EasyDeploy.Helpers
             {
                 return;
             }
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid);
-            ManagementObjectCollection moc = searcher.Get();
-            foreach (ManagementObject mo in moc)
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher($"Select * From Win32_Process Where ParentProcessID={pid}");
+            foreach (ManagementObject mo in searcher.Get())
             {
                 KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
             }
@@ -68,8 +67,7 @@ namespace EasyDeploy.Helpers
         {
             Dictionary<int, string> dicAllProcess = new Dictionary<int, string>();
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process");
-            ManagementObjectCollection moc = searcher.Get();
-            foreach (ManagementObject mo in moc)
+            foreach (ManagementObject mo in searcher.Get())
             {
                 dicAllProcess.Add(int.Parse($"{mo["ProcessID"]}"), $"{mo["Name"]}");
             }
