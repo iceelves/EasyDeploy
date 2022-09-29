@@ -15,6 +15,8 @@
     <!--主界面-->
     <System:String x:Key="Title">Easy Deploy</System:String>
     <System:String x:Key="DeployService">Deploy Service</System:String>
+    <System:String x:Key="CPU">CPU:</System:String>
+    <System:String x:Key="RAM">RAM:</System:String>
     <System:String x:Key="Add">Add</System:String>
     <System:String x:Key="All">All:</System:String>
     <System:String x:Key="StartState">Start:</System:String>

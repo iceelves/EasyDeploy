@@ -97,10 +97,22 @@
             <!--标题栏-->
             <Border x:Name="TitleBar" Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
                 <Grid>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <Image Source="{Binding ElementName=easyDeploy,Path=Icon}" Width="20" Margin="10,0,5,0"/>
                         <Label Content="{Binding ElementName=easyDeploy,Path=Title}" Foreground="#FEFEFE" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </StackPanel>
+                    <Border Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="150,0" Background="#2E2E2E" CornerRadius="10">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                                <Label Content="{DynamicResource CPU}" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding CpuCounter}" Width="52" Foreground="White" FontSize="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                                <Label Content="{DynamicResource RAM}" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding RamCounter}" Width="52" Foreground="White" FontSize="12" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
                     <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1">
                         <control:SvgButton x:Name="MoreMenus" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
                                            ButtonImage="m1002.98416,498.77581l-472.13262,475.50902c-11.25466,11.25464 -29.82483,11.25464 -41.07949,0l-472.13262,-475.50902c-18.00744,-18.00745 -5.06459,-48.95774 20.25837,-48.95774l944.82798,0c25.88571,0 38.82855,30.95029 20.25837,48.95774zm-31.51302,-165.44337l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042zm0,-205.39739l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042z"

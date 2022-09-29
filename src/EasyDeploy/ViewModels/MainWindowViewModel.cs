@@ -64,6 +64,11 @@ namespace EasyDeploy.ViewModels
                     SetLogLogo();
                     SetLog("Easy Deploy Start!");
 
+                    // 加载 CPU、内存
+                    SystemStateHelper systemState = new SystemStateHelper();
+                    systemState.CpuCounterChange += SystemState_CpuCounterChange;
+                    systemState.RamCounterChange += SystemState_RamCounterChange;
+
                     // 加载服务配置文件
                     if (File.Exists(ServiceSavePath))
                     {
@@ -129,6 +134,16 @@ namespace EasyDeploy.ViewModels
         public ObservableDictionary<string, TabControlTerminalModel> ServicesShell { get; set; } = new ObservableDictionary<string, TabControlTerminalModel>();
 
         /// <summary>
+        /// CPU 计数器
+        /// </summary>
+        public string CpuCounter { get; set; } = "0.00%";
+
+        /// <summary>
+        /// 内存计数器
+        /// </summary>
+        public string RamCounter { get; set; } = "0.00%";
+
+        /// <summary>
         /// 日志 Shell Guid
         /// </summary>
         public string LogShellGuid { get; set; } = Guid.NewGuid().ToString();
@@ -137,6 +152,24 @@ namespace EasyDeploy.ViewModels
         /// 选择服务控制台第几项
         /// </summary>
         public int ServicesShellIndex { get; set; } = 0;
+
+        #region 系统使用率统计
+        /// <summary>
+        /// CPU 使用率
+        /// </summary>
+        private void SystemState_CpuCounterChange(double obj)
+        {
+            CpuCounter = $"{obj:f2}%";
+        }
+
+        /// <summary>
+        /// 内存使用率
+        /// </summary>
+        private void SystemState_RamCounterChange(double obj)
+        {
+            RamCounter = $"{obj:f2}%";
+        }
+        #endregion
 
         #region 终端相关配置
         /// <summary>
