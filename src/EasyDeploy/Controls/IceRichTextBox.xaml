@@ -125,7 +125,7 @@
     <RichTextBox x:Name="rtb" IsReadOnly="True" BorderThickness="0" FontFamily="{StaticResource CascadiaMono}" IsUndoEnabled="False" UndoLimit="0"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
                  helper:RichTextBoxHelper.DocumentXaml="{Binding TerminalDocument,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                 Background="{Binding TerminalBackground,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                 Background="#232323" 
                  Foreground="{Binding TerminalForeground,RelativeSource={RelativeSource AncestorType=UserControl}}" 
                  FontSize="{Binding TerminalFontSize,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 </UserControl>

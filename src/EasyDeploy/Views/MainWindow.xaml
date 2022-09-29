@@ -1,4 +1,5 @@
-﻿<Window x:Class="EasyDeploy.Views.MainWindow" x:Name="easyDeploy"
+﻿<Window x:Class="EasyDeploy.Views.MainWindow"
+        x:Name="easyDeploy"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,147 +12,255 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:EasyDeploy.Views"
         mc:Ignorable="d"
-        AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResize"
-        MinHeight="800" MinWidth="1500" Height="800" Width="1500"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        MinHeight="800"
+        MinWidth="1500"
+        Height="800"
+        Width="1500"
         MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
-        Title="{DynamicResource Title}" Icon="pack://application:,,,/Images/terminal.ico">
-
+        Title="{DynamicResource Title}"
+        Icon="pack://application:,,,/Images/terminal.ico">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="35" ResizeBorderThickness="5" />
+        <WindowChrome CaptionHeight="35"
+                      ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
-
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=easyDeploy}"/>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding ElementName=easyDeploy}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-
     <Window.Resources>
-        <Style x:Key="WindowMainMaximizedStyle" TargetType="{x:Type Border}">
-            <Setter Property="Margin" Value="10" />
+        <Style x:Key="WindowMainMaximizedStyle"
+               TargetType="{x:Type Border}">
+            <Setter Property="Margin"
+                    Value="10" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Maximized">
-                    <Setter Property="Margin" Value="5" />
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}"
+                             Value="Maximized">
+                    <Setter Property="Margin"
+                            Value="5" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Normal">
-                    <Setter Property="Margin" Value="10" />
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}"
+                             Value="Normal">
+                    <Setter Property="Margin"
+                            Value="10" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-
         <!--右上角更多菜单下拉样式-->
-        <SolidColorBrush x:Key="TreeViewItem.MouseOver.Background" Color="#666666" />
-        <SolidColorBrush x:Key="TreeViewItem.MouseOver.Foreground" Color="White" />
-        <ControlTemplate x:Key="Button_Message_Template" TargetType="{x:Type Button}">
-            <Border Background="{TemplateBinding Background}" Cursor="Hand">
+        <SolidColorBrush x:Key="TreeViewItem.MouseOver.Background"
+                         Color="#666666" />
+        <SolidColorBrush x:Key="TreeViewItem.MouseOver.Foreground"
+                         Color="White" />
+        <ControlTemplate x:Key="Button_Message_Template"
+                         TargetType="{x:Type Button}">
+            <Border Background="{TemplateBinding Background}"
+                    Cursor="Hand">
                 <Border x:Name="Bd">
                     <Grid x:Name="Gd">
-                        <Viewbox Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
-                            <Path x:Name="Part_Path" Fill="White"/>
+                        <Viewbox Width="16"
+                                 Height="16"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"
+                                 Margin="20,0,0,0">
+                            <Path x:Name="Part_Path"
+                                  Fill="White" />
                         </Viewbox>
-                        <TextBlock x:Name="Tb" Text="{TemplateBinding Content}" Foreground="White" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" />
+                        <TextBlock x:Name="Tb"
+                                   Text="{TemplateBinding Content}"
+                                   Foreground="White"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Margin="20,0,0,0" />
                     </Grid>
                 </Border>
             </Border>
             <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource TreeViewItem.MouseOver.Background}" />
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter TargetName="Bd"
+                            Property="Background"
+                            Value="{DynamicResource TreeViewItem.MouseOver.Background}" />
                 </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource TreeViewItem.MouseOver.Background}" />
-                    <Setter TargetName="Gd" Property="Background" Value="{DynamicResource TreeViewItem.MouseOver.Background}" />
-                    <Setter TargetName="Tb" Property="Foreground" Value="{DynamicResource TreeViewItem.MouseOver.Foreground}" />
+                <Trigger Property="IsPressed"
+                         Value="True">
+                    <Setter TargetName="Bd"
+                            Property="Background"
+                            Value="{DynamicResource TreeViewItem.MouseOver.Background}" />
+                    <Setter TargetName="Gd"
+                            Property="Background"
+                            Value="{DynamicResource TreeViewItem.MouseOver.Background}" />
+                    <Setter TargetName="Tb"
+                            Property="Foreground"
+                            Value="{DynamicResource TreeViewItem.MouseOver.Foreground}" />
                 </Trigger>
-                <Trigger SourceName="Tb" Property="Text" Value="Setting">
-                    <Setter TargetName="Part_Path" Property="Data" Value="M960 414.72l-81.92-18.432c-6.144-20.48-14.848-39.936-24.576-58.88l44.544-74.24c16.384-26.624 25.088-65.536 0-90.624l-45.056-45.056c-12.288-11.776-28.16-17.92-45.056-17.408-16.896 0-34.304 5.632-47.616 14.336l-72.192 46.08c-18.944-9.728-38.4-17.92-58.368-24.576l-18.432-82.944C605.696 32.768 579.072 0 543.744 0H479.744c-35.328 0-56.832 33.28-64 64l-20.48 81.92c-21.504 6.656-42.496 15.872-62.464 26.112l-73.728-47.104c-13.824-9.216-30.72-14.336-47.616-14.336-16.896-0.512-32.768 5.632-45.056 17.408l-45.056 45.056c-25.088 25.088-16.384 64 0 90.624l46.592 77.824c-8.704 17.92-16.384 35.84-22.528 54.784l-81.92 18.432C32.768 420.352 0 446.976 0 482.304v64c0 35.328 33.28 56.832 64 64l82.944 20.48c5.632 17.408 12.8 34.304 20.992 51.2l-46.592 77.824c-16.384 26.624-25.088 65.536 0 90.624l45.056 45.056c12.288 12.288 28.672 17.408 45.056 17.408 16.896 0 34.304-5.632 47.616-14.336l73.728-47.104c19.968 10.752 40.96 19.456 62.464 26.112l20.48 81.92c7.168 30.72 28.672 64 64 64h64c35.328 0 61.952-32.768 67.584-63.488l18.432-83.456c19.968-6.656 39.424-14.848 57.856-24.064l72.192 46.08c12.8 8.704 30.208 14.336 47.616 14.336 16.896 0.512 33.28-5.632 45.056-17.408l45.056-45.056c25.088-25.088 16.384-64 0-90.624l-44.544-74.24c8.704-17.408 16.896-35.84 23.04-54.784l82.944-20.48c30.72-7.168 64-28.672 64-64V482.304c0.512-35.328-32.768-61.952-62.976-67.584z m-447.488 251.904c-85.504 0-154.624-69.12-154.624-154.112 0-85.504 69.12-154.624 154.624-154.624s154.624 69.12 154.624 154.624c0 84.992-69.12 154.112-154.624 154.112z" />
+                <Trigger SourceName="Tb"
+                         Property="Text"
+                         Value="Setting">
+                    <Setter TargetName="Part_Path"
+                            Property="Data"
+                            Value="M960 414.72l-81.92-18.432c-6.144-20.48-14.848-39.936-24.576-58.88l44.544-74.24c16.384-26.624 25.088-65.536 0-90.624l-45.056-45.056c-12.288-11.776-28.16-17.92-45.056-17.408-16.896 0-34.304 5.632-47.616 14.336l-72.192 46.08c-18.944-9.728-38.4-17.92-58.368-24.576l-18.432-82.944C605.696 32.768 579.072 0 543.744 0H479.744c-35.328 0-56.832 33.28-64 64l-20.48 81.92c-21.504 6.656-42.496 15.872-62.464 26.112l-73.728-47.104c-13.824-9.216-30.72-14.336-47.616-14.336-16.896-0.512-32.768 5.632-45.056 17.408l-45.056 45.056c-25.088 25.088-16.384 64 0 90.624l46.592 77.824c-8.704 17.92-16.384 35.84-22.528 54.784l-81.92 18.432C32.768 420.352 0 446.976 0 482.304v64c0 35.328 33.28 56.832 64 64l82.944 20.48c5.632 17.408 12.8 34.304 20.992 51.2l-46.592 77.824c-16.384 26.624-25.088 65.536 0 90.624l45.056 45.056c12.288 12.288 28.672 17.408 45.056 17.408 16.896 0 34.304-5.632 47.616-14.336l73.728-47.104c19.968 10.752 40.96 19.456 62.464 26.112l20.48 81.92c7.168 30.72 28.672 64 64 64h64c35.328 0 61.952-32.768 67.584-63.488l18.432-83.456c19.968-6.656 39.424-14.848 57.856-24.064l72.192 46.08c12.8 8.704 30.208 14.336 47.616 14.336 16.896 0.512 33.28-5.632 45.056-17.408l45.056-45.056c25.088-25.088 16.384-64 0-90.624l-44.544-74.24c8.704-17.408 16.896-35.84 23.04-54.784l82.944-20.48c30.72-7.168 64-28.672 64-64V482.304c0.512-35.328-32.768-61.952-62.976-67.584z m-447.488 251.904c-85.504 0-154.624-69.12-154.624-154.112 0-85.504 69.12-154.624 154.624-154.624s154.624 69.12 154.624 154.624c0 84.992-69.12 154.112-154.624 154.112z" />
                 </Trigger>
-                <Trigger SourceName="Tb" Property="Text" Value="About">
-                    <Setter TargetName="Part_Path" Property="Data" Value="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m-59.072-512v236.32a54.144 54.144 0 1 0 108.288 0V480a54.144 54.144 0 1 0-108.288 0z m53.76-226.464c-14.72 0-27.232 4.544-37.568 15.136-11.04 9.856-16.192 22.72-16.192 38.656 0 15.136 5.152 28 16.192 38.624 10.336 10.592 22.848 15.904 37.6 15.904a57.6 57.6 0 0 0 39.04-15.168c10.304-10.592 15.456-23.456 15.456-39.36s-5.12-28.8-15.456-38.656c-10.304-10.56-23.584-15.136-39.04-15.136z" />
+                <Trigger SourceName="Tb"
+                         Property="Text"
+                         Value="About">
+                    <Setter TargetName="Part_Path"
+                            Property="Data"
+                            Value="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m-59.072-512v236.32a54.144 54.144 0 1 0 108.288 0V480a54.144 54.144 0 1 0-108.288 0z m53.76-226.464c-14.72 0-27.232 4.544-37.568 15.136-11.04 9.856-16.192 22.72-16.192 38.656 0 15.136 5.152 28 16.192 38.624 10.336 10.592 22.848 15.904 37.6 15.904a57.6 57.6 0 0 0 39.04-15.168c10.304-10.592 15.456-23.456 15.456-39.36s-5.12-28.8-15.456-38.656c-10.304-10.56-23.584-15.136-39.04-15.136z" />
                 </Trigger>
-                <Trigger SourceName="Tb" Property="Text" Value="设置">
-                    <Setter TargetName="Part_Path" Property="Data" Value="M960 414.72l-81.92-18.432c-6.144-20.48-14.848-39.936-24.576-58.88l44.544-74.24c16.384-26.624 25.088-65.536 0-90.624l-45.056-45.056c-12.288-11.776-28.16-17.92-45.056-17.408-16.896 0-34.304 5.632-47.616 14.336l-72.192 46.08c-18.944-9.728-38.4-17.92-58.368-24.576l-18.432-82.944C605.696 32.768 579.072 0 543.744 0H479.744c-35.328 0-56.832 33.28-64 64l-20.48 81.92c-21.504 6.656-42.496 15.872-62.464 26.112l-73.728-47.104c-13.824-9.216-30.72-14.336-47.616-14.336-16.896-0.512-32.768 5.632-45.056 17.408l-45.056 45.056c-25.088 25.088-16.384 64 0 90.624l46.592 77.824c-8.704 17.92-16.384 35.84-22.528 54.784l-81.92 18.432C32.768 420.352 0 446.976 0 482.304v64c0 35.328 33.28 56.832 64 64l82.944 20.48c5.632 17.408 12.8 34.304 20.992 51.2l-46.592 77.824c-16.384 26.624-25.088 65.536 0 90.624l45.056 45.056c12.288 12.288 28.672 17.408 45.056 17.408 16.896 0 34.304-5.632 47.616-14.336l73.728-47.104c19.968 10.752 40.96 19.456 62.464 26.112l20.48 81.92c7.168 30.72 28.672 64 64 64h64c35.328 0 61.952-32.768 67.584-63.488l18.432-83.456c19.968-6.656 39.424-14.848 57.856-24.064l72.192 46.08c12.8 8.704 30.208 14.336 47.616 14.336 16.896 0.512 33.28-5.632 45.056-17.408l45.056-45.056c25.088-25.088 16.384-64 0-90.624l-44.544-74.24c8.704-17.408 16.896-35.84 23.04-54.784l82.944-20.48c30.72-7.168 64-28.672 64-64V482.304c0.512-35.328-32.768-61.952-62.976-67.584z m-447.488 251.904c-85.504 0-154.624-69.12-154.624-154.112 0-85.504 69.12-154.624 154.624-154.624s154.624 69.12 154.624 154.624c0 84.992-69.12 154.112-154.624 154.112z" />
+                <Trigger SourceName="Tb"
+                         Property="Text"
+                         Value="设置">
+                    <Setter TargetName="Part_Path"
+                            Property="Data"
+                            Value="M960 414.72l-81.92-18.432c-6.144-20.48-14.848-39.936-24.576-58.88l44.544-74.24c16.384-26.624 25.088-65.536 0-90.624l-45.056-45.056c-12.288-11.776-28.16-17.92-45.056-17.408-16.896 0-34.304 5.632-47.616 14.336l-72.192 46.08c-18.944-9.728-38.4-17.92-58.368-24.576l-18.432-82.944C605.696 32.768 579.072 0 543.744 0H479.744c-35.328 0-56.832 33.28-64 64l-20.48 81.92c-21.504 6.656-42.496 15.872-62.464 26.112l-73.728-47.104c-13.824-9.216-30.72-14.336-47.616-14.336-16.896-0.512-32.768 5.632-45.056 17.408l-45.056 45.056c-25.088 25.088-16.384 64 0 90.624l46.592 77.824c-8.704 17.92-16.384 35.84-22.528 54.784l-81.92 18.432C32.768 420.352 0 446.976 0 482.304v64c0 35.328 33.28 56.832 64 64l82.944 20.48c5.632 17.408 12.8 34.304 20.992 51.2l-46.592 77.824c-16.384 26.624-25.088 65.536 0 90.624l45.056 45.056c12.288 12.288 28.672 17.408 45.056 17.408 16.896 0 34.304-5.632 47.616-14.336l73.728-47.104c19.968 10.752 40.96 19.456 62.464 26.112l20.48 81.92c7.168 30.72 28.672 64 64 64h64c35.328 0 61.952-32.768 67.584-63.488l18.432-83.456c19.968-6.656 39.424-14.848 57.856-24.064l72.192 46.08c12.8 8.704 30.208 14.336 47.616 14.336 16.896 0.512 33.28-5.632 45.056-17.408l45.056-45.056c25.088-25.088 16.384-64 0-90.624l-44.544-74.24c8.704-17.408 16.896-35.84 23.04-54.784l82.944-20.48c30.72-7.168 64-28.672 64-64V482.304c0.512-35.328-32.768-61.952-62.976-67.584z m-447.488 251.904c-85.504 0-154.624-69.12-154.624-154.112 0-85.504 69.12-154.624 154.624-154.624s154.624 69.12 154.624 154.624c0 84.992-69.12 154.112-154.624 154.112z" />
                 </Trigger>
-                <Trigger SourceName="Tb" Property="Text" Value="关于">
-                    <Setter TargetName="Part_Path" Property="Data" Value="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m-59.072-512v236.32a54.144 54.144 0 1 0 108.288 0V480a54.144 54.144 0 1 0-108.288 0z m53.76-226.464c-14.72 0-27.232 4.544-37.568 15.136-11.04 9.856-16.192 22.72-16.192 38.656 0 15.136 5.152 28 16.192 38.624 10.336 10.592 22.848 15.904 37.6 15.904a57.6 57.6 0 0 0 39.04-15.168c10.304-10.592 15.456-23.456 15.456-39.36s-5.12-28.8-15.456-38.656c-10.304-10.56-23.584-15.136-39.04-15.136z" />
+                <Trigger SourceName="Tb"
+                         Property="Text"
+                         Value="关于">
+                    <Setter TargetName="Part_Path"
+                            Property="Data"
+                            Value="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m-59.072-512v236.32a54.144 54.144 0 1 0 108.288 0V480a54.144 54.144 0 1 0-108.288 0z m53.76-226.464c-14.72 0-27.232 4.544-37.568 15.136-11.04 9.856-16.192 22.72-16.192 38.656 0 15.136 5.152 28 16.192 38.624 10.336 10.592 22.848 15.904 37.6 15.904a57.6 57.6 0 0 0 39.04-15.168c10.304-10.592 15.456-23.456 15.456-39.36s-5.12-28.8-15.456-38.656c-10.304-10.56-23.584-15.136-39.04-15.136z" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        <Style x:Key="Button_Message" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#02FFFFFF" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Width" Value="125" />
-            <Setter Property="Height" Value="35" />
-            <Setter Property="Template" Value="{StaticResource Button_Message_Template}" />
+        <Style x:Key="Button_Message"
+               TargetType="{x:Type Button}">
+            <Setter Property="Background"
+                    Value="#02FFFFFF" />
+            <Setter Property="BorderBrush"
+                    Value="Transparent" />
+            <Setter Property="Foreground"
+                    Value="Black" />
+            <Setter Property="FontSize"
+                    Value="12" />
+            <Setter Property="Width"
+                    Value="125" />
+            <Setter Property="Height"
+                    Value="35" />
+            <Setter Property="Template"
+                    Value="{StaticResource Button_Message_Template}" />
         </Style>
     </Window.Resources>
-
-    <Border x:Name="BaseBorder" Style="{StaticResource WindowMainMaximizedStyle}" SnapsToDevicePixels="True">
+    <Border x:Name="BaseBorder"
+            Style="{StaticResource WindowMainMaximizedStyle}"
+            SnapsToDevicePixels="True">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <!--标题栏-->
-            <Border x:Name="TitleBar" Grid.Row="0" Background="#4C4A48" SnapsToDevicePixels="True" CornerRadius="5,5,0,0">
+            <Border x:Name="TitleBar"
+                    Grid.Row="0"
+                    Background="#4C4A48"
+                    SnapsToDevicePixels="True"
+                    CornerRadius="5,5,0,0">
                 <Grid>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <Image Source="{Binding ElementName=easyDeploy,Path=Icon}" Width="20" Margin="10,0,5,0"/>
-                        <Label Content="{Binding ElementName=easyDeploy,Path=Title}" Foreground="#FEFEFE" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                        <Image Source="{Binding ElementName=easyDeploy,Path=Icon}"
+                               Width="20"
+                               Margin="10,0,5,0" />
+                        <Label Content="{Binding ElementName=easyDeploy,Path=Title}"
+                               Foreground="#FEFEFE"
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left" />
                     </StackPanel>
-                    <Border Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="150,0" Background="#2E2E2E" CornerRadius="10">
-                        <StackPanel Orientation="Horizontal" Margin="5,0">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Label Content="{DynamicResource CPU}" Foreground="White" FontSize="12" />
-                                <Label Content="{Binding CpuCounter}" Width="58" Foreground="White" FontSize="12" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Label Content="{DynamicResource RAM}" Foreground="White" FontSize="12" />
-                                <Label Content="{Binding RamCounter}" Width="58" Foreground="White" FontSize="12" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-                    <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1">
-                        <control:SvgButton x:Name="MoreMenus" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
+                    <StackPanel WindowChrome.IsHitTestVisibleInChrome="True"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="10,1">
+                        <control:SvgButton x:Name="MoreMenus"
+                                           Width="30"
+                                           Height="25"
+                                           ImageMargin="5"
                                            ButtonImage="m1002.98416,498.77581l-472.13262,475.50902c-11.25466,11.25464 -29.82483,11.25464 -41.07949,0l-472.13262,-475.50902c-18.00744,-18.00745 -5.06459,-48.95774 20.25837,-48.95774l944.82798,0c25.88571,0 38.82855,30.95029 20.25837,48.95774zm-31.51302,-165.44337l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042zm0,-205.39739l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042z"
-                                           NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
-                                           Click="MoreMenus_Click"/>
-                        <control:SvgButton x:Name="mainMinimize" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="7"
+                                           NormalFill="White"
+                                           IsMouseOverFill="White"
+                                           IsMouseOverBackground="#575553"
+                                           Click="MoreMenus_Click" />
+                        <control:SvgButton x:Name="mainMinimize"
+                                           Width="30"
+                                           Height="25"
+                                           ImageMargin="7"
                                            ButtonImage="M96 417.984h832v188.032h-832z"
-                                           NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
-                                           Click="Minimize_Click"/>
-                        <control:SvgButton x:Name="mainMaximization" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
-                                           NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
+                                           NormalFill="White"
+                                           IsMouseOverFill="White"
+                                           IsMouseOverBackground="#575553"
+                                           Click="Minimize_Click" />
+                        <control:SvgButton x:Name="mainMaximization"
+                                           Width="30"
+                                           Height="25"
+                                           ImageMargin="5"
+                                           NormalFill="White"
+                                           IsMouseOverFill="White"
+                                           IsMouseOverBackground="#575553"
                                            Click="Maximization_Click">
                             <control:SvgButton.Style>
-                                <Style TargetType="{x:Type control:SvgButton}" BasedOn="{StaticResource {x:Type control:SvgButton}}">
+                                <Style TargetType="{x:Type control:SvgButton}"
+                                       BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Maximized">
-                                            <Setter Property="ButtonImage" Value="M146.285714 804.571429h731.428572V365.714286H146.285714v438.857143zM1024 164.571429v694.857142c0 50.285714-41.142857 91.428571-91.428571 91.428572h-841.142858A91.684571 91.684571 0 0 1 0 859.428571v-694.857142C0 114.285714 41.142857 73.142857 91.428571 73.142857h841.142858C982.857143 73.142857 1024 114.285714 1024 164.571429z" />
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}"
+                                                     Value="Maximized">
+                                            <Setter Property="ButtonImage"
+                                                    Value="M146.285714 804.571429h731.428572V365.714286H146.285714v438.857143zM1024 164.571429v694.857142c0 50.285714-41.142857 91.428571-91.428571 91.428572h-841.142858A91.684571 91.684571 0 0 1 0 859.428571v-694.857142C0 114.285714 41.142857 73.142857 91.428571 73.142857h841.142858C982.857143 73.142857 1024 114.285714 1024 164.571429z" />
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Normal">
-                                            <Setter Property="ButtonImage" Value="M735.786833 62.98859 288.310382 62.98859c-123.567293 0-223.738737 100.164281-223.738737 223.738737l0 447.476451c0 123.555014 100.17042 223.751017 223.738737 223.751017l447.476451 0c123.561154 0 223.738737-100.196003 223.738737-223.751017L959.52557 286.727327C959.52557 163.15287 859.347986 62.98859 735.786833 62.98859zM831.694159 702.260252c0 70.612221-57.238632 127.850853-127.850853 127.850853L320.292793 830.111105c-70.612221 0-127.850853-57.238632-127.850853-127.850853L192.44194 318.708715c0-70.612221 57.238632-127.850853 127.850853-127.850853l383.551536 0c70.612221 0 127.850853 57.238632 127.850853 127.850853L831.695183 702.260252z" />
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}"
+                                                     Value="Normal">
+                                            <Setter Property="ButtonImage"
+                                                    Value="M735.786833 62.98859 288.310382 62.98859c-123.567293 0-223.738737 100.164281-223.738737 223.738737l0 447.476451c0 123.555014 100.17042 223.751017 223.738737 223.751017l447.476451 0c123.561154 0 223.738737-100.196003 223.738737-223.751017L959.52557 286.727327C959.52557 163.15287 859.347986 62.98859 735.786833 62.98859zM831.694159 702.260252c0 70.612221-57.238632 127.850853-127.850853 127.850853L320.292793 830.111105c-70.612221 0-127.850853-57.238632-127.850853-127.850853L192.44194 318.708715c0-70.612221 57.238632-127.850853 127.850853-127.850853l383.551536 0c70.612221 0 127.850853 57.238632 127.850853 127.850853L831.695183 702.260252z" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </control:SvgButton.Style>
                         </control:SvgButton>
-                        <control:SvgButton x:Name="mainClose" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
+                        <control:SvgButton x:Name="mainClose"
+                                           Width="30"
+                                           Height="25"
+                                           Margin="0,0,0,0"
+                                           ImageMargin="5"
                                            ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
-                                           NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
-                                           Command="{Binding Close}"/>
+                                           NormalFill="White"
+                                           IsMouseOverFill="White"
+                                           IsMouseOverBackground="#D8605A"
+                                           Command="{Binding Close}" />
                     </StackPanel>
-                    <Popup x:Name="popup_Menu" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="10" HorizontalOffset="-36" StaysOpen="False"
-                           IsOpen="False" PlacementTarget="{Binding ElementName=MoreMenus}" Placement="Bottom">
+                    <Popup x:Name="popup_Menu"
+                           AllowsTransparency="True"
+                           PopupAnimation="Slide"
+                           VerticalOffset="10"
+                           HorizontalOffset="-36"
+                           StaysOpen="False"
+                           IsOpen="False"
+                           PlacementTarget="{Binding ElementName=MoreMenus}"
+                           Placement="Bottom">
                         <Popup.Child>
                             <Grid>
-                                <Border BorderBrush="#92CAF4" BorderThickness="1" Opacity="0.5"></Border>
-                                <Border Background="#35363A" Margin="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                <Border BorderBrush="#92CAF4"
+                                        BorderThickness="1"
+                                        Opacity="0.5"></Border>
+                                <Border Background="#35363A"
+                                        Margin="1"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch" />
                                 <StackPanel Margin="1">
-                                    <Button Content="{DynamicResource Setting}" Style="{StaticResource Button_Message}" Command="{Binding Settings}"/>
-                                    <Button Content="{DynamicResource About}" Style="{StaticResource Button_Message}" Command="{Binding About}"/>
+                                    <Button Content="{DynamicResource Setting}"
+                                            Style="{StaticResource Button_Message}"
+                                            Command="{Binding Settings}" />
+                                    <Button Content="{DynamicResource About}"
+                                            Style="{StaticResource Button_Message}"
+                                            Command="{Binding About}" />
                                 </StackPanel>
                             </Grid>
                         </Popup.Child>
@@ -159,68 +268,134 @@
                 </Grid>
             </Border>
             <!--工作区-->
-            <Grid x:Name="WorkArea" Grid.Row="1" Background="#35363A">
+            <Grid x:Name="WorkArea"
+                  Grid.Row="1"
+                  Background="#35363A">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="600" MinWidth="200" MaxWidth="{c:Binding ElementName=easyDeploy,Path=ActualWidth - 200}"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*" MinWidth="200"/>
+                    <ColumnDefinition Width="600"
+                                      MinWidth="200"
+                                      MaxWidth="{c:Binding ElementName=easyDeploy,Path=ActualWidth - 200}" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*"
+                                      MinWidth="200" />
                 </Grid.ColumnDefinitions>
                 <!--配置列表-->
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Margin="10 0 10 0">
-                        <DockPanel>
-                            <Label Content="{DynamicResource DeployService}" Foreground="White" FontSize="12" VerticalAlignment="Center"/>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
-                                <Label Content="{DynamicResource All}" Foreground="White" FontSize="12" />
-                                <Label Content="{c:Binding Services.Count}" Foreground="White" FontSize="12"/>
+                    <Grid Margin="5" Grid.Row="1" HorizontalAlignment="Stretch">
+                        <Border Height="25"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Background="#5a5a5a"
+                                CornerRadius="4">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Foreground="#dddddd"
+                                           FontSize="12"
+                                           Margin="15 0 15 0"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center">
+                                        <Run Text="{DynamicResource All}"></Run>
+                                        <Run Text="{c:Binding Services.Count,Mode=OneWay}"
+                                             Foreground="#AAAAAA"></Run></TextBlock>
+                                <TextBlock Foreground="#dddddd"
+                                           FontSize="12"
+                                           Margin="0 0 15 0"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center">
+                                        <Run Text="{DynamicResource StartState}"></Run>
+                                        <Run Text="{c:Binding ServicesResources.Count,Mode=OneWay}"
+                                             Foreground="#AAAAAA"></Run></TextBlock>
+                                <TextBlock Foreground="#dddddd"
+                                           FontSize="12"
+                                           Margin="0 0 15 0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center">
+                                        <Run Text="{DynamicResource CPU}"></Run>
+                                        <Run Text="{Binding CpuCounter}"
+                                             Foreground="#AAAAAA"></Run></TextBlock>
+                                <TextBlock Foreground="#dddddd"
+                                           FontSize="12"
+                                           Margin="0 0 15 0"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center">
+                                        <Run Text="{DynamicResource RAM}"></Run>
+                                        <Run Text="{Binding RamCounter}"
+                                             Foreground="#AAAAAA"></Run></TextBlock>
+
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
-                                <Label Content="{DynamicResource StartState}" Foreground="White" FontSize="12" />
-                                <Label Content="{c:Binding ServicesResources.Count}" Foreground="White" FontSize="12" />
-                            </StackPanel>
-                        </DockPanel>
-                        <control:IceButton x:Name="AddService" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Content="{DynamicResource Add}" 
-                                                   Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12" Cursor="Hand"
-                                                   Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Command="{Binding AddService}"/>
+                        </Border>
+                        <control:SvgButton Width="20"
+                                           Height="20"
+                                           Margin="0 0 5 0"
+                                           ButtonImage="M512 936.915619c-234.672764 0-424.915619-190.243879-424.915619-424.915619S277.327236 87.083357 512 87.083357c234.676857 0 424.916643 190.243879 424.916643 424.915619S746.676857 936.915619 512 936.915619zM724.45781 469.50414 554.491767 469.50414 554.491767 299.546284l-84.983533 0 0 169.957857L299.54219 469.50414l0 84.99172 169.966043 0 0 169.966043 84.983533 0L554.491767 554.49586l169.966043 0L724.45781 469.50414z"
+                                           NormalFill="#eeeeee"
+                                           IsMouseOverFill="White"
+                                           HorizontalAlignment="Right"
+                                           IsMouseOverBackground="#575553"
+                                           Command="{Binding AddService}" />
                     </Grid>
-                    <control:IceDataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" x:Name="grid" BorderThickness="0" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" AlternationCount="2" ItemsSource="{Binding Services}">
+                    <control:IceDataGrid HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Grid.Row="0"
+                                         x:Name="grid"
+                                         BorderThickness="0"
+                                         GridLinesVisibility="None"
+                                         AutoGenerateColumns="False"
+                                         CanUserAddRows="False"
+                                         SelectionMode="Single"
+                                         AlternationCount="2"
+                                         ItemsSource="{Binding Services}">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn IsReadOnly="True" Width="60">
+                            <DataGridTemplateColumn IsReadOnly="True"
+                                                    Width="60">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock Text="{DynamicResource State}" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Ellipse x:Name="ServiceType" Width="14" Height="14">
+                                        <Ellipse x:Name="ServiceType"
+                                                 Width="14"
+                                                 Height="14">
                                             <Ellipse.Style>
                                                 <Style TargetType="Ellipse">
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ServiceState}" Value="0">
-                                                            <Setter Property="Fill" Value="Gray"/>
+                                                        <DataTrigger Binding="{Binding ServiceState}"
+                                                                     Value="0">
+                                                            <Setter Property="Fill"
+                                                                    Value="Gray" />
                                                         </DataTrigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
-                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="False"/>
+                                                                <Condition Binding="{Binding ServiceState}"
+                                                                           Value="1" />
+                                                                <Condition Binding="{c:Binding '(Pid == null)'}"
+                                                                           Value="False" />
                                                             </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Fill" Value="Lime"/>
+                                                            <Setter Property="Fill"
+                                                                    Value="Lime" />
                                                         </MultiDataTrigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{Binding ServiceState}" Value="1"/>
-                                                                <Condition Binding="{c:Binding '(Pid == null)'}" Value="True"/>
+                                                                <Condition Binding="{Binding ServiceState}"
+                                                                           Value="1" />
+                                                                <Condition Binding="{c:Binding '(Pid == null)'}"
+                                                                           Value="True" />
                                                             </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Fill" Value="Orange"/>
+                                                            <Setter Property="Fill"
+                                                                    Value="Orange" />
                                                         </MultiDataTrigger>
-                                                        <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                            <Setter Property="Fill" Value="Red"/>
+                                                        <DataTrigger Binding="{Binding ServiceState}"
+                                                                     Value="2">
+                                                            <Setter Property="Fill"
+                                                                    Value="Red" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding ServiceState}" Value="3">
-                                                            <Setter Property="Fill" Value="Orange"/>
+                                                        <DataTrigger Binding="{Binding ServiceState}"
+                                                                     Value="3">
+                                                            <Setter Property="Fill"
+                                                                    Value="Orange" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -229,129 +404,206 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                            <DataGridTemplateColumn IsReadOnly="True"
+                                                    Width="*">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock Text="{DynamicResource Service}" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label Foreground="White" Content="{Binding ServiceName}" ToolTip="{Binding ServiceName}"/>
+                                        <Label Foreground="White"
+                                               Content="{Binding ServiceName}"
+                                               ToolTip="{Binding ServiceName}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                            <DataGridTemplateColumn IsReadOnly="True"
+                                                    Width="*">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock Text="{DynamicResource Pid}" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label Foreground="White" Content="{Binding Pid}" ToolTip="{Binding Pid}"/>
+                                        <Label Foreground="White"
+                                               Content="{Binding Pid}"
+                                               ToolTip="{Binding Pid}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn IsReadOnly="True" Width="*">
+                            <DataGridTemplateColumn IsReadOnly="True"
+                                                    Width="*">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock Text="{DynamicResource Port}" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label Foreground="White" Content="{Binding Port}" ToolTip="{Binding Port}"/>
+                                        <Label Foreground="White"
+                                               Content="{Binding Port}"
+                                               ToolTip="{Binding Port}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="310">
+                            <DataGridTemplateColumn Width="3*">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock Text="{DynamicResource Actions}" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                            <control:IceButton x:Name="Start" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Start}"
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.StartService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                        <StackPanel Orientation="Horizontal"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center">
+                                            <control:SvgButton Width="23"
+                                                               Height="23"
+                                                               Margin="5 2 5 0"
+                                                               ButtonImage="M510.171429 919.771429c-226.742857 0-411.428571-184.685714-411.428572-411.428572S283.428571 96.914286 510.171429 96.914286 921.6 281.6 921.6 508.342857 736.914286 919.771429 510.171429 919.771429zM548.571429 230.4h-74.971429v266.971429H548.571429V230.4z m230.4 213.942857c-5.485714-21.942857-12.8-42.057143-23.771429-62.171428-10.971429-20.114286-21.942857-38.4-36.571429-54.857143-14.628571-16.457143-42.057143-40.228571-42.057142-40.228572s0 1.828571-40.228572 43.885715c64 40.228571 98.742857 104.228571 98.742857 184.685714 0 122.514286-100.571429 223.085714-223.085714 223.085714s-223.085714-100.571429-223.085714-223.085714c0-76.8 38.4-144.457143 98.742857-184.685714L347.428571 288.914286s-32.914286 27.428571-47.542857 43.885714c-14.628571 16.457143-25.6 34.742857-34.742857 53.028571s-16.457143 38.4-21.942857 60.342858c-5.485714 20.114286-7.314286 42.057143-7.314286 64 0 38.4 7.314286 74.971429 21.942857 107.885714 14.628571 32.914286 34.742857 62.171429 60.342858 87.771428s54.857143 43.885714 87.771428 60.342858 69.485714 21.942857 107.885714 21.942857c38.4 0 74.971429-7.314286 107.885715-21.942857 32.914286-14.628571 62.171429-34.742857 87.771428-60.342858s43.885714-54.857143 60.342857-87.771428c14.628571-32.914286 21.942857-69.485714 21.942858-107.885714-5.485714-21.942857-7.314286-45.714286-12.8-65.828572z"
+                                                               IsMouseOverBackground="Transparent"
+                                                               Command="{Binding Path=DataContext.StartService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"
+                                                               CommandParameter="{Binding}"
+                                                               IsMouseOverFill="GreenYellow">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}"
+                                                           BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="0">
-                                                                <Setter Property="IsEnabled" Value="True"/>
-                                                                <Setter Property="Foreground" Value="LimeGreen"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="0">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="True" />
+                                                                <Setter Property="NormalFill"
+                                                                        Value="LimeGreen" />
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="1">
-                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="1">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="False" />
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                <Setter Property="IsEnabled" Value="False"/>
-                                                                <Setter Property="Foreground" Value="LimeGreen"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="2">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="False" />
+                                                                <Setter Property="NormalFill"
+                                                                        Value="LimeGreen" />
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
-                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="3">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="False" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Stop" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Stop}"
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.StopService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+
+                                            <control:SvgButton Width="24"
+                                                               Margin="5 0 5 0"
+                                                               Height="24"
+                                                               ButtonImage="M512 149.333333c200.298667 0 362.666667 162.368 362.666667 362.666667s-162.368 362.666667-362.666667 362.666667S149.333333 712.298667 149.333333 512 311.701333 149.333333 512 149.333333z m53.333333 256h-106.666666a53.333333 53.333333 0 0 0-53.333334 53.333334v106.666666a53.333333 53.333333 0 0 0 53.333334 53.333334h106.666666a53.333333 53.333333 0 0 0 53.333334-53.333334v-106.666666a53.333333 53.333333 0 0 0-53.333334-53.333334z"
+                                                               IsMouseOverBackground="Transparent"
+                                                               Command="{Binding Path=DataContext.StopService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"
+                                                               CommandParameter="{Binding}"
+                                                               IsMouseOverFill="GreenYellow">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}"
+                                                           BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="0">
-                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="0">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="False" />
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="1">
-                                                                <Setter Property="IsEnabled" Value="True"/>
-                                                                <Setter Property="Foreground" Value="Tomato"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="1">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="True" />
+                                                                <Setter Property="NormalFill"
+                                                                        Value="Tomato" />
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="2">
-                                                                <Setter Property="IsEnabled" Value="True"/>
-                                                                <Setter Property="Foreground" Value="Tomato"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="2">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="True" />
+                                                                <Setter Property="NormalFill"
+                                                                        Value="Tomato" />
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ServiceState}" Value="3">
-                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            <DataTrigger Binding="{Binding ServiceState}"
+                                                                         Value="3">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="False" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Shell}" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+
+
+                                            <control:SvgButton Width="24"
+                                                               Margin="5 2 5 0"
+                                                               Height="24"
+                                                               ButtonImage="M128 128h768a42.666667 42.666667 0 0 1 42.666667 42.666667v682.666666a42.666667 42.666667 0 0 1-42.666667 42.666667H128a42.666667 42.666667 0 0 1-42.666667-42.666667V170.666667a42.666667 42.666667 0 0 1 42.666667-42.666667z m42.666667 85.333333v597.333334h682.666666V213.333333H170.666667z m341.333333 426.666667h256v85.333333h-256v-85.333333z m-142.208-128L249.088 391.338667l60.373333-60.373334L490.453333 512l-180.992 181.034667-60.373333-60.373334L369.792 512z"
+                                                               IsMouseOverBackground="Transparent"
+                                                               NormalFill="White"
+                                                               Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"
+                                                               CommandParameter="{Binding}"
+                                                               IsMouseOverFill="GreenYellow">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}"
+                                                           BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{c:Binding '(Pid == null)'}" Value="True">
-                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            <DataTrigger Binding="{c:Binding '(Pid == null)'}"
+                                                                         Value="True">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="False" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Browse}" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="#FFE589" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+
+
+                                            <control:SvgButton Width="24"
+                                                               Margin="5 0 5 0"
+                                                               Height="24"
+                                                               ButtonImage="M460.650667 192a64 64 0 0 1 62.485333 50.133333l3.093333 13.866667H789.333333a64 64 0 0 1 64 64v448a64 64 0 0 1-64 64H234.666667a64 64 0 0 1-64-64V256a64 64 0 0 1 64-64h225.984zM746.666667 640H277.333333v64h469.333334v-64z m42.666666-320H540.437333l9.493334 42.666667H789.333333v-42.666667z"
+                                                               NormalFill="White"
+                                                               IsMouseOverBackground="Transparent"
+                                                               Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"
+                                                               CommandParameter="{Binding}"
+                                                               IsMouseOverFill="GreenYellow">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}"
+                                                           BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding AllowDirectoryToOpen}" Value="False">
-                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            <DataTrigger Binding="{Binding AllowDirectoryToOpen}"
+                                                                         Value="False">
+                                                                <Setter Property="IsEnabled"
+                                                                        Value="False" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Edit}" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.EditService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
-                                            <control:IceButton x:Name="Delete" Width="25" Height="24" VerticalAlignment="Center" Margin="2,0" Content="X" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="Tomato" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.DeleteService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+
+
+                                            <control:SvgButton Width="24"
+                                                               Margin="5 0 5 0"
+                                                               Height="24"
+                                                               ButtonImage="M880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32zM257.7 752c2 0 4-0.2 6-0.5L431.9 722c2-0.4 3.9-1.3 5.3-2.8l423.9-423.9c3.9-3.9 3.9-10.2 0-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2c-1.9 11.1 1.5 21.9 9.4 29.8 6.6 6.4 14.9 9.9 23.8 9.9z"
+                                                               NormalFill="White"
+                                                               Command="{Binding Path=DataContext.EditService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"
+                                                               CommandParameter="{Binding}"
+                                                               IsMouseOverBackground="Transparent"
+                                                               IsMouseOverFill="GreenYellow" />
+
+
+                                            <control:SvgButton Width="22"
+                                                               Margin="5 3 5 0"
+                                                               Height="22"
+                                                               ButtonImage="M861.184 192.512q30.72 0 50.688 10.24t31.744 25.6 16.384 33.28 4.608 33.28q0 7.168-0.512 11.264t-0.512 7.168l0 6.144-67.584 0 0 537.6q0 20.48-8.192 39.424t-23.552 33.28-37.376 23.04-50.688 8.704l-456.704 0q-26.624 0-50.176-8.192t-40.448-23.04-26.624-35.84-9.728-47.616l0-527.36-63.488 0q-1.024-1.024-1.024-5.12-1.024-5.12-1.024-31.744 0-13.312 6.144-29.696t18.432-30.208 31.744-23.04 46.08-9.216l91.136 0 0-62.464q0-26.624 18.432-45.568t45.056-18.944l320.512 0q35.84 0 49.664 18.944t13.824 45.568l0 63.488q21.504 1.024 46.08 1.024l47.104 0zM384 192.512l320.512 0 0-64.512-320.512 0 0 64.512zM352.256 840.704q32.768 0 32.768-41.984l0-475.136-63.488 0 0 475.136q0 21.504 6.656 31.744t24.064 10.24zM545.792 839.68q17.408 0 23.552-9.728t6.144-31.232l0-475.136-63.488 0 0 475.136q0 40.96 33.792 40.96zM738.304 837.632q18.432 0 24.576-9.728t6.144-31.232l0-473.088-64.512 0 0 473.088q0 40.96 33.792 40.96z"
+                                                               NormalFill="White"
+                                                               Command="{Binding Path=DataContext.DeleteService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"
+                                                               CommandParameter="{Binding}"
+                                                               IsMouseOverBackground="Transparent"
+                                                               IsMouseOverFill="GreenYellow" />
+
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -359,26 +611,25 @@
                         </DataGrid.Columns>
                     </control:IceDataGrid>
                 </Grid>
-
                 <!--网格分隔-->
-                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="6">
+                <GridSplitter Grid.Column="1"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              Width="6"
+                              Margin="-6 0 0 0">
                     <GridSplitter.Style>
                         <Style TargetType="GridSplitter">
                             <Style.Triggers>
-                                <Trigger Property="VerticalAlignment" Value="Stretch">
-                                    <Setter Property="BorderThickness" Value="1,0,1,0"></Setter>
-                                    <Setter Property="BorderBrush" Value="LightGray"></Setter>
-                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                <Trigger Property="VerticalAlignment"
+                                         Value="Stretch">
+                                    <Setter Property="HorizontalAlignment"
+                                            Value="Center"></Setter>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type GridSplitter}">
                                                 <Grid Background="Transparent">
                                                     <Canvas VerticalAlignment="Center">
-                                                        <StackPanel Orientation="Vertical" >
-                                                            <Ellipse Width="4" Height="4" Fill="LightGray" Margin="1,2"/>
-                                                            <Ellipse Width="4" Height="4" Fill="LightGray" Margin="1,2"/>
-                                                            <Ellipse Width="4" Height="4" Fill="LightGray" Margin="1,2"/>
-                                                        </StackPanel>
+                                                        <StackPanel Orientation="Vertical"></StackPanel>
                                                     </Canvas>
                                                 </Grid>
                                             </ControlTemplate>
@@ -389,29 +640,31 @@
                         </Style>
                     </GridSplitter.Style>
                 </GridSplitter>
-
                 <!--控制台信息-->
                 <Grid Grid.Column="2">
-                    <TabControl Background="Transparent" BorderThickness="0" Padding="0" ItemsSource="{Binding ServicesShell}" SelectedIndex="{Binding ServicesShellIndex}">
+                    <TabControl Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0"
+                                ItemsSource="{Binding ServicesShell}"
+                                SelectedIndex="{Binding ServicesShellIndex}">
                         <TabControl.ItemTemplate>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding Value.Header}"/>
+                                <ContentPresenter Content="{Binding Value.Header}" />
                             </DataTemplate>
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding Value.Control}"/>
+                                <ContentControl Content="{Binding Value.Control}" />
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
                 </Grid>
             </Grid>
             <!--系统托盘图标-->
-            <tb:TaskbarIcon 
-                IconSource="{Binding ElementName=easyDeploy,Path=Icon}" 
-                ToolTipText="{Binding ElementName=easyDeploy,Path=Title}"
-                LeftClickCommand="{Binding ShowWindow}"
-                DoubleClickCommand="{Binding ShowWindow}">
+            <tb:TaskbarIcon IconSource="{Binding ElementName=easyDeploy,Path=Icon}"
+                            ToolTipText="{Binding ElementName=easyDeploy,Path=Title}"
+                            LeftClickCommand="{Binding ShowWindow}"
+                            DoubleClickCommand="{Binding ShowWindow}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu Foreground="White">
                         <ContextMenu.Style>
@@ -419,23 +672,33 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ContextMenu}">
-                                            <Border Name="Border" Background="#35363A" BorderBrush="#888888" BorderThickness="1" >
-                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                            <Border Name="Border"
+                                                    Background="#35363A"
+                                                    BorderBrush="#888888"
+                                                    BorderThickness="1">
+                                                <StackPanel IsItemsHost="True"
+                                                            KeyboardNavigation.DirectionalNavigation="Cycle" />
                                             </Border>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
                         </ContextMenu.Style>
-                        <MenuItem Header="{DynamicResource ShowOrHide}" Command="{Binding ShowOrHide}"/>
-                        <MenuItem Header="{DynamicResource Setting}" Command="{Binding Settings}"/>
-                        <MenuItem Header="{DynamicResource Exit}" Command="{Binding Close}"/>
+                        <MenuItem Header="{DynamicResource ShowOrHide}"
+                                  Command="{Binding ShowOrHide}" />
+                        <MenuItem Header="{DynamicResource Setting}"
+                                  Command="{Binding Settings}" />
+                        <MenuItem Header="{DynamicResource Exit}"
+                                  Command="{Binding Close}" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
         </Grid>
         <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
+            <DropShadowEffect Color="Black"
+                              BlurRadius="16"
+                              ShadowDepth="0"
+                              Opacity="0.5" />
         </Border.Effect>
     </Border>
 </Window>
