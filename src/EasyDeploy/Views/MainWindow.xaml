@@ -259,19 +259,18 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="310">
+                            <DataGridTemplateColumn Width="160">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock Text="{DynamicResource Actions}" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                            <control:IceButton x:Name="Start" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Start}"
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.StartService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                            <control:SvgButton x:Name="Start" Width="24" Height="24" NormalFill="LimeGreen" IsMouseOverBackground="Transparent" IsMouseOverFill="#32E132" ImageMargin="4"
+                                                               ButtonImage="m52.39999,0c-31.3,0 -52.4,19.9 -52.4,49.5l0,659.6c0,30.9 25.9,53.4 61.5,53.4c17,0 32.8,-5.3 43.9,-14.7l444.6,-309.3l1.2,-1.1c13.3,-12.2 20.6,-28.4 20.6,-45.7s-7.3,-33.5 -20.6,-45.7l-2.1,-1.7l-443.3,-324.9c-13.6,-11.8 -34.3,-19.4 -53.4,-19.4z"
+                                                               CommandParameter="{Binding}" Command="{Binding Path=DataContext.StartService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}" BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding ServiceState}" Value="0">
                                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -289,14 +288,13 @@
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Stop" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Stop}"
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.StopService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+                                            <control:SvgButton x:Name="Stop" Width="24" Height="24" NormalFill="Tomato" IsMouseOverBackground="Transparent" IsMouseOverFill="Salmon" ImageMargin="5"
+                                                               ButtonImage="m84.375,0l506.25,0c46.58203,0 84.375,37.79297 84.375,84.375l0,506.25c0,46.58203 -37.79297,84.375 -84.375,84.375l-506.25,0c-46.58203,0 -84.375,-37.79297 -84.375,-84.375l0,-506.25c0,-46.58203 37.79297,-84.375 84.375,-84.375z"
+                                                               CommandParameter="{Binding}" Command="{Binding Path=DataContext.StopService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}" BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding ServiceState}" Value="0">
                                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -314,44 +312,40 @@
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Shell" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Shell}" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+                                            <control:SvgButton x:Name="Shell" Width="24" Height="24" NormalFill="White" IsMouseOverBackground="Transparent" IsMouseOverFill="Gainsboro" ImageMargin="4"
+                                                               ButtonImage="m42.66667,0l768,0a42.66667,42.66667 0 0 1 42.66667,42.66667l0,682.66666a42.66667,42.66667 0 0 1 -42.66667,42.66667l-768,0a42.66667,42.66667 0 0 1 -42.66667,-42.66667l0,-682.66666a42.66667,42.66667 0 0 1 42.66667,-42.66667zm42.66667,85.33333l0,597.33334l682.66666,0l0,-597.33334l-682.66666,0zm341.33333,426.66667l256,0l0,85.33333l-256,0l0,-85.33333zm-142.208,-128l-120.704,-120.66133l60.37333,-60.37334l180.992,181.03467l-180.992,181.03467l-60.37333,-60.37334l120.704,-120.66133z"
+                                                               CommandParameter="{Binding}" Command="{Binding Path=DataContext.ShellService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}" BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{c:Binding '(Pid == null)'}" Value="True">
                                                                 <Setter Property="IsEnabled" Value="False"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Browse" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Browse}" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="#FFE589" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}">
-                                                <control:IceButton.Style>
-                                                    <Style TargetType="{x:Type control:IceButton}" BasedOn="{StaticResource {x:Type control:IceButton}}">
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+                                            <control:SvgButton x:Name="Browse" Width="24" Height="24" NormalFill="#FFE589" IsMouseOverBackground="Transparent" IsMouseOverFill="#fbe69d" ImageMargin="4"
+                                                               ButtonImage="m289.984,0a64,64 0 0 1 62.48533,50.13333l3.09333,13.86667l263.104,0a64,64 0 0 1 64,64l0,448a64,64 0 0 1 -64,64l-554.66666,0a64,64 0 0 1 -64,-64l0,-512a64,64 0 0 1 64,-64l225.984,0zm286.016,448l-469.33334,0l0,64l469.33334,0l0,-64zm42.66666,-320l-248.896,0l9.49334,42.66667l239.40266,0l0,-42.66667z"
+                                                               CommandParameter="{Binding}" Command="{Binding Path=DataContext.BrowseService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}">
+                                                <control:SvgButton.Style>
+                                                    <Style TargetType="{x:Type control:SvgButton}" BasedOn="{StaticResource {x:Type control:SvgButton}}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding AllowDirectoryToOpen}" Value="False">
                                                                 <Setter Property="IsEnabled" Value="False"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </control:IceButton.Style>
-                                            </control:IceButton>
-                                            <control:IceButton x:Name="Edit" Width="50" Height="24" VerticalAlignment="Center" Margin="2,0" Content="{DynamicResource Edit}" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.EditService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
-                                            <control:IceButton x:Name="Delete" Width="25" Height="24" VerticalAlignment="Center" Margin="2,0" Content="X" 
-                                                                               Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" FontSize="12"
-                                                                               Foreground="Tomato" BorderThickness="0" FontWeight="Bold" IsDefault="True" Cursor="Hand"
-                                                                               Command="{Binding Path=DataContext.DeleteService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}" CommandParameter="{Binding}"/>
+                                                </control:SvgButton.Style>
+                                            </control:SvgButton>
+                                            <control:SvgButton x:Name="Edit" Width="24" Height="24" NormalFill="White" IsMouseOverBackground="Transparent" IsMouseOverFill="Gainsboro" ImageMargin="4"
+                                                               ButtonImage="m768,724l-736,0c-17.7,0 -32,14.3 -32,32l0,36c0,4.4 3.6,8 8,8l784,0c4.4,0 8,-3.6 8,-8l0,-36c0,-17.7 -14.3,-32 -32,-32zm-622.3,-84c2,0 4,-0.2 6,-0.5l168.2,-29.5c2,-0.4 3.9,-1.3 5.3,-2.8l423.9,-423.9c3.9,-3.9 3.9,-10.2 0,-14.1l-166.2,-166.3c-1.9,-1.9 -4.4,-2.9 -7.1,-2.9s-5.2,1 -7.1,2.9l-423.9,423.9c-1.5,1.5 -2.4,3.3 -2.8,5.3l-29.5,168.2c-1.9,11.1 1.5,21.9 9.4,29.8c6.6,6.4 14.9,9.9 23.8,9.9z"
+                                                               CommandParameter="{Binding}" Command="{Binding Path=DataContext.EditService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"/>
+                                            <control:SvgButton x:Name="Delete" Width="24" Height="24" NormalFill="White" IsMouseOverBackground="Transparent" IsMouseOverFill="#D8605A" ImageMargin="4"
+                                                               ButtonImage="m483.14063,356.01563l217.96875,-217.96875c14.4375,-14.4375 14.4375,-40.03125 0,-54.46875l-72.65625,-72.65625c-14.4375,-14.4375 -40.125,-14.4375 -54.46875,0l-217.96875,217.875l-217.96875,-217.96875c-14.4375,-14.4375 -40.125,-14.4375 -54.46875,0l-72.65625,72.65625c-14.4375,14.4375 -14.4375,40.125 0,54.46875l217.875,218.0625l-217.96875,217.96875c-14.4375,14.4375 -14.4375,40.125 0,54.46875l72.65625,72.65625c14.4375,14.4375 40.125,14.4375 54.46875,0l218.0625,-217.96875l217.96875,217.96875c14.4375,14.4375 40.125,14.4375 54.46875,0l72.65625,-72.65625c14.4375,-14.4375 14.4375,-40.03125 0,-54.46875l-217.96875,-217.96875z"
+                                                               CommandParameter="{Binding}" Command="{Binding Path=DataContext.DeleteService,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type control:IceDataGrid}}}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

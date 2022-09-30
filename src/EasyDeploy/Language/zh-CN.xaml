@@ -25,11 +25,6 @@
     <System:String x:Key="Pid">PID</System:String>
     <System:String x:Key="Port">端口号</System:String>
     <System:String x:Key="Actions">功能</System:String>
-    <System:String x:Key="Start">启动</System:String>
-    <System:String x:Key="Stop">停止</System:String>
-    <System:String x:Key="Shell">Shell</System:String>
-    <System:String x:Key="Browse">浏览</System:String>
-    <System:String x:Key="Edit">编辑</System:String>
 
     <!--添加编辑服务-->
     <System:String x:Key="AddService">新增服务</System:String>

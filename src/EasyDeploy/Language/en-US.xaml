@@ -25,11 +25,6 @@
     <System:String x:Key="Pid">PID</System:String>
     <System:String x:Key="Port">Port</System:String>
     <System:String x:Key="Actions">Actions</System:String>
-    <System:String x:Key="Start">Start</System:String>
-    <System:String x:Key="Stop">Stop</System:String>
-    <System:String x:Key="Shell">Shell</System:String>
-    <System:String x:Key="Browse">Browse</System:String>
-    <System:String x:Key="Edit">Edit</System:String>
 
     <!--添加编辑服务-->
     <System:String x:Key="AddService">Add Service</System:String>
