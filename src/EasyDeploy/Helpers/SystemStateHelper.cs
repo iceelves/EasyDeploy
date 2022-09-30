@@ -26,12 +26,10 @@ namespace EasyDeploy.Helpers
                 {
                     var cpuUsage = CpuCounter.NextValue();
                     cpuUsage = cpuUsage >= 100 ? 100 : cpuUsage;
-                    cpuUsage = cpuUsage <= 0 ? 0 : cpuUsage;
 
                     var ramAvailable = RamCounter.NextValue();
                     var memUsage = Math.Round((TotalMemoryMBytesCapacity - ramAvailable) / TotalMemoryMBytesCapacity, 4) * 100;
                     memUsage = memUsage >= 100 ? 100 : memUsage;
-                    memUsage = memUsage <= 0 ? 0 : memUsage;
 
                     CpuCounterChange?.Invoke(cpuUsage);
                     RamCounterChange?.Invoke(memUsage);
@@ -45,54 +43,32 @@ namespace EasyDeploy.Helpers
             Task.Run(() =>
             {
                 const float mega = 1024 * 1024;
+                var vInstanceName = GetProcessInstanceName(pid);
 
-                while (true)
+                if (!string.IsNullOrEmpty(vInstanceName))
                 {
-                    ManagementObjectSearcher searcher = new ManagementObjectSearcher($"Select * From Win32_Process Where ParentProcessID={pid}");
-                    foreach (ManagementObject mo in searcher.Get())
-                    {
-                        var vPid = int.Parse($"{mo["ProcessID"]}");
-                        var vInstanceName = GetProcessInstanceName(vPid);
-                        if (!string.IsNullOrEmpty(vInstanceName))
-                        {
-                            PerformanceCounter cpuPerformanceCounter = new PerformanceCounter("Process", "% Processor Time", vInstanceName);
-                            PerformanceCounter memoryPerformanceCounter = new PerformanceCounter("Process", "Working Set - Private", vInstanceName);
+                    PerformanceCounter cpuPerformanceCounter = new PerformanceCounter("Process", "% Processor Time", vInstanceName);
+                    PerformanceCounter memoryPerformanceCounter = new PerformanceCounter("Process", "Working Set - Private", vInstanceName);
 
+                    while (true)
+                    {
+                        try
+                        {
                             float mainCpu = cpuPerformanceCounter.NextValue() / Environment.ProcessorCount;
                             mainCpu = mainCpu >= 100 ? 100 : mainCpu;
-                            mainCpu = mainCpu <= 0 ? 0 : mainCpu;
 
                             float mainRam = memoryPerformanceCounter.NextValue() / mega;
-                            mainRam = mainRam >= 100 ? 100 : mainRam;
-                            mainRam = mainRam <= 0 ? 0 : mainRam;
 
-                            Console.WriteLine($"CPU:{mainCpu:f2}%\tMemory:{mainRam:f2}M");
-
-                            if (CpuArmChangs.ContainsKey(vPid))
-                            {
-                                CpuArmChangs[vPid].CpuChang = mainCpu;
-                                CpuArmChangs[vPid].RamChang = mainRam;
-                            }
-                            else
-                            {
-                                CpuArmChangs.Add(vPid, new SystemStateModel()
-                                {
-                                    PID = vPid,
-                                    CpuChang = mainCpu,
-                                    RamChang = mainRam,
-                                });
-                            }
+                            CpuCounterChange.Invoke(mainCpu);
+                            RamCounterChange.Invoke(mainRam);
                         }
-                        else
+                        catch (Exception)
                         {
-                            if (CpuArmChangs.ContainsKey(vPid))
-                            {
-                                CpuArmChangs.Remove(vPid);
-                            }
+                            // pid 查询不到进程
                         }
+
+                        Thread.Sleep(500);
                     }
-                    SubprocessCpuArmCountersChange.Invoke(CpuArmChangs);
-                    Thread.Sleep(1000);
                 }
             });
         }
@@ -106,16 +82,6 @@ namespace EasyDeploy.Helpers
         /// 内存使用率
         /// </summary>
         public event Action<double> RamCounterChange;
-
-        /// <summary>
-        /// 子进程 CPU、内存 使用率
-        /// </summary>
-        public event Action<Dictionary<int, SystemStateModel>> SubprocessCpuArmCountersChange;
-
-        /// <summary>
-        /// 子程序 CPU 使用率集合
-        /// </summary>
-        public Dictionary<int, SystemStateModel> CpuArmChangs = new Dictionary<int, SystemStateModel>();
 
         /// <summary>
         /// 获取总内存字节容量
