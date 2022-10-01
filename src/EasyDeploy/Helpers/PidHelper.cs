@@ -75,6 +75,20 @@ namespace EasyDeploy.Helpers
         }
 
         /// <summary>
+        /// 获取指定 pid 关联子进程信息
+        /// </summary>
+        public static Dictionary<int, string> GetAllProcess(int pid)
+        {
+            Dictionary<int, string> dicAllProcess = new Dictionary<int, string>();
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher($"Select * From Win32_Process Where ParentProcessID={pid}");
+            foreach (ManagementObject mo in searcher.Get())
+            {
+                dicAllProcess.Add(int.Parse($"{mo["ProcessID"]}"), $"{mo["Name"]}");
+            }
+            return dicAllProcess;
+        }
+
+        /// <summary>
         /// 获取机器端口占用情况
         /// </summary>
         /// <returns>字典(pid,端口号)</returns>

@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 namespace EasyDeploy.Helpers
 {
     /// <summary>
-    /// 系统使用率统计
+    /// 系统占用率统计
     /// </summary>
     public class SystemStateHelper
     {
+        /// <summary>
+        /// 获取全局占用率
+        /// </summary>
         public SystemStateHelper()
         {
             Task.Run(() =>
@@ -38,6 +41,10 @@ namespace EasyDeploy.Helpers
             });
         }
 
+        /// <summary>
+        /// 获取指定 pid 进程占用率
+        /// </summary>
+        /// <param name="pid">pid</param>
         public SystemStateHelper(int pid)
         {
             Task.Run(() =>
