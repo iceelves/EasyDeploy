@@ -143,7 +143,7 @@
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
                                            Command="{Binding Close}"/>
                     </StackPanel>
-                    <Popup x:Name="popup_Menu" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="10" HorizontalOffset="-36" StaysOpen="False"
+                    <Popup x:Name="popup_Menu" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="10" HorizontalOffset="50" StaysOpen="False"
                            IsOpen="False" PlacementTarget="{Binding ElementName=MoreMenus}" Placement="Bottom">
                         <Popup.Child>
                             <Grid>
