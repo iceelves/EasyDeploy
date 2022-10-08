@@ -105,11 +105,19 @@
                         <StackPanel Orientation="Horizontal" Margin="5,0">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Content="{DynamicResource CPU}" Foreground="White" FontSize="12" />
-                                <Label Content="{Binding CpuCounter}" Width="58" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding CpuCounter}" Width="40" Foreground="White" FontSize="12" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Content="{DynamicResource RAM}" Foreground="White" FontSize="12" />
-                                <Label Content="{Binding RamCounter}" Width="58" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding RamCounter}" Width="40" Foreground="White" FontSize="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource GPU}" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding GpuCounter}" Width="40" Foreground="White" FontSize="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource VRAM}" Foreground="White" FontSize="12" />
+                                <Label Content="{Binding VRamCounter}" Width="40" Foreground="White" FontSize="12" />
                             </StackPanel>
                         </StackPanel>
                     </Border>

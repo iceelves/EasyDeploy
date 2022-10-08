@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace EasyDeploy.Helpers
 {
     /// <summary>
-    /// 系统占用率统计
+    /// 系统利用率统计
     /// </summary>
     public class SystemStateHelper
     {
@@ -36,7 +36,7 @@ namespace EasyDeploy.Helpers
 
                     CpuCounterChange?.Invoke(cpuUsage);
                     RamCounterChange?.Invoke(memUsage);
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                 }
             });
         }
@@ -74,7 +74,7 @@ namespace EasyDeploy.Helpers
                             // pid 查询不到进程
                         }
 
-                        Thread.Sleep(500);
+                        Thread.Sleep(1000);
                     }
                 }
             });

@@ -69,6 +69,11 @@ namespace EasyDeploy.ViewModels
                     systemState.CpuCounterChange += SystemState_CpuCounterChange;
                     systemState.RamCounterChange += SystemState_RamCounterChange;
 
+                    // 加载 GPU、显存
+                    NvmlStateHelper nvmlState = new NvmlStateHelper();
+                    nvmlState.GpuChange += NvmlGpu_GpuChange;
+                    nvmlState.MemoryChange += NvmlGpu_MemoryChange;
+
                     // 加载服务配置文件
                     if (File.Exists(ServiceSavePath))
                     {
@@ -134,14 +139,24 @@ namespace EasyDeploy.ViewModels
         public ObservableDictionary<string, TabControlTerminalModel> ServicesShell { get; set; } = new ObservableDictionary<string, TabControlTerminalModel>();
 
         /// <summary>
-        /// CPU 计数器
+        /// CPU 使用率
         /// </summary>
-        public string CpuCounter { get; set; } = "0.00%";
+        public string CpuCounter { get; set; } = "0%";
 
         /// <summary>
         /// 内存计数器
         /// </summary>
-        public string RamCounter { get; set; } = "0.00%";
+        public string RamCounter { get; set; } = "0%";
+
+        /// <summary>
+        /// Gpu 使用率
+        /// </summary>
+        public string GpuCounter { get; set; } = "0%";
+
+        /// <summary>
+        /// 显存使用率
+        /// </summary>
+        public string VRamCounter { get; set; } = "0%";
 
         /// <summary>
         /// 日志 Shell Guid
@@ -159,7 +174,7 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         private void SystemState_CpuCounterChange(double obj)
         {
-            CpuCounter = $"{obj:f2}%";
+            CpuCounter = $"{obj:f0}%";
         }
 
         /// <summary>
@@ -167,7 +182,25 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         private void SystemState_RamCounterChange(double obj)
         {
-            RamCounter = $"{obj:f2}%";
+            RamCounter = $"{obj:f0}%";
+        }
+
+        /// <summary>
+        /// GPU 使用率
+        /// </summary>
+        /// <param name="obj"></param>
+        private void NvmlGpu_GpuChange(uint obj)
+        {
+            GpuCounter = $"{obj}%";
+        }
+
+        /// <summary>
+        /// 显存使用率
+        /// </summary>
+        /// <param name="obj"></param>
+        private void NvmlGpu_MemoryChange(uint obj)
+        {
+            VRamCounter = $"{obj}%";
         }
         #endregion
 
