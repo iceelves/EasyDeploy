@@ -3,6 +3,7 @@ using EasyDeploy.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,9 @@ namespace EasyDeploy.Views
 
             // 初始化系统语言
             SystemConfigHelper.SetLanguage();
+
+            // 设置对齐方式
+            SetAlignment();
         }
 
         /// <summary>
@@ -67,6 +71,24 @@ namespace EasyDeploy.Views
         private void MoreMenus_Click(object sender, RoutedEventArgs e)
         {
             popup_Menu.IsOpen = !popup_Menu.IsOpen;
+        }
+
+        /// <summary>
+        /// 设置对齐方式
+        /// 设置为惯用左手 菜单出现在手的右侧
+        /// </summary>
+        public static void SetAlignment() 
+        {
+            //获取系统是以Left-handed（true）还是Right-handed（false）
+            var ifLeft = SystemParameters.MenuDropAlignment;
+
+            if (ifLeft)
+            {
+                // change to false
+                var t = typeof(SystemParameters);
+                var field = t.GetField("_menuDropAlignment", BindingFlags.NonPublic | BindingFlags.Static);
+                field.SetValue(null, false);
+            }
         }
     }
 }
