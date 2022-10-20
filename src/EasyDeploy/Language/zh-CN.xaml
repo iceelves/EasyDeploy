@@ -19,7 +19,6 @@
     <System:String x:Key="RAM">内存:</System:String>
     <System:String x:Key="GPU">GPU:</System:String>
     <System:String x:Key="VRAM">显存:</System:String>
-    <System:String x:Key="Add">新增</System:String>
     <System:String x:Key="All">全部:</System:String>
     <System:String x:Key="StartState">启动:</System:String>
     <System:String x:Key="State">状态</System:String>
