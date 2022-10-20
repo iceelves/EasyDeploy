@@ -5,7 +5,7 @@
 
 ; 安装程序初始定义常量
 !define PRODUCT_NAME "EasyDeploy"
-!define PRODUCT_VERSION "1.0.0.5"
+!define PRODUCT_VERSION "1.0.0.6"
 !define PRODUCT_PUBLISHER "北京冰云信息科技有限公司"
 !define PRODUCT_WEB_SITE "iceelves.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\EasyDeploy.exe"
