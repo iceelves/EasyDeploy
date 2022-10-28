@@ -371,7 +371,7 @@ namespace EasyDeploy.ViewModels
                 else
                 {
                     // 未成功启动
-                    // 等待两秒后再次检查是否获取到 PID,以 PID结束进程或
+                    // 等待两秒后再次检查是否获取到 PID，还是获取不到的话移除运行时资源
                     Timer timer = new Timer(2000);
                     timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                     {
