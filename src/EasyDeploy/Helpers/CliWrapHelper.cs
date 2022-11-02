@@ -84,7 +84,7 @@ namespace EasyDeploy.Helpers
             {
                 if (!string.IsNullOrEmpty(_workingDirectory))
                 {
-                    _cmd = Cli.Wrap($"{_workingDirectory}\\{_applicationName}").WithWorkingDirectory($"{_workingDirectory}"); ;
+                    _cmd = Cli.Wrap($"{_workingDirectory}\\{_applicationName}").WithWorkingDirectory($"{_workingDirectory}");
                 }
                 else
                 {

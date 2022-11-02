@@ -587,7 +587,7 @@ namespace EasyDeploy.ViewModels
                         {
                             var vTerminalBackground = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_BACKGROUND]}";
                             var vBackground = !string.IsNullOrEmpty(vTerminalBackground) ? vTerminalBackground : "#0C0C0C";
-                            TerminalBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground)); ;
+                            TerminalBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground));
                         }
 
                         // 终端 - 文字颜色
@@ -595,7 +595,7 @@ namespace EasyDeploy.ViewModels
                         {
                             var vTerminalForeground = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FOREGROUND]}";
                             var vForeground = !string.IsNullOrEmpty(vTerminalForeground) ? vTerminalForeground : "#FFFFFF";
-                            TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground)); ;
+                            TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
                         }
 
                         // 终端 - 字号
