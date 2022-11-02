@@ -194,7 +194,7 @@ namespace EasyDeploy.Views
                 IsAbsolutePath = true;
                 if (!string.IsNullOrEmpty(ServicePath.Text))
                 {
-                    ServicePath.Text = PathHelper.RelativeToAbsolute(ServicePath.Text);
+                    ServicePath.Text = PathHelper.RelativeToAbsolute(ServicePath.Text, AppDomain.CurrentDomain.BaseDirectory);
                 }
             }
             else
@@ -204,7 +204,7 @@ namespace EasyDeploy.Views
                 {
                     try
                     {
-                        ServicePath.Text = PathHelper.AbsoluteToRelative(ServicePath.Text);
+                        ServicePath.Text = PathHelper.AbsoluteToRelative(ServicePath.Text, AppDomain.CurrentDomain.BaseDirectory);
                     }
                     catch (Exception ex)
                     {

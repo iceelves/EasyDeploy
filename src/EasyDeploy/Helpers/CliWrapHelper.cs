@@ -84,6 +84,11 @@ namespace EasyDeploy.Helpers
             {
                 if (!string.IsNullOrEmpty(_workingDirectory))
                 {
+                    if (!PathHelper.IsAbsolutePath(_workingDirectory))
+                    {
+                        // 以开机自启方式启动，运行目录为 C:\\Windows\\System32，避免目录异常，相对路径都修改为绝对路径后调用
+                        _workingDirectory = PathHelper.RelativeToAbsolute(_workingDirectory, AppDomain.CurrentDomain.BaseDirectory);
+                    }
                     _cmd = Cli.Wrap($"{_workingDirectory}\\{_applicationName}").WithWorkingDirectory($"{_workingDirectory}");
                 }
                 else
