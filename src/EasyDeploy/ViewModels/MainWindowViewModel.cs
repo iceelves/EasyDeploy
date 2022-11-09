@@ -38,6 +38,8 @@ namespace EasyDeploy.ViewModels
                 return new DelegateCommand<Window>(delegate (Window window)
                 {
                     this.window = window;
+                    // 窗体关闭前触发事件
+                    this.window.Closing += Window_Closing;
 
                     // 加载系统配置文件
                     // 终端 - 最大行数
@@ -100,6 +102,30 @@ namespace EasyDeploy.ViewModels
                         SetLog("Not Found Config File!");
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// 窗体关闭前触发事件
+        /// 用于判断关闭所有正在运行的程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (ServicesResources != null && ServicesResources.Count >= 1)
+            {
+                var result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "存在尚未关闭的服务，确定关闭么" : "There are services that have not been closed. Do you want to close them")} ?",
+                    $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    StopAllService();
+                }
+                else
+                {
+                    // 取消关闭窗体
+                    e.Cancel = true;
+                }
             }
         }
 
@@ -530,33 +556,6 @@ namespace EasyDeploy.ViewModels
                             sw.Close();
                         }
                     }
-                });
-            }
-        }
-
-        /// <summary>
-        /// 关闭窗体
-        /// </summary>
-        public DelegateCommand Close
-        {
-            get
-            {
-                return new DelegateCommand(delegate ()
-                {
-                    if (ServicesResources != null && ServicesResources.Count >= 1)
-                    {
-                        var result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "存在尚未关闭的服务，确定关闭么" : "There are services that have not been closed. Do you want to close them")} ?",
-                            $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
-                        if (result == MessageBoxResult.OK)
-                        {
-                            StopAllService();
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
-                    this.window.Close();
                 });
             }
         }

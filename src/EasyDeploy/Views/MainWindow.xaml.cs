@@ -37,6 +37,16 @@ namespace EasyDeploy.Views
         }
 
         /// <summary>
+        /// 关闭窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mainClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
         /// 最大化窗体
         /// </summary>
         /// <param name="sender"></param>
