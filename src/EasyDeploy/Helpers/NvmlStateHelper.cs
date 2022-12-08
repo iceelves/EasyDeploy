@@ -94,16 +94,23 @@ namespace EasyDeploy.Helpers
 
                 while (true)
                 {
-                    NvmlUtilization nvmlUtilization;
-                    res = NvmlDeviceGetUtilizationRates(device, out nvmlUtilization);
-                    if (NvmlReturn.NVML_SUCCESS != res)
+                    try
                     {
-                        //throw new SystemException(res.ToString());
-                        return;
-                    }
+                        NvmlUtilization nvmlUtilization;
+                        res = NvmlDeviceGetUtilizationRates(device, out nvmlUtilization);
+                        if (NvmlReturn.NVML_SUCCESS != res)
+                        {
+                            //throw new SystemException(res.ToString());
+                            return;
+                        }
 
-                    GpuChange?.Invoke(nvmlUtilization.gpu);
-                    MemoryChange?.Invoke(nvmlUtilization.memory);
+                        GpuChange?.Invoke(nvmlUtilization.gpu);
+                        MemoryChange?.Invoke(nvmlUtilization.memory);
+                    }
+                    catch (Exception)
+                    {
+                        // 获取信息失败
+                    }
 
                     Thread.Sleep(1000);
                 }
