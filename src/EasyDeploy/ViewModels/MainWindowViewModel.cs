@@ -633,6 +633,10 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand(delegate ()
                 {
+                    if (this.window.WindowState == WindowState.Minimized)
+                    {
+                        this.window.WindowState = WindowState.Normal;
+                    }
                     this.window?.Show();
                     this.window?.Activate();
                 });
