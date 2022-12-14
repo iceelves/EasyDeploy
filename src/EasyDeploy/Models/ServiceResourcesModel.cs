@@ -185,7 +185,7 @@ namespace EasyDeploy.Models
                         var vProcessPorts = PidHelper.GetProcessPorts(CliWrap.threadID);
                         if (vProcessPorts != null && vProcessPorts.Count >= 1)
                         {
-                            Service.Port = string.Join('/', PidHelper.GetProcessPorts(CliWrap.threadID));
+                            Service.Port = string.Join('/', vProcessPorts);
                         }
                         Service.ServiceState = ServiceState.Start;
                     }

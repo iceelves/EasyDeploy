@@ -321,7 +321,7 @@ namespace EasyDeploy.ViewModels
                             var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
                             if (vProcessPorts != null && vProcessPorts.Count >= 1)
                             {
-                                Service.Port = string.Join('/', PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID));
+                                Service.Port = string.Join('/', vProcessPorts);
                             }
                             // 添加到服务运行时资源列表
                             if (ServicesResources.ContainsKey(strGuid))
