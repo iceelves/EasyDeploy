@@ -19,6 +19,16 @@ namespace EasyDeploy.Helpers
         const string NVML_SHARED_LIBRARY_STRING = "nvml.dll";
 
         /// <summary>
+        /// Buffer size guaranteed to be large enough for \ref nvmlDeviceGetName
+        /// </summary>
+        const int NVML_DEVICE_NAME_BUFFER_SIZE = 64;
+
+        /// <summary>
+        /// Buffer size guaranteed to be large enough for \ref nvmlDeviceGetUUID
+        /// </summary>
+        const int NVML_DEVICE_UUID_BUFFER_SIZE = 80;
+
+        /// <summary>
         /// 初始化 NVML 库
         /// </summary>
         /// <returns></returns>
@@ -51,6 +61,16 @@ namespace EasyDeploy.Helpers
         /// <returns></returns>
         [DllImport(NVML_SHARED_LIBRARY_STRING, CharSet = CharSet.Ansi, EntryPoint = "nvmlDeviceGetName")]
         internal static extern NvmlReturn NvmlDeviceGetName(IntPtr device, [Out, MarshalAs(UnmanagedType.LPArray)] byte[] name, uint length);
+
+        /// <summary>
+        /// 获取显卡 UUID
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="uuid"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        [DllImport(NVML_SHARED_LIBRARY_STRING, CharSet = CharSet.Ansi, EntryPoint = "nvmlDeviceGetUUID")]
+        internal static extern NvmlReturn NvmlDeviceGetUUID(IntPtr device, [Out, MarshalAs(UnmanagedType.LPArray)] byte[] uuid, uint length);
 
         /// <summary>
         /// 获取显卡使用率信息
@@ -92,6 +112,23 @@ namespace EasyDeploy.Helpers
                     return;
                 }
 
+                // 获取显卡名称
+                byte[] bufferName = new byte[NVML_DEVICE_NAME_BUFFER_SIZE];
+                res = NvmlDeviceGetName(device, bufferName, NVML_DEVICE_NAME_BUFFER_SIZE);
+                if (NvmlReturn.NVML_SUCCESS == res)
+                {
+                    var gpuName = Encoding.Default.GetString(bufferName).Replace("\0", "");
+                }
+
+                // 获取显卡 UUID
+                byte[] bufferUUID = new byte[NVML_DEVICE_UUID_BUFFER_SIZE];
+                res = NvmlDeviceGetUUID(device, bufferUUID, NVML_DEVICE_UUID_BUFFER_SIZE);
+                if (NvmlReturn.NVML_SUCCESS == res)
+                {
+                    var gpuUUID = Encoding.Default.GetString(bufferUUID).Replace("\0", "");
+                }
+
+                // 获取 GPU 与显存使用率
                 while (true)
                 {
                     try
