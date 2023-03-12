@@ -132,7 +132,7 @@ namespace EasyDeploy.Views
                 if (!WindowsHelper.IsAdministrator())
                 {
                     NLogHelper.SaveDebug($"设置开机启动无效：请以管理员方式运行！");
-                    IceMessageBox.ShowDialogBox("请以管理员方式运行！");
+                    IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "请以管理员方式运行！" : "Please run as administrator!")}");
                 }
                 else
                 {
