@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows;
 
 namespace EasyDeploy.Helpers
 {
@@ -57,16 +58,8 @@ namespace EasyDeploy.Helpers
             //If we didn't find a common prefix then throw
             if (lastCommonRoot == -1)
             {
-                if (SystemConfigHelper.IsChinese())
-                {
-                    throw new ArgumentException("没有公共路径，请改用绝对路径！");
-                }
-                else
-                {
-                    throw new ArgumentException("Paths do not have a common base,Please Use absolute path instead!");
-                }
+                throw new ArgumentException($"{Application.Current.FindResource("NoPublicPath")}");
             }
-
 
             //Build up the relative path
             StringBuilder relativePath = new StringBuilder();

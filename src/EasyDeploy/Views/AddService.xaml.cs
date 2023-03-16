@@ -33,14 +33,8 @@ namespace EasyDeploy.Views
 
             if (serviceModel != null)
             {
-                if (SystemConfigHelper.IsChinese())
-                {
-                    this.Title = "编辑服务";
-                }
-                else
-                {
-                    this.Title = "Edit Service";
-                }
+                this.Title = $"{Application.Current.FindResource("EditService")}";
+
                 ServiceModel = serviceModel;
                 ServiceName.Text = serviceModel.ServiceName;
                 ServicePath.Text = serviceModel.ServicePath;

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System ="clr-namespace:System;assembly=mscorlib">
-    
+
     <!--公共-->
     <System:String x:Key="Save">Save</System:String>
     <System:String x:Key="Close">Close</System:String>
@@ -10,6 +10,7 @@
     <System:String x:Key="Yes">Yes</System:String>
     <System:String x:Key="No">No</System:String>
     <System:String x:Key="Cancel">Cancel</System:String>
+    <System:String x:Key="Tips">Tips</System:String>
     <System:String x:Key="ShowOrHide">Show/Hide</System:String>
 
     <!--主界面-->
@@ -26,9 +27,17 @@
     <System:String x:Key="Pid">PID</System:String>
     <System:String x:Key="Port">Port</System:String>
     <System:String x:Key="Actions">Actions</System:String>
+    <!--主界面:弹窗-->
+    <System:String x:Key="CloseWindowStopServer">There are services that have not been closed. Do you want to close them?</System:String>
+    <System:String x:Key="DeleteServerStopServer">Close Service Before Delete!</System:String>
+    <System:String x:Key="ConfirmDeleteService">Confirm Delete of Service?</System:String>
+
+    <!--帮助类:弹窗-->
+    <System:String x:Key="NoPublicPath">Paths do not have a common base,Please Use absolute path instead!</System:String>
 
     <!--添加编辑服务-->
     <System:String x:Key="AddService">Add Service</System:String>
+    <System:String x:Key="EditService">Edit Service</System:String>
     <System:String x:Key="ServiceName">Service Name:</System:String>
     <System:String x:Key="ServicePath">Service Path:</System:String>
     <System:String x:Key="ServicePathType">Service Path Type:</System:String>
@@ -50,7 +59,9 @@
     <System:String x:Key="Background">Background:</System:String>
     <System:String x:Key="Foreground">Foreground:</System:String>
     <System:String x:Key="FontSize">FontSize:</System:String>
-    
+    <!--设置:弹窗-->
+    <System:String x:Key="RunAsAdministrator">Please run as administrator!</System:String>
+
     <!--关于-->
     <System:String x:Key="About">About</System:String>
     <System:String x:Key="Company">Beijing BingYun Information Technology Co., Ltd.</System:String>

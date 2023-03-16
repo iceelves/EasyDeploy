@@ -115,8 +115,7 @@ namespace EasyDeploy.ViewModels
         {
             if (ServicesResources != null && ServicesResources.Count >= 1)
             {
-                var result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "存在尚未关闭的服务，确定关闭么" : "There are services that have not been closed. Do you want to close them")} ?",
-                    $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
+                var result = IceMessageBox.ShowDialogBox($"{Application.Current.FindResource("CloseWindowStopServer")}", $"{Application.Current.FindResource("Tips")}", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     StopAllService();
@@ -538,13 +537,11 @@ namespace EasyDeploy.ViewModels
                 {
                     if (Service.ServiceState == ServiceState.Start)
                     {
-                        IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "删除前需要关闭服务" : "Close Service Before Delete")} : {Service.ServiceName} !",
-                            $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}");
+                        IceMessageBox.ShowDialogBox($"{Application.Current.FindResource("DeleteServerStopServer")}", $"{Application.Current.FindResource("Tips")}");
                     }
                     else
                     {
-                        var result = IceMessageBox.ShowDialogBox($"{(SystemConfigHelper.IsChinese() ? "是否删除服务" : "Confirm Delete of Service")} : {Service.ServiceName} ?",
-                             $"{(SystemConfigHelper.IsChinese() ? "提示" : "Tips")}", MessageBoxButton.OKCancel);
+                        var result = IceMessageBox.ShowDialogBox($"{Application.Current.FindResource("ConfirmDeleteService")}", $"{Application.Current.FindResource("Tips")}", MessageBoxButton.OKCancel);
                         if (result == MessageBoxResult.OK)
                         {
                             SetLog($"Remove Service: {Service.ServiceName}");
