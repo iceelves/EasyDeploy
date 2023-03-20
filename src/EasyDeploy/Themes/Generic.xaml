@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
     <ResourceDictionary.MergedDictionaries>
         <!--定制原生控件-->
         <ResourceDictionary Source="/EasyDeploy;component/Themes/SvgButtonStyle.xaml"/>
@@ -9,10 +10,13 @@
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceComboBoxStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabControlStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabItemStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/ScrollViewerStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/ToolTipStyle.xaml"/>
         <!--设置语言-->
         <ResourceDictionary Source="/EasyDeploy;component/Language/en-US.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Language/zh-CN.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <!--通用默认样式-->
     <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}" />
+    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ToolTipStyle}" />
 </ResourceDictionary>
