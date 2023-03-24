@@ -44,7 +44,7 @@
     <Page Update="Language\zh-CN.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\GroupBoxStyle.xaml">
+    <Page Update="Themes\IceGroupBoxStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\IceCheckBoxStyle.xaml">
@@ -59,7 +59,7 @@
     <Page Update="Themes\IceTabItemStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\ToolTipStyle.xaml">
+    <Page Update="Themes\IceToolTipStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AboutWindow.xaml">
@@ -80,7 +80,7 @@
     <Page Update="Themes\IceDataGridStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\ScrollViewerStyle.xaml">
+    <Page Update="Themes\IceScrollViewerStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\SvgButtonStyle.xaml">

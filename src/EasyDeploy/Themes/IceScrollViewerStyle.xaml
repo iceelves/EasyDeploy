@@ -281,7 +281,7 @@
         </Grid>
     </ControlTemplate>
 
-    <Style x:Key="ScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
+    <Style x:Key="IceScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template" Value="{StaticResource ScrollViewerTemplate}" />
     </Style>
 </ResourceDictionary>

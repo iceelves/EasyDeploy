@@ -10,15 +10,15 @@
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceComboBoxStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabControlStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceTabItemStyle.xaml"/>
-        <ResourceDictionary Source="/EasyDeploy;component/Themes/ScrollViewerStyle.xaml"/>
-        <ResourceDictionary Source="/EasyDeploy;component/Themes/ToolTipStyle.xaml"/>
-        <ResourceDictionary Source="/EasyDeploy;component/Themes/GroupBoxStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/IceScrollViewerStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/IceToolTipStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/IceGroupBoxStyle.xaml"/>
         <!--设置语言-->
         <ResourceDictionary Source="/EasyDeploy;component/Language/en-US.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Language/zh-CN.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <!--通用默认样式-->
-    <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}" />
-    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ToolTipStyle}" />
-    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource GroupBoxStyle}" />
+    <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource IceScrollViewerStyle}" />
+    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource IceToolTipStyle}" />
+    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource IceGroupBoxStyle}" />
 </ResourceDictionary>

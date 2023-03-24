@@ -3,7 +3,7 @@
                     xmlns:control="clr-namespace:EasyDeploy.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ScrollViewerStyle.xaml"/>
+        <ResourceDictionary Source="IceScrollViewerStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="DataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
