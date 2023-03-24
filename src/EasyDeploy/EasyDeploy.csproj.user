@@ -44,6 +44,9 @@
     <Page Update="Language\zh-CN.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\GroupBoxStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\IceCheckBoxStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
