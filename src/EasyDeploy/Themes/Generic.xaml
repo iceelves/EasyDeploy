@@ -3,7 +3,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <!--定制原生控件-->
-        <ResourceDictionary Source="/EasyDeploy;component/Themes/SvgButtonStyle.xaml"/>
+        <ResourceDictionary Source="/EasyDeploy;component/Themes/IceSvgButtonStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceButtonStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceDataGridStyle.xaml"/>
         <ResourceDictionary Source="/EasyDeploy;component/Themes/IceCheckBoxStyle.xaml"/>

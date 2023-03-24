@@ -83,7 +83,7 @@
     <Page Update="Themes\IceScrollViewerStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\SvgButtonStyle.xaml">
+    <Page Update="Themes\IceSvgButtonStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingsWindow.xaml">

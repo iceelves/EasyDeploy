@@ -11,9 +11,9 @@ namespace EasyDeploy.Controls
     /// 仅SVG图片按钮
     /// </summary>
     [TemplatePart(Name = "Part_Path", Type = typeof(FrameworkElement))]
-    public class SvgButton : Button
+    public class IceSvgButton : Button
     {
-        static SvgButton() => DefaultStyleKeyProperty.OverrideMetadata(typeof(SvgButton), new FrameworkPropertyMetadata(typeof(SvgButton)));
+        static IceSvgButton() => DefaultStyleKeyProperty.OverrideMetadata(typeof(IceSvgButton), new FrameworkPropertyMetadata(typeof(IceSvgButton)));
 
         /// <summary>
         /// 控件中 SVG 图片
@@ -24,7 +24,7 @@ namespace EasyDeploy.Controls
             set { SetValue(ButtonImageProperty, value); }
         }
         public static readonly DependencyProperty ButtonImageProperty =
-            DependencyProperty.Register("ButtonImage", typeof(Geometry), typeof(SvgButton));
+            DependencyProperty.Register("ButtonImage", typeof(Geometry), typeof(IceSvgButton));
 
         /// <summary>
         /// 常规状态下的颜色
@@ -35,7 +35,7 @@ namespace EasyDeploy.Controls
             set { SetValue(NormalFillProperty, value); }
         }
         public static readonly DependencyProperty NormalFillProperty =
-            DependencyProperty.Register("NormalFill", typeof(Brush), typeof(SvgButton), new PropertyMetadata(default(Brush)));
+            DependencyProperty.Register("NormalFill", typeof(Brush), typeof(IceSvgButton), new PropertyMetadata(default(Brush)));
 
         /// <summary>
         /// 鼠标放置时背景颜色
@@ -46,7 +46,7 @@ namespace EasyDeploy.Controls
             set { SetValue(ImageMarginProperty, value); }
         }
         public static readonly DependencyProperty ImageMarginProperty =
-            DependencyProperty.Register("ImageMargin", typeof(Thickness), typeof(SvgButton));
+            DependencyProperty.Register("ImageMargin", typeof(Thickness), typeof(IceSvgButton));
 
         /// <summary>
         /// 鼠标放置时 SVG 颜色
@@ -57,7 +57,7 @@ namespace EasyDeploy.Controls
             set { SetValue(IsMouseOverFillProperty, value); }
         }
         public static readonly DependencyProperty IsMouseOverFillProperty =
-            DependencyProperty.Register("IsMouseOverFill", typeof(Brush), typeof(SvgButton), new PropertyMetadata(default(Brush)));
+            DependencyProperty.Register("IsMouseOverFill", typeof(Brush), typeof(IceSvgButton), new PropertyMetadata(default(Brush)));
 
         /// <summary>
         /// 鼠标放置时背景颜色
@@ -68,6 +68,6 @@ namespace EasyDeploy.Controls
             set { SetValue(IsMouseOverBackgroundProperty, value); }
         }
         public static readonly DependencyProperty IsMouseOverBackgroundProperty =
-            DependencyProperty.Register("IsMouseOverBackground", typeof(Brush), typeof(SvgButton), new PropertyMetadata(default(Brush)));
+            DependencyProperty.Register("IsMouseOverBackground", typeof(Brush), typeof(IceSvgButton), new PropertyMetadata(default(Brush)));
     }
 }
