@@ -2,20 +2,15 @@
 using EasyDeploy.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace EasyDeploy.Views
@@ -87,7 +82,7 @@ namespace EasyDeploy.Views
         /// 设置对齐方式
         /// 设置为惯用左手 菜单出现在手的右侧
         /// </summary>
-        public static void SetAlignment() 
+        public static void SetAlignment()
         {
             //获取系统是以Left-handed（true）还是Right-handed（false）
             var ifLeft = SystemParameters.MenuDropAlignment;
