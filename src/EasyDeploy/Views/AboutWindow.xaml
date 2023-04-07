@@ -10,7 +10,7 @@
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
         Title="{DynamicResource About}" Height="400" Width="500" Icon="pack://application:,,,/Images/terminal.ico">
-    <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Margin="10" Background="Transparent" CornerRadius="5" BorderBrush="#92CAF4" BorderThickness="1">
+    <Border x:Name="BaseBorder" SnapsToDevicePixels="True" Background="Transparent" CornerRadius="5" BorderBrush="#92CAF4" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
@@ -58,8 +58,5 @@
                 </Grid>
             </Border>
         </Grid>
-        <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.1" />
-        </Border.Effect>
     </Border>
 </Window>
