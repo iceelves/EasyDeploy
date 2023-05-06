@@ -29,13 +29,18 @@
 
     <Window.Resources>
         <Style x:Key="WindowMainMaximizedStyle" TargetType="{x:Type Border}">
-            <Setter Property="Margin" Value="0" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Maximized">
                     <Setter Property="Margin" Value="7" />
+                    <Setter Property="Effect" Value="{x:Null}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState}" Value="Normal">
-                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Margin" Value="10" />
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="0" Opacity="0.5" />
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
