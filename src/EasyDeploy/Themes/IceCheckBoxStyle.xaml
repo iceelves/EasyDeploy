@@ -24,7 +24,7 @@
     <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF"/>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF"/>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="White"/>
-    <SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6"/>
+    <SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#22E6E6E6"/>
     <SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC"/>
     <SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="White"/>
     <SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF"/>
