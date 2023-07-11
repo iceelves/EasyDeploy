@@ -33,11 +33,11 @@ namespace EasyDeploy.Views
         /// <param name="e"></param>
         private void AboutWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //初始化界面信息
-            //获取系统版本号
+            // 初始化界面信息
+            // 获取系统版本号
             var vCurrentClient = Assembly.GetExecutingAssembly().GetName().Version;
             SystemVersion.Content = $"V{vCurrentClient}";
-            //获取版权声明
+            // 获取版权声明
             Copyright.Content = $"Copyright © 2019 - {DateTime.Now.Year}";
         }
 
