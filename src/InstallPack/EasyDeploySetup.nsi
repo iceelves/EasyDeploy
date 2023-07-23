@@ -5,12 +5,18 @@
 
 ; 安装程序初始定义常量
 !define PRODUCT_NAME "EasyDeploy"
-!define PRODUCT_VERSION "1.0.0.8"
+!define PRODUCT_VERSION "1.0.0.9"
 !define PRODUCT_PUBLISHER "北京冰云信息科技有限公司"
+!define PRODUCT_PUBLISHER_ENGLISH "IceElves"
 !define PRODUCT_WEB_SITE "iceelves.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\EasyDeploy.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
+
+!ifdef ProcessorArchitecture
+!else
+  !define ProcessorArchitecture x64
+!endif
 
 SetCompressor lzma
 
@@ -43,8 +49,16 @@ SetCompressor lzma
 ; ------ MUI 现代界面定义结束 ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "EasyDeploySetup_V${PRODUCT_VERSION}_${PRODUCT_TIME}.exe"
-InstallDir "$PROGRAMFILES\${PRODUCT_NAME}"
+OutFile "EasyDeploySetup_${ProcessorArchitecture}_V${PRODUCT_VERSION}_${PRODUCT_TIME}.exe"
+
+!if ${ProcessorArchitecture} == x64
+	; 使用 $PROGRAMFILES64
+	InstallDir "$PROGRAMFILES64\${PRODUCT_PUBLISHER_ENGLISH}\${PRODUCT_NAME}"
+!else
+	; 使用 $PROGRAMFILES
+	InstallDir "$PROGRAMFILES\${PRODUCT_PUBLISHER_ENGLISH}\${PRODUCT_NAME}"
+!endif
+
 InstallDirRegKey HKLM "${PRODUCT_UNINST_KEY}" "UninstallString"
 ShowInstDetails show
 ShowUnInstDetails show
@@ -52,11 +66,11 @@ ShowUnInstDetails show
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File /r "..\EasyDeploy\bin\Publish\netcoreapp3.1\*.*"
+  File /r "..\EasyDeploy\bin\Release\netcoreapp3.1\publish_${ProcessorArchitecture}\*.*"
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
-  File "..\EasyDeploy\bin\Publish\netcoreapp3.1\EasyDeploy.exe"
+  File "..\EasyDeploy\bin\Release\netcoreapp3.1\publish_${ProcessorArchitecture}\EasyDeploy.exe"
 SectionEnd
 
 Section -AdditionalIcons
