@@ -29,7 +29,7 @@ namespace EasyDeploy.ViewModels
         }
 
         /// <summary>
-        /// Load事件
+        /// Loaded 事件
         /// </summary>
         public DelegateCommand<Window> LoadedCommand
         {
