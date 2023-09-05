@@ -66,11 +66,11 @@ ShowUnInstDetails show
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File /r "..\EasyDeploy\bin\Release\netcoreapp3.1\publish_${ProcessorArchitecture}\*.*"
+  File /r "..\EasyDeploy\bin\Release\net6.0-windows\publish_${ProcessorArchitecture}\*.*"
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
-  File "..\EasyDeploy\bin\Release\netcoreapp3.1\publish_${ProcessorArchitecture}\EasyDeploy.exe"
+  File "..\EasyDeploy\bin\Release\net6.0-windows\publish_${ProcessorArchitecture}\EasyDeploy.exe"
 SectionEnd
 
 Section -AdditionalIcons
