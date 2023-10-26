@@ -15,8 +15,8 @@ MSBuild %ProjectPath% /t:Publish /p:Configuration=Release /p:PublishProfile=Fold
 MSBuild %ProjectPath% /t:Publish /p:Configuration=Release /p:PublishProfile=FolderProfileX64.pubxml
 
 :: 打包
-makensis.exe /DProcessorArchitecture=x86 EasyDeploySetup.nsi
-makensis.exe /DProcessorArchitecture=x64 EasyDeploySetup.nsi
+makensis.exe /V4 /DProcessorArchitecture=x86 EasyDeploySetup.nsi
+makensis.exe /V4 /DProcessorArchitecture=x64 EasyDeploySetup.nsi
 
 pause
 exit
