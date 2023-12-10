@@ -21,7 +21,7 @@
     <Compile Update="Views\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AddService.xaml.cs">
+    <Compile Update="Views\AddServiceWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SettingsWindow.xaml.cs">
@@ -65,7 +65,7 @@
     <Page Update="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\AddService.xaml">
+    <Page Update="Views\AddServiceWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainWindow.xaml">

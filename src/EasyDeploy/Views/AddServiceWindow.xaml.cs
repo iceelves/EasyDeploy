@@ -21,12 +21,12 @@ namespace EasyDeploy.Views
     /// <summary>
     /// AddService.xaml 的交互逻辑
     /// </summary>
-    public partial class AddService : Window
+    public partial class AddServiceWindow : Window
     {
         /// <summary>
         /// 构造函数
         /// </summary>
-        public AddService(ServiceModel serviceModel = null)
+        public AddServiceWindow(ServiceModel serviceModel = null)
         {
             InitializeComponent();
             this.TitleBar.MouseDown += TitleBar_MouseDown;

@@ -260,7 +260,7 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand(delegate ()
                 {
-                    AddService window = new AddService();
+                    AddServiceWindow window = new AddServiceWindow();
                     window.ShowDialog();
                     var vServiceModel = window.ServiceModel;
                     if (vServiceModel != null)
@@ -514,7 +514,7 @@ namespace EasyDeploy.ViewModels
                 return new DelegateCommand<ServiceModel>(delegate (ServiceModel Service)
                 {
                     SetLog($"Edge Service: {Service.ServiceName}");
-                    AddService window = new AddService(Service);
+                    AddServiceWindow window = new AddServiceWindow(Service);
                     window.ShowDialog();
                     Service = window.ServiceModel;
                     // 保存数据集
