@@ -82,7 +82,7 @@
                             <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Save}" 
                                        Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                        Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Save_Click"/>
-                            <control:IceButton x:Name="Close" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Close}" 
+                            <control:IceButton x:Name="Close" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Cancel}" 
                                        Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                        Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Close_Click"/>
                         </StackPanel>
