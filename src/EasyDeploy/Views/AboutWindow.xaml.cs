@@ -65,14 +65,16 @@ namespace EasyDeploy.Views
         }
 
         /// <summary>
-        /// 打开项目地址
+        /// 打开链接地址
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            Hyperlink link = sender as Hyperlink;
-            Process.Start(new ProcessStartInfo { FileName = link.NavigateUri.AbsoluteUri, UseShellExecute = true });
+            if (sender is Hyperlink link)
+            {
+                Process.Start(new ProcessStartInfo { FileName = link.NavigateUri.AbsoluteUri, UseShellExecute = true });
+            }
         }
     }
 }
