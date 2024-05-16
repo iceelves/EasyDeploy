@@ -144,7 +144,7 @@ namespace EasyDeploy.Views
                         if (!vDicAllStartupItems.ContainsKey(_systemName))
                         {
                             var vStartup = RegistryHelper.CreateStartupItems(_systemName, _systemExePath);
-                            NLogHelper.SaveDebug($"设置Windows开机启动{(vStartup ? "成功" : "失败")}");
+                            NLogHelper.SaveDebug($"设置 Windows 开机启动{(vStartup ? "成功" : "失败")}");
                         }
                     }
                     else
@@ -153,7 +153,7 @@ namespace EasyDeploy.Views
                         if (vDicAllStartupItems.ContainsKey(_systemName))
                         {
                             var vStartup = RegistryHelper.DeleteStartupItems(_systemName);
-                            NLogHelper.SaveDebug($"移除Windows开机启动{(vStartup ? "成功" : "失败")}");
+                            NLogHelper.SaveDebug($"移除 Windows 开机启动{(vStartup ? "成功" : "失败")}");
                         }
                     }
                 }

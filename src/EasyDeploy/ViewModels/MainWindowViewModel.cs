@@ -285,8 +285,7 @@ namespace EasyDeploy.ViewModels
         /// <param name="IsAuto">是否自动触发</param>
         private void StartServiceCore(ServiceModel Service, bool IsAuto)
         {
-            SetLog($"{(IsAuto ? "Auto " : "")}Start Service: {Service.ServiceName}");
-            NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动服务");
+            SetLog($"Service:{Service.ServiceName} {(IsAuto ? "Auto " : "")}Start");
             if (Service.ServiceState == ServiceState.None)
             {
                 Service.ServiceState = ServiceState.Wait;
@@ -319,7 +318,7 @@ namespace EasyDeploy.ViewModels
                         {
                             // 启动成功
                             Service.Pid = $"{serviceResources.CliWrap.threadID}";
-                            NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动成功，PID：{Service.Pid}");
+                            SetLog($"Service:{Service.ServiceName} Start success,PID:{Service.Pid}");
                             var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
                             if (vProcessPorts != null && vProcessPorts.Count >= 1)
                             {
@@ -340,12 +339,16 @@ namespace EasyDeploy.ViewModels
                         }
                         else
                         {
-                            // 启动失败
-                            Service.ServiceState = ServiceState.Error;
                             if (iDetectionNumber++ < 10)
                             {
+                                // 不确认是否启动成功，循环重试
                                 timer.Enabled = true;
-                                NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动失败，重试 {iDetectionNumber}/10 次");
+                                SetLog($"Service:{Service.ServiceName} Start uncertain success,Try again {iDetectionNumber}/10 times");
+                            }
+                            else
+                            {
+                                // 启动失败
+                                Service.ServiceState = ServiceState.Error;
                             }
                         }
                     });
@@ -377,8 +380,7 @@ namespace EasyDeploy.ViewModels
         /// <param name="Service">服务信息</param>
         private void StopServiceCore(ServiceModel Service)
         {
-            SetLog($"Stop Service: {Service.ServiceName}");
-            NLogHelper.SaveInfo($"应用 {Service.ServiceName} 停止服务");
+            SetLog($"Service:{Service.ServiceName} Stop");
             if ((Service.ServiceState == ServiceState.Start || Service.ServiceState == ServiceState.Error) && !string.IsNullOrEmpty(Service.Guid))
             {
                 Service.ServiceState = ServiceState.Wait;
@@ -679,9 +681,11 @@ namespace EasyDeploy.ViewModels
             if (ServicesResources != null && ServicesResources.Count >= 1)
             {
                 // 停止所有正在运行的服务
+                SetLog($"App shutdown,Stop all running services");
                 foreach (var item in ServicesResources)
                 {
                     PidHelper.KillProcessAndChildren(item.Value?.CliWrap?.threadID);
+                    SetLog($"App shutdown,Stop services:{item.Value?.Service?.ServiceName},PID:{item.Value?.Service?.Pid}");
                 }
                 ServicesResources = null;
                 // 清空关联数据
@@ -760,6 +764,9 @@ namespace EasyDeploy.ViewModels
                     ServicesShell[LogShellGuid]?.Control?.SetText($"\u001b[90m{DateTime.Now}: \u001b[0m{log}");
                 });
             }
+
+            // 保存信息日志
+            NLogHelper.SaveInfo(log);
         }
 
         /// <summary>

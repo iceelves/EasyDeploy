@@ -87,8 +87,7 @@ namespace EasyDeploy.Models
             {
                 if (!PidHelper.GetProcessIsOnline(int.Parse(Pid)))
                 {
-                    SetLog($"Error Stop Service:{Pid}");
-                    NLogHelper.SaveInfo($"应用 {Service.ServiceName} 异常关闭，PID：{Pid}");
+                    SetLog($"Error Stop Service PID:{Pid}");
                     timerPerSecond?.Stop();
                     Service.ServiceState = ServiceState.Error;
                     // 尝试重启
@@ -142,7 +141,7 @@ namespace EasyDeploy.Models
         {
             Application.Current?.Dispatcher?.Invoke(() =>
             {
-                SetLog($"Stop Service:{obj}");
+                SetLog($"Stop Service,Exit code:{obj}");
                 timerPerSecond?.Stop();
                 Service.ServiceState = ServiceState.Error;
                 // 尝试重启
@@ -160,8 +159,7 @@ namespace EasyDeploy.Models
         /// </summary>
         private void ReCliWrap()
         {
-            SetLog($"Test Re Start Service");
-            NLogHelper.SaveInfo($"应用 {Service.ServiceName} 尝试重启");
+            SetLog($"Restart Service");
             Service.ServiceState = ServiceState.Wait;
             if (string.IsNullOrEmpty(Service.Parameter))
             {
@@ -174,7 +172,8 @@ namespace EasyDeploy.Models
             MonitorShell();
             CliWrap.Start();
             // 通过返回的进程 ID 判断是否运行成功
-            Timer timer = new Timer(2000);
+            int iDetectionNumber = 0;
+            Timer timer = new Timer(500);
             timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
             {
                 timer.Enabled = false;
@@ -184,7 +183,7 @@ namespace EasyDeploy.Models
                     {
                         // 启动成功
                         Service.Pid = $"{CliWrap.threadID}";
-                        NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动成功，PID：{Service.Pid}");
+                        SetLog($"Start Success PID:{Service.Pid}");
                         var vProcessPorts = PidHelper.GetProcessPorts(CliWrap.threadID);
                         if (vProcessPorts != null && vProcessPorts.Count >= 1)
                         {
@@ -194,13 +193,22 @@ namespace EasyDeploy.Models
                     }
                     else
                     {
-                        // 启动失败
-                        Service.ServiceState = ServiceState.Error;
-                        NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动失败，尝试重新启动");
-                        // 等待片刻后重新尝试启动
-                        System.Threading.Thread.Sleep(30000);
-                        CliWrap = null;
-                        ReCliWrap();
+                        if (iDetectionNumber++ < 10)
+                        {
+                            // 不确认是否启动成功，循环重试
+                            timer.Enabled = true;
+                            SetLog($"Start uncertain success,Try again {iDetectionNumber}/10 times");
+                        }
+                        else
+                        {
+                            // 启动失败
+                            Service.ServiceState = ServiceState.Error;
+                            SetLog($"Start failed,Test Restart");
+                            // 等待片刻后重新尝试启动
+                            System.Threading.Thread.Sleep(30000);
+                            CliWrap = null;
+                            ReCliWrap();
+                        }
                     }
                 });
             };
