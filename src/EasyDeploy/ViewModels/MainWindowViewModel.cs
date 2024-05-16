@@ -286,6 +286,7 @@ namespace EasyDeploy.ViewModels
         private void StartServiceCore(ServiceModel Service, bool IsAuto)
         {
             SetLog($"{(IsAuto ? "Auto " : "")}Start Service: {Service.ServiceName}");
+            NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动服务");
             if (Service.ServiceState == ServiceState.None)
             {
                 Service.ServiceState = ServiceState.Wait;
@@ -307,7 +308,8 @@ namespace EasyDeploy.ViewModels
                 serviceResources.MonitorShell();
                 serviceResources.CliWrap.Start();
                 // 通过返回的进程 ID 判断是否运行成功
-                Timer timer = new Timer(2000);
+                int iDetectionNumber = 0;
+                Timer timer = new Timer(500);
                 timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
@@ -317,6 +319,7 @@ namespace EasyDeploy.ViewModels
                         {
                             // 启动成功
                             Service.Pid = $"{serviceResources.CliWrap.threadID}";
+                            NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动成功，PID：{Service.Pid}");
                             var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
                             if (vProcessPorts != null && vProcessPorts.Count >= 1)
                             {
@@ -339,6 +342,11 @@ namespace EasyDeploy.ViewModels
                         {
                             // 启动失败
                             Service.ServiceState = ServiceState.Error;
+                            if (iDetectionNumber++ < 10)
+                            {
+                                timer.Enabled = true;
+                                NLogHelper.SaveInfo($"应用 {Service.ServiceName} 启动失败，重试 {iDetectionNumber}/10 次");
+                            }
                         }
                     });
                 };
@@ -370,6 +378,7 @@ namespace EasyDeploy.ViewModels
         private void StopServiceCore(ServiceModel Service)
         {
             SetLog($"Stop Service: {Service.ServiceName}");
+            NLogHelper.SaveInfo($"应用 {Service.ServiceName} 停止服务");
             if ((Service.ServiceState == ServiceState.Start || Service.ServiceState == ServiceState.Error) && !string.IsNullOrEmpty(Service.Guid))
             {
                 Service.ServiceState = ServiceState.Wait;
