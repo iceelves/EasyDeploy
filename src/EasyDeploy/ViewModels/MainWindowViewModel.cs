@@ -308,7 +308,7 @@ namespace EasyDeploy.ViewModels
                 serviceResources.CliWrap.Start();
                 // 通过返回的进程 ID 判断是否运行成功
                 int iDetectionNumber = 0;
-                Timer timer = new Timer(500);
+                Timer timer = new Timer(1000);
                 timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
@@ -339,7 +339,7 @@ namespace EasyDeploy.ViewModels
                         }
                         else
                         {
-                            if (iDetectionNumber++ < 10)
+                            if (iDetectionNumber++ < 20)
                             {
                                 // 不确认是否启动成功，循环重试
                                 timer.Enabled = true;
