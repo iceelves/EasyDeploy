@@ -197,7 +197,7 @@ namespace EasyDeploy.Models
                         {
                             // 不确认是否启动成功，循环重试
                             timer.Enabled = true;
-                            SetLog($"Start uncertain success,Try again {iDetectionNumber}/10 times");
+                            SetLog($"Start uncertain success,Try again {iDetectionNumber}/20 times");
                         }
                         else
                         {

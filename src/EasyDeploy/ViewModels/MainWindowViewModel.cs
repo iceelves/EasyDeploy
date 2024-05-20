@@ -343,7 +343,7 @@ namespace EasyDeploy.ViewModels
                             {
                                 // 不确认是否启动成功，循环重试
                                 timer.Enabled = true;
-                                SetLog($"Service:{Service.ServiceName} Start uncertain success,Try again {iDetectionNumber}/10 times");
+                                SetLog($"Service:{Service.ServiceName} Start uncertain success,Try again {iDetectionNumber}/20 times");
                             }
                             else
                             {
