@@ -30,6 +30,16 @@ namespace EasyDeploy.Helpers
         public const string SYSTEM_LANGUAGE = "Language";
 
         /// <summary>
+        /// 应用节点标识
+        /// </summary>
+        public const string SECTION_APPLICATION = "Application";
+
+        /// <summary>
+        /// 启动等待次数
+        /// </summary>
+        public const string APPLICATION_START_WAIT_TIMES = "StartWaitTimes";
+
+        /// <summary>
         /// 终端节点标识
         /// </summary>
         public const string SECTION_TERMINAL = "Terminal";
@@ -99,7 +109,9 @@ namespace EasyDeploy.Helpers
                     INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, SYSTEM_START_WITH_WINDOWS, "false");
                     // 获取系统语言，默认如果是中文加载中文，其余加载英文
                     var vLanguage = CultureInfo.InstalledUICulture.Name.Equals("zh-CN") ? "zh-CN" : "en-US";
-                    INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, "Language", vLanguage);
+                    INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, SYSTEM_LANGUAGE, vLanguage);
+                    // 创建默认应用配置信息
+                    INIHelper.INIWriteValue(strPath, SECTION_APPLICATION, APPLICATION_START_WAIT_TIMES, "20");
                     // 创建默认终端配置信息
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_MAXROWS, "5000");
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_BACKGROUND, "#FF0C0C0C");

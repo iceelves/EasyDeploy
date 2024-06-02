@@ -42,9 +42,15 @@ namespace EasyDeploy.ViewModels
                     this.window.Closing += Window_Closing;
 
                     // 加载系统配置文件
+                    // 应用 - 启动等待次数
+                    var vTerminalConfigInfo_StartWaitTimes = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_START_WAIT_TIMES);
+                    StartWaitTimes = !string.IsNullOrEmpty(vTerminalConfigInfo_StartWaitTimes) && int.Parse(vTerminalConfigInfo_StartWaitTimes) >= 1 ? int.Parse(vTerminalConfigInfo_StartWaitTimes) : 1;
                     // 终端 - 最大行数
                     var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
                     TerminalMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
+                    // 终端 - 字号
+                    var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
+                    TerminalFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
                     // 终端 - 背景颜色
                     var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
                     var vBackground = !string.IsNullOrEmpty(vTerminalConfigInfo_Background) ? vTerminalConfigInfo_Background : "#0C0C0C";
@@ -53,9 +59,6 @@ namespace EasyDeploy.ViewModels
                     var vTerminalConfigInfo_Foreground = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND);
                     var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
                     TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
-                    // 终端 - 字号
-                    var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
-                    TerminalFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
 
                     // 加载日志控件
                     ServicesShell.Add(LogShellGuid, new TabControlTerminalModel()
@@ -229,11 +232,23 @@ namespace EasyDeploy.ViewModels
         }
         #endregion
 
+        #region 应用相关配置
+        /// <summary>
+        /// 启动等待次数
+        /// </summary>
+        public int StartWaitTimes { get; set; } = 20;
+        #endregion
+
         #region 终端相关配置
         /// <summary>
         /// 最大行数
         /// </summary>
         public int TerminalMaxRows { get; set; }
+
+        /// <summary>
+        /// 文字大小
+        /// </summary>
+        public int TerminalFontSize { get; set; }
 
         /// <summary>
         /// 背景颜色
@@ -244,11 +259,6 @@ namespace EasyDeploy.ViewModels
         /// 文字颜色
         /// </summary>
         public SolidColorBrush TerminalForeground { get; set; }
-
-        /// <summary>
-        /// 文字大小
-        /// </summary>
-        public int TerminalFontSize { get; set; }
         #endregion
 
         /// <summary>
@@ -294,6 +304,7 @@ namespace EasyDeploy.ViewModels
                 Service.Guid = strGuid;
                 ServiceResourcesModel serviceResources = new ServiceResourcesModel();
                 serviceResources.Service = Service;
+                serviceResources.StartWaitTimes = StartWaitTimes;
                 if (string.IsNullOrEmpty(Service.Parameter))
                 {
                     serviceResources.CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath));
@@ -339,11 +350,11 @@ namespace EasyDeploy.ViewModels
                         }
                         else
                         {
-                            if (iDetectionNumber++ < 20)
+                            if (iDetectionNumber++ < StartWaitTimes)
                             {
                                 // 不确认是否启动成功，循环重试
                                 timer.Enabled = true;
-                                SetLog($"Service:{Service.ServiceName} Start uncertain success,Try again {iDetectionNumber}/20 times");
+                                SetLog($"Service:{Service.ServiceName} Start uncertain success,Try again {iDetectionNumber}/{StartWaitTimes} times");
                             }
                             else
                             {
@@ -581,12 +592,37 @@ namespace EasyDeploy.ViewModels
                     settingsWindow.ShowDialog();
                     if (settingsWindow.OutConfig != null && settingsWindow.OutConfig.Count >= 1)
                     {
+                        // 应用 - 启动等待次数
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.APPLICATION_START_WAIT_TIMES))
+                        {
+                            var vApplicationStartWaitTimes = $"{settingsWindow.OutConfig[SystemConfigHelper.APPLICATION_START_WAIT_TIMES]}";
+                            var vStartWaitTimes = !string.IsNullOrEmpty(vApplicationStartWaitTimes) && int.Parse(vApplicationStartWaitTimes) >= 1 ? int.Parse(vApplicationStartWaitTimes) : 1;
+                            StartWaitTimes = vStartWaitTimes;
+
+                            // 如果有正在运行的服务，一起修改启动等待次数
+                            if (ServicesResources != null && ServicesResources.Count >= 1)
+                            {
+                                foreach (var item in ServicesResources)
+                                {
+                                    item.Value.StartWaitTimes = vStartWaitTimes;
+                                }
+                            }
+                        }
+
                         // 终端 - 最大行数
                         if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS))
                         {
                             var vTerminalMaxRows = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_MAXROWS]}";
                             var vMaxRows = !string.IsNullOrEmpty(vTerminalMaxRows) && int.Parse(vTerminalMaxRows) >= 1 ? int.Parse(vTerminalMaxRows) : 1;
                             TerminalMaxRows = vMaxRows;
+                        }
+
+                        // 终端 - 字号
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE))
+                        {
+                            var vTerminalFontSize = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FONTSIZE]}";
+                            var vFontSize = !string.IsNullOrEmpty(vTerminalFontSize) && int.Parse(vTerminalFontSize) >= 1 ? int.Parse(vTerminalFontSize) : 1;
+                            TerminalFontSize = vFontSize;
                         }
 
                         // 终端 - 背景颜色
@@ -603,14 +639,6 @@ namespace EasyDeploy.ViewModels
                             var vTerminalForeground = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FOREGROUND]}";
                             var vForeground = !string.IsNullOrEmpty(vTerminalForeground) ? vTerminalForeground : "#FFFFFF";
                             TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
-                        }
-
-                        // 终端 - 字号
-                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE))
-                        {
-                            var vTerminalFontSize = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FONTSIZE]}";
-                            var vFontSize = !string.IsNullOrEmpty(vTerminalFontSize) && int.Parse(vTerminalFontSize) >= 1 ? int.Parse(vTerminalFontSize) : 1;
-                            TerminalFontSize = vFontSize;
                         }
                     }
                 });

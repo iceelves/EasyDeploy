@@ -51,9 +51,14 @@
 
     <!--设置-->
     <System:String x:Key="Setting">设置</System:String>
+    <!--设置:系统设置-->
     <System:String x:Key="SystemSettings">系统设置</System:String>
     <System:String x:Key="StartWithWindows">自动启动：</System:String>
     <System:String x:Key="Language">语言：</System:String>
+    <!--设置:应用设置-->
+    <System:String x:Key="ApplicationSettings">应用设置</System:String>
+    <System:String x:Key="StartWaitTimes">启动等待次数：</System:String>
+    <!--设置:终端设置-->
     <System:String x:Key="TerminalSettings">终端设置</System:String>
     <System:String x:Key="MaxRows">最大行数：</System:String>
     <System:String x:Key="Background">背景颜色：</System:String>

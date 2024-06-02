@@ -43,6 +43,11 @@ namespace EasyDeploy.Models
         public string Pid { get; set; }
 
         /// <summary>
+        /// 启动等待次数
+        /// </summary>
+        public int StartWaitTimes { get; set; } = 20;
+
+        /// <summary>
         /// 监听 Shell
         /// </summary>
         public void MonitorShell()
@@ -193,11 +198,11 @@ namespace EasyDeploy.Models
                     }
                     else
                     {
-                        if (iDetectionNumber++ < 20)
+                        if (iDetectionNumber++ < StartWaitTimes)
                         {
                             // 不确认是否启动成功，循环重试
                             timer.Enabled = true;
-                            SetLog($"Start uncertain success,Try again {iDetectionNumber}/20 times");
+                            SetLog($"Start uncertain success,Try again {iDetectionNumber}/{StartWaitTimes} times");
                         }
                         else
                         {

@@ -59,12 +59,24 @@ namespace EasyDeploy.Views
                 }
             }
 
+            // 获取应用配置
+            // 应用 - 启动等待次数
+            var vApplicationConfigInfo_StartWaitTimes = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_START_WAIT_TIMES);
+            _initialConfig.Add(SystemConfigHelper.APPLICATION_START_WAIT_TIMES, vApplicationConfigInfo_StartWaitTimes);
+            StartWaitTimes.Text = $"{vApplicationConfigInfo_StartWaitTimes}";
+
             // 获取终端配置
             // 终端 - 最大行数
             var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
             var vMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
             _initialConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, vMaxRows);
             MaxRows.Text = $"{vMaxRows}";
+
+            // 终端 - 字号
+            var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
+            var vFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
+            _initialConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, vFontSize);
+            FontSize.Text = $"{vFontSize}";
 
             // 终端 - 背景颜色
             var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
@@ -77,12 +89,6 @@ namespace EasyDeploy.Views
             var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
             _initialConfig.Add(SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
             Foreground.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
-
-            // 终端 - 字号
-            var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
-            var vFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
-            _initialConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, vFontSize);
-            FontSize.Text = $"{vFontSize}";
         }
 
         /// <summary>
@@ -170,6 +176,22 @@ namespace EasyDeploy.Views
             #endregion
             #endregion
 
+            #region 应用设置
+            #region 启动等待次数
+            StartWaitTimes.Text = StartWaitTimes.Text.Replace(" ", "");
+            if (_initialConfig.ContainsKey(SystemConfigHelper.APPLICATION_START_WAIT_TIMES) && !_initialConfig[SystemConfigHelper.APPLICATION_START_WAIT_TIMES].ToString().Equals(StartWaitTimes.Text))
+            {
+                if (StartWaitTimes.Text.Length > 10 || double.Parse(StartWaitTimes.Text) < 1 || double.Parse(StartWaitTimes.Text) > int.MaxValue)
+                {
+                    BorderFlashing(StartWaitTimes);
+                    return;
+                }
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_START_WAIT_TIMES, StartWaitTimes.Text);
+                OutConfig.Add(SystemConfigHelper.APPLICATION_START_WAIT_TIMES, StartWaitTimes.Text);
+            }
+            #endregion
+            #endregion
+
             #region 终端设置
             #region 最大行数
             MaxRows.Text = MaxRows.Text.Replace(" ", "");
@@ -182,6 +204,20 @@ namespace EasyDeploy.Views
                 }
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
                 OutConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
+            }
+            #endregion
+
+            #region 文字大小
+            FontSize.Text = FontSize.Text.Replace(" ", "");
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(FontSize.Text))
+            {
+                if (FontSize.Text.Length > 10 || double.Parse(FontSize.Text) < 5 || double.Parse(FontSize.Text) > 32)
+                {
+                    BorderFlashing(FontSize);
+                    return;
+                }
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
+                OutConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
             }
             #endregion
 
@@ -200,20 +236,6 @@ namespace EasyDeploy.Views
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
                 OutConfig.Add(SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
-            }
-            #endregion
-
-            #region 文字大小
-            FontSize.Text = FontSize.Text.Replace(" ", "");
-            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(FontSize.Text))
-            {
-                if (FontSize.Text.Length > 10 || double.Parse(FontSize.Text) < 5 || double.Parse(FontSize.Text) > 32)
-                {
-                    BorderFlashing(FontSize);
-                    return;
-                }
-                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
-                OutConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
             }
             #endregion
             #endregion

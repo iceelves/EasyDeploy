@@ -51,9 +51,14 @@
 
     <!--设置-->
     <System:String x:Key="Setting">Setting</System:String>
+    <!--设置:系统设置-->
     <System:String x:Key="SystemSettings">System Settings</System:String>
     <System:String x:Key="StartWithWindows">Start with Windows:</System:String>
     <System:String x:Key="Language">Language:</System:String>
+    <!--设置:应用设置-->
+    <System:String x:Key="ApplicationSettings">Application Settings</System:String>
+    <System:String x:Key="StartWaitTimes">Start wait times:</System:String>
+    <!--设置:终端设置-->
     <System:String x:Key="TerminalSettings">Terminal Settings</System:String>
     <System:String x:Key="MaxRows">MaxRows:</System:String>
     <System:String x:Key="Background">Background:</System:String>
