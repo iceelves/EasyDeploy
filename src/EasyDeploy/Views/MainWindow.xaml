@@ -18,7 +18,7 @@
         Title="{DynamicResource Title}" Icon="pack://application:,,,/Images/terminal.ico">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="35" ResizeBorderThickness="5" />
+        <WindowChrome CaptionHeight="35" ResizeBorderThickness="15" />
     </WindowChrome.WindowChrome>
 
     <i:Interaction.Triggers>
