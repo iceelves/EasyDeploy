@@ -7,10 +7,10 @@
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>./Images/terminal.ico</ApplicationIcon>
-    <Version>1.0.1.1</Version>
+    <Version>1.0.1.2</Version>
     <Authors>北京冰云信息科技有限公司</Authors>
     <Company>北京冰云信息科技有限公司</Company>
-    <Copyright>Copyright ©  2022</Copyright>
+    <Copyright>Copyright ©  2024</Copyright>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
