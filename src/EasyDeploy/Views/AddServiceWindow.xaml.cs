@@ -161,19 +161,21 @@ namespace EasyDeploy.Views
         /// <param name="containingObject"></param>
         private void BorderFlashing(FrameworkElement containingObject)
         {
-            Storyboard _blinkStoryboard = this.TryFindResource("BlinkAnime") as Storyboard;
-            _blinkStoryboard.Begin(containingObject, true);
-
-            Timer timer = new Timer(5000);
-            timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+            if (this.TryFindResource("BlinkAnime") is Storyboard blinkStoryboard)
             {
-                timer.Enabled = false;
-                this.Dispatcher.Invoke(new Action(() =>
+                blinkStoryboard.Begin(containingObject, true);
+
+                Timer timer = new Timer(5000);
+                timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                 {
-                    _blinkStoryboard.Stop(containingObject);
-                }));
-            };
-            timer.Enabled = true;
+                    timer.Enabled = false;
+                    this.Dispatcher.Invoke(new Action(() =>
+                    {
+                        blinkStoryboard.Stop(containingObject);
+                    }));
+                };
+                timer.Enabled = true;
+            }
         }
 
         /// <summary>

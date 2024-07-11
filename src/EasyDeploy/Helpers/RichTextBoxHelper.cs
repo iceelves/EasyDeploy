@@ -66,10 +66,9 @@ namespace EasyDeploy.Helpers
                     }
 
                     // When the document changes update the source
-                    richTextBox.TextChanged += (obj2, e2) =>
+                    richTextBox.TextChanged += (obj, e) =>
                     {
-                        RichTextBox richTextBox2 = obj2 as RichTextBox;
-                        if (richTextBox2 != null)
+                        if (obj is RichTextBox richTextBox2)
                         {
                             SetDocumentXaml(richTextBox, XamlWriter.Save(richTextBox2.Document));
                         }

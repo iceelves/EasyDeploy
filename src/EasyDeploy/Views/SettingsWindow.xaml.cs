@@ -167,11 +167,13 @@ namespace EasyDeploy.Views
             #endregion
 
             #region 语言
-            var vSelectedLanguage = Language.SelectedItem as LanguageModel;
-            if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_LANGUAGE) && !_initialConfig[SystemConfigHelper.SYSTEM_LANGUAGE].ToString().Equals(vSelectedLanguage.FileName))
+            if (Language.SelectedItem is LanguageModel selectedLanguage)
             {
-                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE, vSelectedLanguage.FileName);
-                SystemConfigHelper.SetLanguage(vSelectedLanguage.Resource.Source.OriginalString);
+                if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_LANGUAGE) && !$"{_initialConfig[SystemConfigHelper.SYSTEM_LANGUAGE]}".Equals(selectedLanguage.FileName))
+                {
+                    SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE, selectedLanguage.FileName);
+                    SystemConfigHelper.SetLanguage(selectedLanguage.Resource.Source.OriginalString);
+                }
             }
             #endregion
             #endregion
@@ -270,19 +272,21 @@ namespace EasyDeploy.Views
         /// <param name="containingObject"></param>
         private void BorderFlashing(FrameworkElement containingObject)
         {
-            Storyboard _blinkStoryboard = this.TryFindResource("BlinkAnime") as Storyboard;
-            _blinkStoryboard.Begin(containingObject, true);
-
-            Timer timer = new Timer(5000);
-            timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+            if (this.TryFindResource("BlinkAnime") is Storyboard blinkStoryboard)
             {
-                timer.Enabled = false;
-                this.Dispatcher.Invoke(new Action(() =>
+                blinkStoryboard.Begin(containingObject, true);
+
+                Timer timer = new Timer(5000);
+                timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
                 {
-                    _blinkStoryboard.Stop(containingObject);
-                }));
-            };
-            timer.Enabled = true;
+                    timer.Enabled = false;
+                    this.Dispatcher.Invoke(new Action(() =>
+                    {
+                        blinkStoryboard.Stop(containingObject);
+                    }));
+                };
+                timer.Enabled = true;
+            }
         }
     }
 }

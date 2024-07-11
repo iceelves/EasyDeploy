@@ -92,7 +92,7 @@ namespace EasyDeploy.Views
                 // change to false
                 var t = typeof(SystemParameters);
                 var field = t.GetField("_menuDropAlignment", BindingFlags.NonPublic | BindingFlags.Static);
-                field.SetValue(null, false);
+                field?.SetValue(null, false);
             }
         }
     }
