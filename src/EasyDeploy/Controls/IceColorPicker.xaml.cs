@@ -77,40 +77,41 @@ namespace EasyDeploy.Controls
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-            string text = textBox.Text;
-
-            //错误的数据，则使用上次的正确数据
-            if (!int.TryParse(TextR.Text, out int Rvalue) || (Rvalue > 255 || Rvalue < 0))
+            if (sender is TextBox textBox)
             {
-                TextR.Text = R.ToString();
-                return;
+                string text = textBox.Text;
+
+                //错误的数据，则使用上次的正确数据
+                if (!int.TryParse(TextR.Text, out int Rvalue) || (Rvalue > 255 || Rvalue < 0))
+                {
+                    TextR.Text = R.ToString();
+                    return;
+                }
+
+                if (!int.TryParse(TextG.Text, out int Gvalue) || (Gvalue > 255 || Gvalue < 0))
+                {
+                    TextG.Text = G.ToString();
+                    return;
+                }
+
+                if (!int.TryParse(TextB.Text, out int Bvalue) || (Bvalue > 255 || Bvalue < 0))
+                {
+                    TextB.Text = _B.ToString();
+                    return;
+                }
+                if (!int.TryParse(TextA.Text, out int Avalue) || (Avalue > 255 || Avalue < 0))
+                {
+                    TextA.Text = A.ToString();
+                    return;
+                }
+                R = Rvalue; G = Gvalue; _B = Bvalue; A = Avalue;
+
+
+                RgbaColor Hcolor = new RgbaColor(R, G, _B, A);
+                SelectColor = Hcolor.SolidColorBrush;
+
+                TextHex.Text = Hcolor.HexString;
             }
-
-            if (!int.TryParse(TextG.Text, out int Gvalue) || (Gvalue > 255 || Gvalue < 0))
-            {
-                TextG.Text = G.ToString();
-                return;
-            }
-
-            if (!int.TryParse(TextB.Text, out int Bvalue) || (Bvalue > 255 || Bvalue < 0))
-            {
-                TextB.Text = _B.ToString();
-                return;
-            }
-            if (!int.TryParse(TextA.Text, out int Avalue) || (Avalue > 255 || Avalue < 0))
-            {
-                TextA.Text = A.ToString();
-                return;
-            }
-            R = Rvalue; G = Gvalue; _B = Bvalue; A = Avalue;
-
-
-            RgbaColor Hcolor = new RgbaColor(R, G, _B, A);
-            SelectColor = Hcolor.SolidColorBrush;
-
-            TextHex.Text = Hcolor.HexString;
-
         }
 
         private void HexTextLostFocus(object sender, RoutedEventArgs e)
