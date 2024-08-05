@@ -2,6 +2,7 @@
 using EasyDeploy.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -190,7 +191,7 @@ namespace EasyDeploy.Models
                         Service.Pid = $"{CliWrap.threadID}";
                         SetLog($"Start Success PID:{Service.Pid}");
                         var vProcessPorts = PidHelper.GetProcessPorts(CliWrap.threadID);
-                        if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                        if (vProcessPorts != null && vProcessPorts.Any())
                         {
                             Service.Port = string.Join('/', vProcessPorts);
                         }

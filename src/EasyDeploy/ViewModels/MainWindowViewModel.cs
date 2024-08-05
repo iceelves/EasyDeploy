@@ -88,7 +88,7 @@ namespace EasyDeploy.ViewModels
                         SetLog($"Get {Services.Count} Services!");
 
                         // 启动自动运行项
-                        if (Services != null && Services.Count >= 1)
+                        if (Services != null && Services.Any())
                         {
                             foreach (var item in Services.Where(o => o.AutoStart))
                             {
@@ -116,7 +116,7 @@ namespace EasyDeploy.ViewModels
         /// <param name="e"></param>
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (ServicesResources != null && ServicesResources.Count >= 1)
+            if (ServicesResources != null && ServicesResources.Any())
             {
                 var result = IceMessageBox.ShowDialogBox($"{Application.Current.FindResource("CloseWindowStopServer")}", $"{Application.Current.FindResource("Tips")}", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
@@ -331,7 +331,7 @@ namespace EasyDeploy.ViewModels
                             Service.Pid = $"{serviceResources.CliWrap.threadID}";
                             SetLog($"Service:{Service.ServiceName} Start success,PID:{Service.Pid}");
                             var vProcessPorts = PidHelper.GetProcessPorts(serviceResources.CliWrap.threadID);
-                            if (vProcessPorts != null && vProcessPorts.Count >= 1)
+                            if (vProcessPorts != null && vProcessPorts.Any())
                             {
                                 Service.Port = string.Join('/', vProcessPorts);
                             }
@@ -590,7 +590,7 @@ namespace EasyDeploy.ViewModels
                 {
                     SettingsWindow settingsWindow = new SettingsWindow();
                     settingsWindow.ShowDialog();
-                    if (settingsWindow.OutConfig != null && settingsWindow.OutConfig.Count >= 1)
+                    if (settingsWindow.OutConfig != null && settingsWindow.OutConfig.Any())
                     {
                         // 应用 - 启动等待次数
                         if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.APPLICATION_START_WAIT_TIMES))
@@ -600,7 +600,7 @@ namespace EasyDeploy.ViewModels
                             StartWaitTimes = vStartWaitTimes;
 
                             // 如果有正在运行的服务，一起修改启动等待次数
-                            if (ServicesResources != null && ServicesResources.Count >= 1)
+                            if (ServicesResources != null && ServicesResources.Any())
                             {
                                 foreach (var item in ServicesResources)
                                 {
@@ -706,7 +706,7 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         private void StopAllService()
         {
-            if (ServicesResources != null && ServicesResources.Count >= 1)
+            if (ServicesResources != null && ServicesResources.Any())
             {
                 // 停止所有正在运行的服务
                 SetLog($"App shutdown,Stop all running services");
@@ -785,7 +785,7 @@ namespace EasyDeploy.ViewModels
         /// <param name="log"></param>
         private void SetLog(string log)
         {
-            if (ServicesShell != null && ServicesShell.Count >= 1 && ServicesShell.ContainsKey(LogShellGuid))
+            if (ServicesShell != null && ServicesShell.Any() && ServicesShell.ContainsKey(LogShellGuid))
             {
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {

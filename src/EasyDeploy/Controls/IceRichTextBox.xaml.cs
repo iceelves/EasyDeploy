@@ -1,6 +1,7 @@
 ﻿using EasyDeploy.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -181,7 +182,7 @@ namespace EasyDeploy.Controls
                 return run;
             }
             var vMatches = Regex.Matches(ansiColor, AnsiHelper.AnsiRegex);
-            if (vMatches != null && vMatches.Count >= 1 && vMatches[0].Groups != null && vMatches[0].Groups.Count >= 2)
+            if (vMatches != null && vMatches.Any() && vMatches[0].Groups != null && vMatches[0].Groups.Count >= 2)
             {
                 var vSplit = vMatches[0].Groups[1].Value.Split(';');
                 foreach (var item in vSplit)
