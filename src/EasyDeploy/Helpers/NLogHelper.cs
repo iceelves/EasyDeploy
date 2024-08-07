@@ -27,7 +27,7 @@ namespace EasyDeploy.Helpers
         [CallerLineNumber] int sourceLineNumber = 0)
         {
             logger.Debug($"[{Path.GetFileName(sourceFilePath)}][{memberName}] {message}");
-            Console.WriteLine($"{DateTime.Now} | logDebug | {message}");
+            ConsileWriteLog(ConsoleColor.Yellow, "Debug", message);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace EasyDeploy.Helpers
         [CallerLineNumber] int sourceLineNumber = 0)
         {
             logger.Info($"[{Path.GetFileName(sourceFilePath)}][{memberName}] {message}");
-            Console.WriteLine($"{DateTime.Now} | logInfo | {message}");
+            ConsileWriteLog(ConsoleColor.Green, "Info", message);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace EasyDeploy.Helpers
         [CallerLineNumber] int sourceLineNumber = 0)
         {
             logger.Error($"[{Path.GetFileName(sourceFilePath)}][{memberName}] {message}");
-            Console.WriteLine($"{DateTime.Now} | logError | {message}");
+            ConsileWriteLog(ConsoleColor.Red, "Error", message);
         }
 
         /// <summary>
@@ -75,7 +75,26 @@ namespace EasyDeploy.Helpers
         [CallerLineNumber] int sourceLineNumber = 0)
         {
             logger.Trace($"[{Path.GetFileName(sourceFilePath)}][{memberName}] {message}");
-            Console.WriteLine($"{DateTime.Now} | logTrace | {message}");
+            ConsileWriteLog(ConsoleColor.DarkGray, "Trace", message);
+        }
+
+        /// <summary>
+        /// 控制台打印日志
+        /// </summary>
+        /// <param name="consoleColor">颜色</param>
+        /// <param name="type">类型</param>
+        /// <param name="message">消息</param>
+        public static void ConsileWriteLog(ConsoleColor consoleColor, string type, string message)
+        {
+            lock (Console.Out)
+            {
+                Console.Write($"{DateTime.Now}");
+                Console.ForegroundColor = consoleColor;
+                Console.Write($" {type} ");
+                Console.ResetColor();
+                Console.Write($"{message}");
+                Console.Write($"\r\n");
+            }
         }
     }
 }
