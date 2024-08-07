@@ -1,5 +1,4 @@
 ﻿using EasyDeploy.Helpers;
-using EasyDeploy.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -26,6 +25,11 @@ namespace EasyDeploy.Views
 
             // 初始化系统语言
             SystemConfigHelper.SetLanguage();
+
+#if DEBUG
+            // 运行控制台程序
+            ConsoleWindow.Show();
+#endif
 
             // 设置对齐方式
             SetAlignment();
