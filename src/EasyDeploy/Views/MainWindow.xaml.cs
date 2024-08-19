@@ -88,7 +88,7 @@ namespace EasyDeploy.Views
         /// </summary>
         public static void SetAlignment()
         {
-            //获取系统是以Left-handed（true）还是Right-handed（false）
+            // 获取系统是以Left-handed（true）还是Right-handed（false）
             var ifLeft = SystemParameters.MenuDropAlignment;
 
             if (ifLeft)
