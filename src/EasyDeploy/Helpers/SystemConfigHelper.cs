@@ -137,14 +137,14 @@ namespace EasyDeploy.Helpers
                 }
                 else
                 {
-                    NLogHelper.SaveDebug("获取配置文件 SystemConfig 失败！");
+                    NLogHelper.SaveDebug($"获取配置文件 SystemConfig {key} 失败！");
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveDebug("获取配置文件 LoginConfig 异常！");
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveDebug($"获取配置文件 SystemConfig {key} 异常！");
+                NLogHelper.SaveError($"{ex}");
                 return null;
             }
         }
@@ -164,8 +164,8 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveDebug("记录配置文件 SystemConfig 失败！");
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveDebug($"记录配置文件 SystemConfig {key} 失败！");
+                NLogHelper.SaveError($"{ex}");
                 return false;
             }
         }
@@ -173,7 +173,7 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// 设置语言
         /// </summary>
-        /// <param name="language"></param>
+        /// <param name="language">语言</param>
         public static void SetLanguage(string language = null)
         {
             // 把要修改的语言放置资源最后
@@ -189,7 +189,7 @@ namespace EasyDeploy.Helpers
                 {
                     if (item.FileName.Equals(vSystemConfigInfo_Language))
                     {
-                        language = item.Resource.Source.OriginalString;
+                        language = item.Resource?.Source.OriginalString;
                         break;
                     }
                 }

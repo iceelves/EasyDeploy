@@ -38,7 +38,7 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveError($"{ex}");
                 return false;
             }
         }
@@ -67,7 +67,7 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveError($"{ex}");
                 return false;
             }
         }
@@ -110,7 +110,7 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveError($"{ex}");
                 return null;
             }
         }
@@ -169,7 +169,7 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveError($"{ex}");
                 return false;
             }
         }
@@ -228,7 +228,7 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveError($"{ex}");
                 return false;
             }
         }
@@ -261,7 +261,7 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveError($"{ex}");
                 return false;
             }
         }
@@ -294,7 +294,7 @@ namespace EasyDeploy.Helpers
             }
             catch (Exception ex)
             {
-                NLogHelper.SaveError(ex.ToString());
+                NLogHelper.SaveError($"{ex}");
                 return false;
             }
         }
