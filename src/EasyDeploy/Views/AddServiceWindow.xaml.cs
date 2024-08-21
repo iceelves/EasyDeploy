@@ -29,6 +29,7 @@ namespace EasyDeploy.Views
         public AddServiceWindow(ServiceModel serviceModel = null)
         {
             InitializeComponent();
+
             this.TitleBar.MouseDown += TitleBar_MouseDown;
 
             if (serviceModel != null)

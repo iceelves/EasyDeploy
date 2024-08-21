@@ -28,12 +28,13 @@ namespace EasyDeploy.Views
         public SettingsWindow()
         {
             InitializeComponent();
+
             this.TitleBar.MouseDown += TitleBar_MouseDown;
             this.Loaded += SettingsWindow_Loaded;
         }
 
         /// <summary>
-        /// Load
+        /// Loaded
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
