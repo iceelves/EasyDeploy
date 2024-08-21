@@ -74,8 +74,8 @@ namespace EasyDeploy.Helpers
             {
                 _listLanguage ??= new List<LanguageModel>
                 {
-                    new() { FileName = "en-US", Language = "English", Resource = new ResourceDictionary() { Source = new Uri("/EasyDeploy;component/Language/en-US.xaml", UriKind.RelativeOrAbsolute) } },
-                    new() { FileName = "zh-CN", Language = "简体中文", Resource = new ResourceDictionary() { Source = new Uri("/EasyDeploy;component/Language/zh-CN.xaml", UriKind.RelativeOrAbsolute) } }
+                    new() { FileName = "en-US", Language = "English", Resource = new ResourceDictionary() { Source = new Uri("pack://application:,,,/Language/en-US.xaml", UriKind.RelativeOrAbsolute) } },
+                    new() { FileName = "zh-CN", Language = "简体中文", Resource = new ResourceDictionary() { Source = new Uri("pack://application:,,,/Language/zh-CN.xaml", UriKind.RelativeOrAbsolute) } }
                 };
                 return _listLanguage;
             }
