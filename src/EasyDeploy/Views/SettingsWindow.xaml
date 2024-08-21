@@ -32,9 +32,9 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,1">
                         <control:IceSvgButton x:Name="mainClose" Width="30" Height="25" Margin="0,0,0,0" ImageMargin="5"
-                                           ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
-                                           NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
-                                           Click="Close_Click"/>
+                                              ButtonImage="M954.304 190.336a15.552 15.552 0 0 1 0 21.952l-300.032 300.032 298.56 298.56a15.616 15.616 0 0 1 0 22.016l-120.96 120.896a15.552 15.552 0 0 1-21.952 0L511.36 655.232 214.272 952.32a15.552 15.552 0 0 1-21.952 0l-120.896-120.896a15.488 15.488 0 0 1 0-21.952l297.152-297.152L69.888 213.76a15.552 15.552 0 0 1 0-21.952l120.896-120.896a15.552 15.552 0 0 1 21.952 0L511.36 369.472l300.096-300.032a15.36 15.36 0 0 1 21.952 0l120.896 120.896z"
+                                              NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#D8605A"
+                                              Click="Cancel_Click"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -91,9 +91,9 @@
                         <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Save}" 
                                        Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                        Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Save_Click"/>
-                        <control:IceButton x:Name="Close" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Cancel}" 
+                        <control:IceButton x:Name="Cancel" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Cancel}" 
                                        Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
-                                       Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Close_Click"/>
+                                       Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Cancel_Click"/>
                     </StackPanel>
                 </Grid>
             </Border>

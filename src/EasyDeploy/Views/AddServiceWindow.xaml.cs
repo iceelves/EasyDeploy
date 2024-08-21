@@ -146,11 +146,11 @@ namespace EasyDeploy.Views
         }
 
         /// <summary>
-        /// 关闭窗体
+        /// 取消
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
