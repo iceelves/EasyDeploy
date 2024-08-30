@@ -49,7 +49,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Language}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <ComboBox x:Name="Language" Width="150" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" Foreground="White">
+                                    <ComboBox x:Name="SystemLanguage" Width="150" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" Foreground="White">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <ContentPresenter Content="{Binding Language}"/>
@@ -72,28 +72,28 @@
                             <StackPanel Orientation="Vertical" Margin="20,0">
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource MaxRows}" Foreground="White" Width="82" HorizontalContentAlignment="Right"/>
-                                    <TextBox x:Name="MaxRows" Width="150" Height="25" MaxLength="9" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Background="Transparent" Foreground="White" CaretBrush="White"
+                                    <TextBox x:Name="TerminalMaxRows" Width="150" Height="25" MaxLength="9" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Background="Transparent" Foreground="White" CaretBrush="White"
                                              InputMethod.IsInputMethodEnabled="False" PreviewTextInput="TextBox_PreviewTextInput"/>
                                     <Label Content="{DynamicResource FontSize}" Foreground="White" Width="82" HorizontalContentAlignment="Right"/>
-                                    <TextBox x:Name="FontSize" Width="150" Height="25" MaxLength="9" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Background="Transparent" Foreground="White" CaretBrush="White"
+                                    <TextBox x:Name="TerminalFontSize" Width="150" Height="25" MaxLength="9" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Background="Transparent" Foreground="White" CaretBrush="White"
                                              InputMethod.IsInputMethodEnabled="False" PreviewTextInput="TextBox_PreviewTextInput"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Background}" Foreground="White" Width="82" HorizontalContentAlignment="Right"/>
-                                    <control:IceColorPicker x:Name="Background" Width="150" Height="25" Margin="10,0,0,0"/>
+                                    <control:IceColorPicker x:Name="TerminalBackground" Width="150" Height="25" Margin="10,0,0,0"/>
                                     <Label Content="{DynamicResource Foreground}" Foreground="White" Width="82" HorizontalContentAlignment="Right"/>
-                                    <control:IceColorPicker x:Name="Foreground" Width="150" Height="25" Margin="10,0,0,0"/>
+                                    <control:IceColorPicker x:Name="TerminalForeground" Width="150" Height="25" Margin="10,0,0,0"/>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
-                        <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Save}" 
-                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
-                                       Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Save_Click"/>
-                        <control:IceButton x:Name="Cancel" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Cancel}" 
-                                       Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
-                                       Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Cancel_Click"/>
+                        <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Save}"
+                                           Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
+                                           Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Save_Click"/>
+                        <control:IceButton x:Name="Cancel" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Cancel}"
+                                           Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
+                                           Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Cancel_Click"/>
                     </StackPanel>
                 </Grid>
             </Border>

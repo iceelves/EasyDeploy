@@ -48,7 +48,7 @@ namespace EasyDeploy.Views
             StartWithWindows.IsChecked = vStartWithWindows;
 
             // 初始化语言
-            Language.ItemsSource = SystemConfigHelper.ListLanguage;
+            SystemLanguage.ItemsSource = SystemConfigHelper.ListLanguage;
             // 系统 - 语言
             var vSystemConfigInfo_Language = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE);
             _initialConfig.Add(SystemConfigHelper.SYSTEM_LANGUAGE, vSystemConfigInfo_Language);
@@ -56,7 +56,7 @@ namespace EasyDeploy.Views
             {
                 if (SystemConfigHelper.ListLanguage[i].FileName.Equals(vSystemConfigInfo_Language))
                 {
-                    Language.SelectedIndex = i;
+                    SystemLanguage.SelectedIndex = i;
                 }
             }
 
@@ -71,25 +71,25 @@ namespace EasyDeploy.Views
             var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
             var vMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
             _initialConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, vMaxRows);
-            MaxRows.Text = $"{vMaxRows}";
+            TerminalMaxRows.Text = $"{vMaxRows}";
 
             // 终端 - 字号
             var vTerminalConfigInfo_FontSize = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE);
             var vFontSize = !string.IsNullOrEmpty(vTerminalConfigInfo_FontSize) && int.Parse(vTerminalConfigInfo_FontSize) >= 1 ? int.Parse(vTerminalConfigInfo_FontSize) : 1;
             _initialConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, vFontSize);
-            FontSize.Text = $"{vFontSize}";
+            TerminalFontSize.Text = $"{vFontSize}";
 
             // 终端 - 背景颜色
             var vTerminalConfigInfo_Background = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND);
             var vBackground = !string.IsNullOrEmpty(vTerminalConfigInfo_Background) ? vTerminalConfigInfo_Background : "#0C0C0C";
             _initialConfig.Add(SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
-            Background.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground));
+            TerminalBackground.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground));
 
             // 终端 - 文字颜色
             var vTerminalConfigInfo_Foreground = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND);
             var vForeground = !string.IsNullOrEmpty(vTerminalConfigInfo_Foreground) ? vTerminalConfigInfo_Foreground : "#FFFFFF";
             _initialConfig.Add(SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
-            Foreground.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
+            TerminalForeground.SelectColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace EasyDeploy.Views
             #endregion
 
             #region 语言
-            if (Language.SelectedItem is LanguageModel selectedLanguage)
+            if (SystemLanguage.SelectedItem is LanguageModel selectedLanguage)
             {
                 if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_LANGUAGE) && !$"{_initialConfig[SystemConfigHelper.SYSTEM_LANGUAGE]}".Equals(selectedLanguage.FileName))
                 {
@@ -197,35 +197,35 @@ namespace EasyDeploy.Views
 
             #region 终端设置
             #region 最大行数
-            MaxRows.Text = MaxRows.Text.Replace(" ", "");
-            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS) && !_initialConfig[SystemConfigHelper.TERMINAL_MAXROWS].ToString().Equals(MaxRows.Text))
+            TerminalMaxRows.Text = TerminalMaxRows.Text.Replace(" ", "");
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS) && !_initialConfig[SystemConfigHelper.TERMINAL_MAXROWS].ToString().Equals(TerminalMaxRows.Text))
             {
-                if (MaxRows.Text.Length > 10 || double.Parse(MaxRows.Text) < 10 || double.Parse(MaxRows.Text) > int.MaxValue)
+                if (TerminalMaxRows.Text.Length > 10 || double.Parse(TerminalMaxRows.Text) < 10 || double.Parse(TerminalMaxRows.Text) > int.MaxValue)
                 {
-                    BorderFlashing(MaxRows);
+                    BorderFlashing(TerminalMaxRows);
                     return;
                 }
-                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
-                OutConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, MaxRows.Text);
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS, TerminalMaxRows.Text);
+                OutConfig.Add(SystemConfigHelper.TERMINAL_MAXROWS, TerminalMaxRows.Text);
             }
             #endregion
 
             #region 文字大小
-            FontSize.Text = FontSize.Text.Replace(" ", "");
-            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(FontSize.Text))
+            TerminalFontSize.Text = TerminalFontSize.Text.Replace(" ", "");
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(TerminalFontSize.Text))
             {
-                if (FontSize.Text.Length > 10 || double.Parse(FontSize.Text) < 5 || double.Parse(FontSize.Text) > 32)
+                if (TerminalFontSize.Text.Length > 10 || double.Parse(TerminalFontSize.Text) < 5 || double.Parse(TerminalFontSize.Text) > 32)
                 {
-                    BorderFlashing(FontSize);
+                    BorderFlashing(TerminalFontSize);
                     return;
                 }
-                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
-                OutConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, FontSize.Text);
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FONTSIZE, TerminalFontSize.Text);
+                OutConfig.Add(SystemConfigHelper.TERMINAL_FONTSIZE, TerminalFontSize.Text);
             }
             #endregion
 
             #region 背景颜色
-            var vBackground = Background.SelectColor.Color.ToString();
+            var vBackground = TerminalBackground.SelectColor.Color.ToString();
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_BACKGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_BACKGROUND].ToString().Equals(vBackground))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
@@ -234,7 +234,7 @@ namespace EasyDeploy.Views
             #endregion
 
             #region 文字颜色
-            var vForeground = Foreground.SelectColor.Color.ToString();
+            var vForeground = TerminalForeground.SelectColor.Color.ToString();
             if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FOREGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_FOREGROUND].ToString().Equals(vForeground))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
