@@ -27,7 +27,7 @@ namespace EasyDeploy.Controls
             InitializeComponent();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         double H = 0;
         double S = 1;
@@ -140,18 +140,20 @@ namespace EasyDeploy.Controls
         {
             pop.IsOpen = true;
 
-            SelectColor = btn.Background as SolidColorBrush;
+            if (btn.Background is SolidColorBrush selectColor)
+            {
+                SelectColor = selectColor;
+                RgbaColor Hcolor = new RgbaColor(SelectColor);
+                ColorChange(Hcolor);
 
-            RgbaColor Hcolor = new RgbaColor(SelectColor);
-            ColorChange(Hcolor);
+                var xpercent = Hcolor.HsbaColor.S;
+                var ypercent = 1 - Hcolor.HsbaColor.B;
 
-            var xpercent = Hcolor.HsbaColor.S;
-            var ypercent = 1 - Hcolor.HsbaColor.B;
+                var Ypercent = Hcolor.HsbaColor.H / 360;
 
-            var Ypercent = Hcolor.HsbaColor.H / 360;
-
-            thumbH.SetTopLeftByPercent(1, Ypercent);
-            thumbSB.SetTopLeftByPercent(xpercent, ypercent);
+                thumbH.SetTopLeftByPercent(1, Ypercent);
+                thumbSB.SetTopLeftByPercent(xpercent, ypercent);
+            }
         }
     }
 
@@ -161,7 +163,7 @@ namespace EasyDeploy.Controls
     /// </summary>
     public class ThumbPro : Thumb
     {
-        //距离Canvas的Top,模板中需要Canvas.Top 绑定此Top
+        // 距离 Canvas 的 Top,模板中需要 Canvas.Top 绑定此 Top
         public double Top
         {
             get { return (double)GetValue(TopProperty); }
@@ -173,7 +175,7 @@ namespace EasyDeploy.Controls
             DependencyProperty.Register("Top", typeof(double), typeof(ThumbPro), new PropertyMetadata(0.0));
 
 
-        //距离Canvas的Top,模板中需要Canvas.Left 绑定此Left
+        // 距离 Canvas 的 Top,模板中需要 Canvas.Left 绑定此 Left
         public double Left
         {
             get { return (double)GetValue(LeftProperty); }
@@ -187,7 +189,7 @@ namespace EasyDeploy.Controls
         double FirstTop;
         double FirstLeft;
 
-        //小圆点的半径
+        // 小圆点的半径
         public double Xoffset { get; set; }
         public double Yoffset { get; set; }
 
@@ -203,7 +205,10 @@ namespace EasyDeploy.Controls
                 Left = xpercent * ActualWidth - Xoffset;
         }
 
-        public event Action<double, double> ValueChanged;
+        /// <summary>
+        /// 值回调
+        /// </summary>
+        public event Action<double, double>? ValueChanged;
 
         public ThumbPro()
         {
@@ -212,8 +217,6 @@ namespace EasyDeploy.Controls
                 if (!VerticalOnly)
                     Left = -Xoffset;
                 Top = -Yoffset;
-
-
             };
             DragStarted += (object sender, DragStartedEventArgs e) =>
             {
@@ -476,54 +479,6 @@ namespace EasyDeploy.Controls
                     break;
             }
             return new RgbaColor((int)(255.0 * r), (int)(255.0 * g), (int)(255.0 * b), (int)(255.0 * hsba.A));
-        }
-
-        /// <summary>
-        /// 读取指定图片到内存
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        internal static BitmapSource LoadImg(string path)
-        {
-            try
-            {
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(path));
-                bitmapImage.EndInit();
-
-                return bitmapImage;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// BitmapImage转Bitmap
-        /// </summary>
-        /// <param name="bitmapImage"></param>
-        /// <returns></returns>
-        internal static Bitmap BitmapImageToBitmap(BitmapImage bitmapImage)
-        {
-            System.Drawing.Imaging.PixelFormat pp = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
-            Bitmap bmp = new Bitmap(bitmapImage.PixelWidth, bitmapImage.PixelHeight, pp);
-            System.Drawing.Imaging.BitmapData data = bmp.LockBits(new System.Drawing.Rectangle(System.Drawing.Point.Empty, bmp.Size), System.Drawing.Imaging.ImageLockMode.WriteOnly, pp);
-            bitmapImage.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
-            bmp.UnlockBits(data);
-            return bmp;
-        }
-
-        /// <summary>
-        /// Bitmap转BitmapSource
-        /// </summary>
-        /// <param name="bitmap"></param>
-        /// <returns></returns>
-        internal static BitmapSource BitmapToBitmapSource(Bitmap bitmap)
-        {
-            return Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
 
         /// <summary>

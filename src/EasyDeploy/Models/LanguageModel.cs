@@ -13,16 +13,16 @@ namespace EasyDeploy.Models
         /// <summary>
         /// 文件名称
         /// </summary>
-        public string FileName { get; set; }
+        public string? FileName { get; set; }
 
         /// <summary>
         /// 语言名称
         /// </summary>
-        public string Language { get; set; }
+        public string? Language { get; set; }
 
         /// <summary>
         /// 资源文件
         /// </summary>
-        public ResourceDictionary Resource { get; set; }
+        public ResourceDictionary? Resource { get; set; }
     }
 }

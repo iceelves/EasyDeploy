@@ -61,7 +61,7 @@ namespace EasyDeploy.ViewModels
                     TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
 
                     // 加载日志控件
-                    ServicesShell.Add(LogShellGuid, new TabControlTerminalModel()
+                    ServicesShell?.Add(LogShellGuid, new TabControlTerminalModel()
                     {
                         Header = "Log",
                         Control = CreateBlankRichTextBox()
@@ -85,7 +85,7 @@ namespace EasyDeploy.ViewModels
                         var vServiceJson = File.ReadAllText(ServiceSavePath);
                         SetLog($"Load Service Config File: {Path.GetFileName(ServiceSavePath)}");
                         Services = JsonConvert.DeserializeObject<ObservableCollection<ServiceModel>>(vServiceJson);
-                        SetLog($"Get {Services.Count} Services!");
+                        SetLog($"Get {Services?.Count} Services!");
 
                         // 启动自动运行项
                         if (Services != null && Services.Any())
@@ -114,7 +114,7 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Window_Closing(object? sender, CancelEventArgs e)
         {
             if (ServicesResources != null && ServicesResources.Any())
             {
@@ -136,7 +136,7 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnProcessExit(object sender, EventArgs e)
+        private void OnProcessExit(object? sender, EventArgs e)
         {
             StopAllService();
         }
@@ -144,7 +144,7 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// Window 窗体
         /// </summary>
-        public Window window { get; private set; }
+        public Window? window { get; private set; }
 
         /// <summary>
         /// 服务配置文件保存路径
@@ -154,17 +154,17 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 服务信息集合
         /// </summary>
-        public ObservableCollection<ServiceModel> Services { get; set; } = new ObservableCollection<ServiceModel>();
+        public ObservableCollection<ServiceModel>? Services { get; set; } = new ObservableCollection<ServiceModel>();
 
         /// <summary>
         /// 服务运行时资源
         /// </summary>
-        public ObservableDictionary<string, ServiceResourcesModel> ServicesResources { get; set; } = new ObservableDictionary<string, ServiceResourcesModel>();
+        public ObservableDictionary<string, ServiceResourcesModel>? ServicesResources { get; set; } = new ObservableDictionary<string, ServiceResourcesModel>();
 
         /// <summary>
         /// 服务控制台绑定控件
         /// </summary>
-        public ObservableDictionary<string, TabControlTerminalModel> ServicesShell { get; set; } = new ObservableDictionary<string, TabControlTerminalModel>();
+        public ObservableDictionary<string, TabControlTerminalModel>? ServicesShell { get; set; } = new ObservableDictionary<string, TabControlTerminalModel>();
 
         /// <summary>
         /// CPU 使用率
@@ -253,12 +253,12 @@ namespace EasyDeploy.ViewModels
         /// <summary>
         /// 背景颜色
         /// </summary>
-        public SolidColorBrush TerminalBackground { get; set; }
+        public SolidColorBrush? TerminalBackground { get; set; }
 
         /// <summary>
         /// 文字颜色
         /// </summary>
-        public SolidColorBrush TerminalForeground { get; set; }
+        public SolidColorBrush? TerminalForeground { get; set; }
         #endregion
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace EasyDeploy.ViewModels
                     {
                         SetLog($"Add Service: {vServiceModel.ServiceName}");
                         // 填充数据
-                        Services.Add(vServiceModel);
+                        Services?.Add(vServiceModel);
                         // 保存数据集
                         var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
                         StreamWriter sw = new StreamWriter(ServiceSavePath);
@@ -320,7 +320,7 @@ namespace EasyDeploy.ViewModels
                 // 通过返回的进程 ID 判断是否运行成功
                 int iDetectionNumber = 0;
                 Timer timer = new Timer(1000);
-                timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+                timer.Elapsed += delegate (object? senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
                     Application.Current?.Dispatcher?.Invoke(() =>
@@ -336,16 +336,19 @@ namespace EasyDeploy.ViewModels
                                 Service.Port = string.Join('/', vProcessPorts);
                             }
                             // 添加到服务运行时资源列表
-                            if (ServicesResources.ContainsKey(strGuid))
+                            if (ServicesResources != null)
                             {
-                                ServicesResources[strGuid] = serviceResources;
-                            }
-                            else
-                            {
-                                ServicesResources.Add(strGuid, serviceResources);
+                                if (ServicesResources.ContainsKey(strGuid))
+                                {
+                                    ServicesResources[strGuid] = serviceResources;
+                                }
+                                else
+                                {
+                                    ServicesResources.Add(strGuid, serviceResources);
+                                }
                             }
                             // 添加到服务控制台绑定控件
-                            ServicesShell.Add(strGuid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = serviceResources.Terminal });
+                            ServicesShell?.Add(strGuid, new TabControlTerminalModel() { Header = Service.ServiceName, Control = serviceResources.Terminal });
                             Service.ServiceState = ServiceState.Start;
                         }
                         else
@@ -400,14 +403,14 @@ namespace EasyDeploy.ViewModels
                     // 关闭服务
                     PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
                     // 移除运行时资源
-                    if (ServicesResources.ContainsKey(Service.Guid))
+                    if (ServicesResources != null && ServicesResources.ContainsKey(Service.Guid))
                     {
-                        ServicesResources[Service.Guid].StopTimer();
+                        ServicesResources[Service.Guid]?.StopTimer();
                         ServicesResources.Remove(Service.Guid);
                     }
-                    if (ServicesShell.ContainsKey(Service.Guid))
+                    if (ServicesShell != null && ServicesShell.ContainsKey(Service.Guid))
                     {
-                        ServicesShell[Service.Guid].Control.Collect();
+                        ServicesShell[Service.Guid]?.Control?.Collect();
                         ServicesShell.Remove(Service.Guid);
                     }
                     Service.Pid = null;
@@ -420,7 +423,7 @@ namespace EasyDeploy.ViewModels
                     // 未成功启动
                     // 等待两秒后再次检查是否获取到 PID，还是获取不到的话移除运行时资源
                     Timer timer = new Timer(2000);
-                    timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+                    timer.Elapsed += delegate (object? senderTimer, ElapsedEventArgs eTimer)
                     {
                         timer.Enabled = false;
                         Application.Current?.Dispatcher?.Invoke(() =>
@@ -430,14 +433,14 @@ namespace EasyDeploy.ViewModels
                                 PidHelper.KillProcessAndChildren(int.Parse(Service.Pid));
                             }
                             // 移除运行时资源
-                            if (ServicesResources.ContainsKey(Service.Guid))
+                            if (ServicesResources != null && ServicesResources.ContainsKey(Service.Guid))
                             {
-                                ServicesResources[Service.Guid].StopTimer();
+                                ServicesResources[Service.Guid]?.StopTimer();
                                 ServicesResources.Remove(Service.Guid);
                             }
-                            if (ServicesShell.ContainsKey(Service.Guid))
+                            if (ServicesShell != null && ServicesShell.ContainsKey(Service.Guid))
                             {
-                                ServicesShell[Service.Guid].Control.Collect();
+                                ServicesShell[Service.Guid]?.Control?.Collect();
                                 ServicesShell.Remove(Service.Guid);
                             }
                             Service.Pid = null;
@@ -507,8 +510,8 @@ namespace EasyDeploy.ViewModels
                 {
                     SetLog($"Open Shell: {Service.ServiceName}");
                     if (Service != null && !string.IsNullOrEmpty(Service.Guid) &&
-                        ServicesResources.ContainsKey(Service.Guid) &&
-                        ServicesShell.ContainsKey(Service.Guid))
+                    ServicesResources != null && ServicesResources.ContainsKey(Service.Guid) &&
+                    ServicesShell != null && ServicesShell.ContainsKey(Service.Guid))
                     {
                         // 切换分页
                         for (int i = 0; i < ServicesShell.Count; i++)
@@ -517,7 +520,7 @@ namespace EasyDeploy.ViewModels
                             {
                                 ServicesShellIndex = i;
                                 // 滚动条切至底部
-                                ServicesShell.ElementAt(i).Value.Control.ScrollToEnd();
+                                ServicesShell.ElementAt(i).Value?.Control?.ScrollToEnd();
                                 break;
                             }
                         }
@@ -538,7 +541,12 @@ namespace EasyDeploy.ViewModels
                     SetLog($"Edge Service: {Service.ServiceName}");
                     AddServiceWindow window = new AddServiceWindow(Service);
                     window.ShowDialog();
-                    Service = window.ServiceModel;
+
+                    if (window.ServiceModel != null)
+                    {
+                        Service = window.ServiceModel;
+                    }
+
                     // 保存数据集
                     var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
                     StreamWriter sw = new StreamWriter(ServiceSavePath);
@@ -567,7 +575,7 @@ namespace EasyDeploy.ViewModels
                         if (result == MessageBoxResult.OK)
                         {
                             SetLog($"Remove Service: {Service.ServiceName}");
-                            Services.Remove(Service);
+                            Services?.Remove(Service);
                             // 保存数据集
                             var vServiceJson = JsonConvert.SerializeObject(Services, Formatting.Indented);
                             StreamWriter sw = new StreamWriter(ServiceSavePath);
@@ -669,7 +677,7 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand(delegate ()
                 {
-                    if (this.window.WindowState == WindowState.Minimized)
+                    if (this.window?.WindowState == WindowState.Minimized)
                     {
                         this.window.WindowState = WindowState.Normal;
                     }
@@ -688,7 +696,7 @@ namespace EasyDeploy.ViewModels
             {
                 return new DelegateCommand(delegate ()
                 {
-                    if (this.window.IsVisible)
+                    if (this.window != null && this.window.IsVisible)
                     {
                         this.window?.Hide();
                     }
@@ -717,12 +725,15 @@ namespace EasyDeploy.ViewModels
                 }
                 ServicesResources = null;
                 // 清空关联数据
-                foreach (var item in Services)
+                if (Services != null && Services.Any())
                 {
-                    item.ServiceState = ServiceState.None;
-                    item.Pid = null;
-                    item.Port = null;
-                    item.Guid = null;
+                    foreach (var item in Services)
+                    {
+                        item.ServiceState = ServiceState.None;
+                        item.Pid = null;
+                        item.Port = null;
+                        item.Guid = null;
+                    }
                 }
             }
         }
@@ -731,9 +742,9 @@ namespace EasyDeploy.ViewModels
         /// 创建空白富文本控件
         /// </summary>
         /// <returns></returns>
-        private IceRichTextBox CreateBlankRichTextBox()
+        private IceRichTextBox? CreateBlankRichTextBox()
         {
-            IceRichTextBox vRichText = null;
+            IceRichTextBox? vRichText = null;
             Application.Current?.Dispatcher?.Invoke(() =>
             {
                 // 创建控件
@@ -802,6 +813,11 @@ namespace EasyDeploy.ViewModels
         /// </summary>
         private void SetLogLogo()
         {
+            if (ServicesShell == null)
+            {
+                return;
+            }
+
             Application.Current?.Dispatcher?.Invoke(() =>
             {
                 int l1 = 96;

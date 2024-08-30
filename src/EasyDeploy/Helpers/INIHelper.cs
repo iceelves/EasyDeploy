@@ -113,7 +113,7 @@ namespace EasyDeploy.Helpers
             if (bytesReturned != 0)
             {
                 //读取指定内存的内容
-                string local = Marshal.PtrToStringAuto(pReturnedString, (int)bytesReturned).ToString();
+                string local = $"{Marshal.PtrToStringAuto(pReturnedString, (int)bytesReturned)}";
                 //每个节点之间用\0分隔,末尾有一个\0
                 sections = local.Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
             }
@@ -128,18 +128,18 @@ namespace EasyDeploy.Helpers
         /// <param name="iniFile">Ini文件</param>
         /// <param name="section">节点名称</param>
         /// <returns>指定节点中的所有项目,没有内容返回string[0]</returns>
-        public static string[] INIGetAllItems(string iniFile, string section)
+        public static string[]? INIGetAllItems(string iniFile, string section)
         {
             //返回值形式为 key=value,例如 Color=Red;
             uint MAX_BUFFER = 32767;
-            string[] items = new string[0];
+            string[]? items = new string[0];
             //分配内存
             IntPtr pReturnedString = Marshal.AllocCoTaskMem((int)MAX_BUFFER * sizeof(char));
             uint bytesReturned = GetPrivateProfileSection(section, pReturnedString, MAX_BUFFER, iniFile);
             if (!(bytesReturned == MAX_BUFFER - 2) || (bytesReturned == 0))
             {
-                string returnedString = Marshal.PtrToStringAuto(pReturnedString, (int)bytesReturned);
-                items = returnedString.Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
+                var returnedString = Marshal.PtrToStringAuto(pReturnedString, (int)bytesReturned);
+                items = returnedString?.Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
             }
             //释放内存
             Marshal.FreeCoTaskMem(pReturnedString);
@@ -160,8 +160,8 @@ namespace EasyDeploy.Helpers
             {
                 throw new ArgumentException("必须指定节点名称", "section");
             }
-            char[] chars = new char[SIZE];
-            uint bytesReturned = GetPrivateProfileString(section, null, null, chars, SIZE, iniFile);
+            char[]? chars = new char[SIZE];
+            uint bytesReturned = GetPrivateProfileString(section, "", "", chars, SIZE, iniFile);
             if (bytesReturned != 0)
             {
                 value = new string(chars).Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
@@ -178,9 +178,9 @@ namespace EasyDeploy.Helpers
         /// <param name="key">键名称</param>
         /// <param name="defaultValue">如果没此KEY所使用的默认值</param>
         /// <returns>读取到的值</returns>
-        public static string INIGetStringValue(string iniFile, string section, string key, string defaultValue)
+        public static string? INIGetStringValue(string iniFile, string section, string key, string? defaultValue)
         {
-            string value = defaultValue;
+            var value = defaultValue;
             const int SIZE = 1024 * 10;
             if (string.IsNullOrEmpty(section))
             {
@@ -190,11 +190,11 @@ namespace EasyDeploy.Helpers
             {
                 throw new ArgumentException("必须指定键名称(key)", "key");
             }
-            StringBuilder sb = new StringBuilder(SIZE);
-            uint bytesReturned = GetPrivateProfileString(section, key, defaultValue, sb, SIZE, iniFile);
+            StringBuilder? sb = new StringBuilder(SIZE);
+            uint bytesReturned = GetPrivateProfileString(section, key, $"{defaultValue}", sb, SIZE, iniFile);
             if (bytesReturned != 0)
             {
-                value = sb.ToString();
+                value = $"{sb}";
             }
             sb = null;
             return value;
@@ -228,7 +228,7 @@ namespace EasyDeploy.Helpers
         /// <param name="key">键</param>
         /// <param name="value">值</param>
         /// <returns>操作是否成功</returns>
-        public static bool INIWriteValue(string iniFile, string section, string key, string value)
+        public static bool INIWriteValue(string iniFile, string section, string? key, string? value)
         {
             if (string.IsNullOrEmpty(section))
             {
@@ -262,7 +262,7 @@ namespace EasyDeploy.Helpers
             {
                 throw new ArgumentException("必须指定键名称", "key");
             }
-            return WritePrivateProfileString(section, key, null, iniFile);
+            return WritePrivateProfileString(section, key, "", iniFile);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace EasyDeploy.Helpers
             {
                 throw new ArgumentException("必须指定节点名称", "section");
             }
-            return WritePrivateProfileString(section, null, null, iniFile);
+            return WritePrivateProfileString(section, "", "", iniFile);
         }
 
         /// <summary>

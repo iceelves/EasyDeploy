@@ -54,7 +54,8 @@ namespace EasyDeploy.Views
             _initialConfig.Add(SystemConfigHelper.SYSTEM_LANGUAGE, vSystemConfigInfo_Language);
             for (int i = 0; i < SystemConfigHelper.ListLanguage.Count; i++)
             {
-                if (SystemConfigHelper.ListLanguage[i].FileName.Equals(vSystemConfigInfo_Language))
+                var vLanguage = SystemConfigHelper.ListLanguage[i];
+                if (vLanguage != null && !string.IsNullOrEmpty(vLanguage.FileName) && vLanguage.FileName.Equals(vSystemConfigInfo_Language))
                 {
                     SystemLanguage.SelectedIndex = i;
                 }
@@ -108,22 +109,22 @@ namespace EasyDeploy.Views
         /// <summary>
         /// 记录初始配置
         /// </summary>
-        private Dictionary<string, object> _initialConfig = new Dictionary<string, object>();
+        private Dictionary<string, object?> _initialConfig = new Dictionary<string, object?>();
 
         /// <summary>
         /// 返回配置
         /// </summary>
-        public Dictionary<string, object> OutConfig = new Dictionary<string, object>();
+        public Dictionary<string, object?> OutConfig = new Dictionary<string, object?>();
 
         /// <summary>
         /// 系统名称
         /// </summary>
-        private string _systemName = Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName);
+        private string? _systemName = Path.GetFileNameWithoutExtension(Process.GetCurrentProcess()?.MainModule?.FileName);
 
         /// <summary>
         /// 系统进程路径
         /// </summary>
-        private string _systemExePath = Process.GetCurrentProcess().MainModule.FileName;
+        private string? _systemExePath = Process.GetCurrentProcess()?.MainModule?.FileName;
 
         /// <summary>
         /// 保存设置
@@ -134,7 +135,7 @@ namespace EasyDeploy.Views
         {
             #region 系统设置
             #region 自动启动
-            if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_START_WITH_WINDOWS) && (bool)_initialConfig[SystemConfigHelper.SYSTEM_START_WITH_WINDOWS] != (bool)StartWithWindows.IsChecked)
+            if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_START_WITH_WINDOWS) && bool.Parse($"{_initialConfig[SystemConfigHelper.SYSTEM_START_WITH_WINDOWS]}") != StartWithWindows.IsChecked.GetValueOrDefault())
             {
                 if (!WindowsHelper.IsAdministrator())
                 {
@@ -145,10 +146,10 @@ namespace EasyDeploy.Views
                 {
                     SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_START_WITH_WINDOWS, StartWithWindows.IsChecked.ToString());
                     var vDicAllStartupItems = RegistryHelper.GetAllStartupItems();
-                    if ((bool)StartWithWindows.IsChecked)
+                    if (StartWithWindows.IsChecked.GetValueOrDefault())
                     {
                         //设置开机自启
-                        if (!vDicAllStartupItems.ContainsKey(_systemName))
+                        if (vDicAllStartupItems != null && !vDicAllStartupItems.ContainsKey($"{_systemName}"))
                         {
                             var vStartup = RegistryHelper.CreateStartupItems(_systemName, _systemExePath);
                             NLogHelper.SaveDebug($"设置 Windows 开机启动{(vStartup ? "成功" : "失败")}");
@@ -157,7 +158,7 @@ namespace EasyDeploy.Views
                     else
                     {
                         //移除开机自启
-                        if (vDicAllStartupItems.ContainsKey(_systemName))
+                        if (vDicAllStartupItems != null && vDicAllStartupItems.ContainsKey($"{_systemName}"))
                         {
                             var vStartup = RegistryHelper.DeleteStartupItems(_systemName);
                             NLogHelper.SaveDebug($"移除 Windows 开机启动{(vStartup ? "成功" : "失败")}");
@@ -173,7 +174,7 @@ namespace EasyDeploy.Views
                 if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_LANGUAGE) && !$"{_initialConfig[SystemConfigHelper.SYSTEM_LANGUAGE]}".Equals(selectedLanguage.FileName))
                 {
                     SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE, selectedLanguage.FileName);
-                    SystemConfigHelper.SetLanguage(selectedLanguage.Resource.Source.OriginalString);
+                    SystemConfigHelper.SetLanguage(selectedLanguage?.Resource?.Source.OriginalString);
                 }
             }
             #endregion
@@ -182,7 +183,7 @@ namespace EasyDeploy.Views
             #region 应用设置
             #region 启动等待次数
             StartWaitTimes.Text = StartWaitTimes.Text.Replace(" ", "");
-            if (_initialConfig.ContainsKey(SystemConfigHelper.APPLICATION_START_WAIT_TIMES) && !_initialConfig[SystemConfigHelper.APPLICATION_START_WAIT_TIMES].ToString().Equals(StartWaitTimes.Text))
+            if (_initialConfig.ContainsKey(SystemConfigHelper.APPLICATION_START_WAIT_TIMES) && !$"{_initialConfig[SystemConfigHelper.APPLICATION_START_WAIT_TIMES]}".Equals(StartWaitTimes.Text))
             {
                 if (StartWaitTimes.Text.Length > 10 || double.Parse(StartWaitTimes.Text) < 1 || double.Parse(StartWaitTimes.Text) > int.MaxValue)
                 {
@@ -198,7 +199,7 @@ namespace EasyDeploy.Views
             #region 终端设置
             #region 最大行数
             TerminalMaxRows.Text = TerminalMaxRows.Text.Replace(" ", "");
-            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS) && !_initialConfig[SystemConfigHelper.TERMINAL_MAXROWS].ToString().Equals(TerminalMaxRows.Text))
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS) && !$"{_initialConfig[SystemConfigHelper.TERMINAL_MAXROWS]}".Equals(TerminalMaxRows.Text))
             {
                 if (TerminalMaxRows.Text.Length > 10 || double.Parse(TerminalMaxRows.Text) < 10 || double.Parse(TerminalMaxRows.Text) > int.MaxValue)
                 {
@@ -212,7 +213,7 @@ namespace EasyDeploy.Views
 
             #region 文字大小
             TerminalFontSize.Text = TerminalFontSize.Text.Replace(" ", "");
-            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE].ToString().Equals(TerminalFontSize.Text))
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FONTSIZE) && !$"{_initialConfig[SystemConfigHelper.TERMINAL_FONTSIZE]}".Equals(TerminalFontSize.Text))
             {
                 if (TerminalFontSize.Text.Length > 10 || double.Parse(TerminalFontSize.Text) < 5 || double.Parse(TerminalFontSize.Text) > 32)
                 {
@@ -226,7 +227,7 @@ namespace EasyDeploy.Views
 
             #region 背景颜色
             var vBackground = TerminalBackground.SelectColor.Color.ToString();
-            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_BACKGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_BACKGROUND].ToString().Equals(vBackground))
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_BACKGROUND) && !$"{_initialConfig[SystemConfigHelper.TERMINAL_BACKGROUND]}".Equals(vBackground))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
                 OutConfig.Add(SystemConfigHelper.TERMINAL_BACKGROUND, vBackground);
@@ -235,7 +236,7 @@ namespace EasyDeploy.Views
 
             #region 文字颜色
             var vForeground = TerminalForeground.SelectColor.Color.ToString();
-            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FOREGROUND) && !_initialConfig[SystemConfigHelper.TERMINAL_FOREGROUND].ToString().Equals(vForeground))
+            if (_initialConfig.ContainsKey(SystemConfigHelper.TERMINAL_FOREGROUND) && !$"{_initialConfig[SystemConfigHelper.TERMINAL_FOREGROUND]}".Equals(vForeground))
             {
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
                 OutConfig.Add(SystemConfigHelper.TERMINAL_FOREGROUND, vForeground);
@@ -278,7 +279,7 @@ namespace EasyDeploy.Views
                 blinkStoryboard.Begin(containingObject, true);
 
                 Timer timer = new Timer(5000);
-                timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+                timer.Elapsed += delegate (object? senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
                     this.Dispatcher.Invoke(new Action(() =>

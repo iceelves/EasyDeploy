@@ -4,6 +4,27 @@
              xmlns:local="clr-namespace:EasyDeploy"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="/Themes/Generic.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--定制原生控件-->
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceSvgButtonStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceButtonStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceDataGridStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceCheckBoxStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceTabControlStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceTabItemStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceScrollViewerStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceToolTipStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceGroupBoxStyle.xaml"/>
+                <!--设置语言-->
+                <ResourceDictionary Source="pack://application:,,,/Language/en-US.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Language/zh-CN.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!--通用默认样式-->
+            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource IceScrollViewerStyle}" />
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource IceToolTipStyle}" />
+            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource IceGroupBoxStyle}" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

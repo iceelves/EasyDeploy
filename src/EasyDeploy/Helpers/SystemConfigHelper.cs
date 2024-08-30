@@ -64,7 +64,7 @@ namespace EasyDeploy.Helpers
         /// </summary>
         public const string TERMINAL_FONTSIZE = "FontSize";
 
-        private static List<LanguageModel> _listLanguage;
+        private static List<LanguageModel>? _listLanguage;
         /// <summary>
         /// 语言资源集合
         /// </summary>
@@ -92,13 +92,13 @@ namespace EasyDeploy.Helpers
         {
             get
             {
-                string strPath = $"{AppDomain.CurrentDomain.BaseDirectory}SystemConfig.ini";
+                var strPath = $"{AppDomain.CurrentDomain.BaseDirectory}SystemConfig.ini";
                 // 文件夹不存在时自动创建
-                string strFolderPath = Path.GetDirectoryName(strPath);
+                var strFolderPath = Path.GetDirectoryName(strPath);
                 if (!Directory.Exists(strFolderPath))
                 {
                     NLogHelper.SaveDebug("系统配置文件夹不存在，自动创建！");
-                    Directory.CreateDirectory(strFolderPath);
+                    Directory.CreateDirectory($"{strFolderPath}");
                 }
                 // 文件不存在时自动创建
                 if (!File.Exists(strPath))
@@ -127,7 +127,7 @@ namespace EasyDeploy.Helpers
         /// <param name="section">节点</param>
         /// <param name="key">键</param>
         /// <returns>节点值</returns>
-        public static string GetSystemConfigInfo(string section, string key)
+        public static string? GetSystemConfigInfo(string section, string key)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace EasyDeploy.Helpers
         /// <param name="key">键</param>
         /// <param name="value">值</param>
         /// <returns>保存成功返回True</returns>
-        public static bool SetSystemConfigInfo(string section, string key, string value)
+        public static bool SetSystemConfigInfo(string section, string key, string? value)
         {
             try
             {
@@ -174,7 +174,7 @@ namespace EasyDeploy.Helpers
         /// 设置语言
         /// </summary>
         /// <param name="language">语言</param>
-        public static void SetLanguage(string language = null)
+        public static void SetLanguage(string? language = null)
         {
             // 把要修改的语言放置资源最后
             List<ResourceDictionary> dictionaryList = new List<ResourceDictionary>();
@@ -187,7 +187,7 @@ namespace EasyDeploy.Helpers
                 var vSystemConfigInfo_Language = GetSystemConfigInfo(SECTION_SYSTEM, SYSTEM_LANGUAGE);
                 foreach (var item in ListLanguage)
                 {
-                    if (item.FileName.Equals(vSystemConfigInfo_Language))
+                    if (!string.IsNullOrEmpty(item.FileName) && item.FileName.Equals(vSystemConfigInfo_Language))
                     {
                         language = item.Resource?.Source.OriginalString;
                         break;

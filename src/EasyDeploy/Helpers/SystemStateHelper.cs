@@ -66,8 +66,8 @@ namespace EasyDeploy.Helpers
 
                             float mainRam = memoryPerformanceCounter.NextValue() / mega;
 
-                            CpuCounterChange.Invoke(mainCpu);
-                            RamCounterChange.Invoke(mainRam);
+                            CpuCounterChange?.Invoke(mainCpu);
+                            RamCounterChange?.Invoke(mainRam);
                         }
                         catch (Exception)
                         {
@@ -83,12 +83,12 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// CPU 使用率
         /// </summary>
-        public event Action<double> CpuCounterChange;
+        public event Action<double>? CpuCounterChange;
 
         /// <summary>
         /// 内存使用率
         /// </summary>
-        public event Action<double> RamCounterChange;
+        public event Action<double>? RamCounterChange;
 
         /// <summary>
         /// 获取总内存字节容量
@@ -103,7 +103,7 @@ namespace EasyDeploy.Helpers
                     double totalCapacity = 0d;
                     foreach (var mo in moc)
                     {
-                        var moCapacity = long.Parse(mo.Properties["Capacity"].Value.ToString());
+                        var moCapacity = long.Parse($"{mo.Properties["Capacity"].Value}");
                         totalCapacity += Math.Round(moCapacity / 1024.0 / 1024, 1);
                     }
                     return totalCapacity;
@@ -127,7 +127,7 @@ namespace EasyDeploy.Helpers
                 {
                     try
                     {
-                        if ((int)performanceCounter?.RawValue == pid)
+                        if (int.Parse($"{performanceCounter?.RawValue}") == pid)
                         {
                             return runnedInstance;
                         }

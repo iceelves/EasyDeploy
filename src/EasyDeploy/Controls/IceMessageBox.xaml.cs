@@ -59,7 +59,7 @@ namespace EasyDeploy.Controls
             return ShowDialogBox(null, message, caption, button);
         }
 
-        public static MessageBoxResult? ShowDialogBox(Window owner, string message, string caption, MessageBoxButton button)
+        public static MessageBoxResult? ShowDialogBox(Window? owner, string message, string caption, MessageBoxButton button)
         {
             return Application.Current?.Dispatcher?.Invoke(new Func<MessageBoxResult>(() =>
             {
@@ -69,7 +69,7 @@ namespace EasyDeploy.Controls
             }));
         }
 
-        public static MessageBoxResult? ShowDialogBox(Window owner, string message, string caption, MessageBoxButton button, string ok = "Tips", string yes = "Yes", string no = "No", string cancel = "Cancel")
+        public static MessageBoxResult? ShowDialogBox(Window? owner, string message, string caption, MessageBoxButton button, string ok = "Tips", string yes = "Yes", string no = "No", string cancel = "Cancel")
         {
             return Application.Current?.Dispatcher?.Invoke(new Func<MessageBoxResult>(() =>
             {
@@ -88,7 +88,7 @@ namespace EasyDeploy.Controls
             this.Close();
         }
 
-        private static IceMessageBox InitBox(Window owner, string message, string caption, MessageBoxButton button)
+        private static IceMessageBox InitBox(Window? owner, string message, string caption, MessageBoxButton button)
         {
             IceMessageBox box = new IceMessageBox();
             box.Owner = owner;

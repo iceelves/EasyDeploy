@@ -13,22 +13,24 @@ namespace EasyDeploy.Models
     /// </summary>
     public class ServiceModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning disable CS0067
+        public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore CS0067
 
         /// <summary>
         /// 服务名称
         /// </summary>
-        public string ServiceName { get; set; }
+        public string? ServiceName { get; set; }
 
         /// <summary>
         /// 服务路径
         /// </summary>
-        public string ServicePath { get; set; }
+        public string? ServicePath { get; set; }
 
         /// <summary>
         /// 参数
         /// </summary>
-        public string Parameter { get; set; }
+        public string? Parameter { get; set; }
 
         /// <summary>
         /// 程序启动时是否自动启动
@@ -50,20 +52,20 @@ namespace EasyDeploy.Models
         /// 进程 PID
         /// </summary>
         [JsonIgnore]
-        public string Pid { get; set; }
+        public string? Pid { get; set; }
 
         /// <summary>
         /// 端口号
         /// </summary>
         [JsonIgnore]
-        public string Port { get; set; }
+        public string? Port { get; set; }
 
         /// <summary>
         /// 点击运行时随机生成的主键
         /// 用于关联控制台资源
         /// </summary>
         [JsonIgnore]
-        public string Guid { get; set; }
+        public string? Guid { get; set; }
 
         /// <summary>
         /// 是否允许打开文件目录

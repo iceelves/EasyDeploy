@@ -5,6 +5,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<!--使用 MSBuild 构建发布项目项目时需要配置-->
 		<RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<Authors>北京冰云信息科技有限公司</Authors>
 		<Company>北京冰云信息科技有限公司</Company>

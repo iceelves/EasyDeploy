@@ -27,7 +27,7 @@ namespace EasyDeploy.Helpers
         /// <param name="AbsolutePath">绝对路径</param>
         /// <param name="CurrentPath">当前路径</param>
         /// <returns>相对路径</returns>
-        public static string AbsoluteToRelative(string AbsolutePath, string CurrentPath = null)
+        public static string AbsoluteToRelative(string AbsolutePath, string? CurrentPath = null)
         {
             if (!IsAbsolutePath(AbsolutePath))
             {
@@ -83,7 +83,7 @@ namespace EasyDeploy.Helpers
         /// <param name="RelativePath">相对路径</param>
         /// <param name="CurrentPath">当前路径</param>
         /// <returns>绝对路径</returns>
-        public static string RelativeToAbsolute(string RelativePath, string CurrentPath = null)
+        public static string RelativeToAbsolute(string RelativePath, string? CurrentPath = null)
         {
             if (IsAbsolutePath(RelativePath))
             {

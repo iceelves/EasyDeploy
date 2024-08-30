@@ -92,9 +92,9 @@ namespace EasyDeploy.Helpers
         /// 获取机器端口占用情况
         /// </summary>
         /// <returns>字典(pid,端口号)</returns>
-        public static Dictionary<int, List<int>> GetProcessPorts()
+        public static Dictionary<int, List<int>>? GetProcessPorts()
         {
-            Dictionary<int, List<int>> portinfo = null;
+            Dictionary<int, List<int>>? portinfo = null;
 
             try
             {
@@ -110,7 +110,7 @@ namespace EasyDeploy.Helpers
                 pro.StandardInput.WriteLine("netstat -ano");
                 pro.StandardInput.WriteLine("exit");
                 Regex reg = new Regex("\\s+", RegexOptions.Compiled);
-                string line = null;
+                string? line = null;
                 while ((line = pro.StandardOutput.ReadLine()) != null)
                 {
                     line = line.Trim();
@@ -172,10 +172,10 @@ namespace EasyDeploy.Helpers
         /// </summary>
         /// <param name="pid">进程ID</param>
         /// <returns>字典(pid,端口号)</returns>
-        public static List<int> GetProcessPorts(int pid)
+        public static List<int>? GetProcessPorts(int pid)
         {
             var vProcessPorts = GetProcessPorts();
-            return vProcessPorts.ContainsKey(pid) ? vProcessPorts[pid] : null;
+            return vProcessPorts != null && vProcessPorts.ContainsKey(pid) ? vProcessPorts[pid] : null;
         }
     }
 }

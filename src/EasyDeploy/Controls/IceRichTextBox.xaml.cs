@@ -139,7 +139,7 @@ namespace EasyDeploy.Controls
             }
 
             // 添加文本
-            string ansiColor = null;
+            string? ansiColor = null;
             Paragraph paragraph = new Paragraph();
             foreach (var item in AnsiHelper.GetAnsiSplit(Text))
             {
@@ -175,7 +175,7 @@ namespace EasyDeploy.Controls
         /// <param name="run">文本</param>
         /// <param name="ansiColor">ansi 颜色</param>
         /// <returns></returns>
-        private Run SetColorFromAnsi(Run run, string ansiColor)
+        private Run SetColorFromAnsi(Run run, string? ansiColor)
         {
             if (string.IsNullOrEmpty(ansiColor))
             {

@@ -22,7 +22,7 @@ namespace EasyDeploy.Helpers
         /// <param name="workingDirectory">工作目录</param>
         /// <param name="applicationName">应用名称</param>
         /// <param name="withArguments">参数</param>
-        public CliWrapHelper(string workingDirectory, string applicationName, string[] withArguments = null)
+        public CliWrapHelper(string? workingDirectory, string? applicationName, string[]? withArguments = null)
         {
             _workingDirectory = workingDirectory;
             _applicationName = applicationName;
@@ -32,22 +32,22 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// 工作目录
         /// </summary>
-        private string _workingDirectory { get; set; }
+        private string? _workingDirectory { get; set; }
 
         /// <summary>
         /// 应用名称
         /// </summary>
-        private string _applicationName { get; set; }
+        private string? _applicationName { get; set; }
 
         /// <summary>
         /// 参数
         /// </summary>
-        private string[] _withArguments { get; set; }
+        private string[]? _withArguments { get; set; }
 
         /// <summary>
         /// 命令行
         /// </summary>
-        private Command _cmd { get; set; }
+        private Command? _cmd { get; set; }
 
         /// <summary>
         /// 启动线程 ID
@@ -57,23 +57,23 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// 启动命令事件
         /// </summary>
-        public event Action<string> StartedCommandEvent;
+        public event Action<string>? StartedCommandEvent;
 
         /// <summary>
         /// 标准输出命令事件
         /// </summary>
-        public event Action<string> StandardOutputCommandEvent;
+        public event Action<string>? StandardOutputCommandEvent;
 
         /// <summary>
         /// 标准错误命令事件
         /// </summary>
-        public event Action<string> StandardErrorCommandEvent;
+        public event Action<string>? StandardErrorCommandEvent;
 
         /// <summary>
         /// 退出命令事件
         /// 非正常退出一般不会执行这里
         /// </summary>
-        public event Action<string> ExitedCommandEvent;
+        public event Action<string>? ExitedCommandEvent;
 
         /// <summary>
         /// 启动

@@ -21,27 +21,27 @@ namespace EasyDeploy.Models
         /// <summary>
         /// 服务基础信息
         /// </summary>
-        public ServiceModel Service { get; set; }
+        public ServiceModel? Service { get; set; }
 
         /// <summary>
         /// 控制台
         /// </summary>
-        public CliWrapHelper CliWrap { get; set; }
+        public CliWrapHelper? CliWrap { get; set; }
 
         /// <summary>
         /// 终端 Shell
         /// </summary>
-        public IceRichTextBox Terminal { get; set; }
+        public IceRichTextBox? Terminal { get; set; }
 
         /// <summary>
         /// 计时器每秒刷新
         /// </summary>
-        private DispatcherTimer timerPerSecond = null;
+        private DispatcherTimer? timerPerSecond = null;
 
         /// <summary>
         /// 进程 PID
         /// </summary>
-        public string Pid { get; set; }
+        public string? Pid { get; set; }
 
         /// <summary>
         /// 启动等待次数
@@ -87,11 +87,11 @@ namespace EasyDeploy.Models
         /// 计时器事件
         /// </summary>
         /// <param name="state"></param>
-        public void TimerPerSecondCallback(object sender, EventArgs e)
+        public void TimerPerSecondCallback(object? sender, EventArgs e)
         {
             Task.Run(() =>
             {
-                if (!PidHelper.GetProcessIsOnline(int.Parse(Pid)))
+                if (!PidHelper.GetProcessIsOnline(int.Parse($"{Pid}")) && Service != null)
                 {
                     SetLog($"Error Stop Service PID:{Pid}");
                     timerPerSecond?.Stop();
@@ -149,11 +149,14 @@ namespace EasyDeploy.Models
             {
                 SetLog($"Stop Service,Exit code:{obj}");
                 timerPerSecond?.Stop();
-                Service.ServiceState = ServiceState.Error;
+                if (Service != null)
+                {
+                    Service.ServiceState = ServiceState.Error;
+                }
                 // 尝试重启
                 CliWrap?.Stop();
                 CliWrap = null;
-                if (Service.AutoReStart)
+                if (Service != null && Service.AutoReStart)
                 {
                     ReCliWrap();
                 }
@@ -165,11 +168,16 @@ namespace EasyDeploy.Models
         /// </summary>
         private void ReCliWrap()
         {
+            if (Service == null)
+            {
+                return;
+            }
+
             SetLog($"Restart Service");
             Service.ServiceState = ServiceState.Wait;
             if (string.IsNullOrEmpty(Service.Parameter))
             {
-                CliWrap = new CliWrapHelper(Path.GetDirectoryName(Service.ServicePath), Path.GetFileName(Service.ServicePath));
+                CliWrap = new CliWrapHelper(Path.GetDirectoryName($"{Service.ServicePath}"), Path.GetFileName(Service.ServicePath));
             }
             else
             {
@@ -180,7 +188,7 @@ namespace EasyDeploy.Models
             // 通过返回的进程 ID 判断是否运行成功
             int iDetectionNumber = 0;
             Timer timer = new Timer(1000);
-            timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+            timer.Elapsed += delegate (object? senderTimer, ElapsedEventArgs eTimer)
             {
                 timer.Enabled = false;
                 Application.Current?.Dispatcher?.Invoke(() =>

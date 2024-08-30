@@ -157,12 +157,12 @@ namespace EasyDeploy.Helpers
         /// <summary>
         /// Gpu 使用率
         /// </summary>
-        public event Action<uint> GpuChange;
+        public event Action<uint>? GpuChange;
 
         /// <summary>
         /// 显存使用率
         /// </summary>
-        public event Action<uint> MemoryChange;
+        public event Action<uint>? MemoryChange;
     }
 
     /// <summary>

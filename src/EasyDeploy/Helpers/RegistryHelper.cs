@@ -19,7 +19,7 @@ namespace EasyDeploy.Helpers
         /// <param name="strName">键值名称</param>
         /// <param name="strSoftwarePath">启动项软件路径</param>
         /// <returns>成功返回true,失败返回false</returns>
-        public static bool CreateStartupItems(string strName, string strSoftwarePath)
+        public static bool CreateStartupItems(string? strName, string? strSoftwarePath)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace EasyDeploy.Helpers
                 {
                     return false;
                 }
-                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                var registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
                 if (registryKey == null)
                 {
                     registryKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
@@ -48,7 +48,7 @@ namespace EasyDeploy.Helpers
         /// </summary>
         /// <param name="strName">键值名称</param>
         /// <returns>成功返回true,失败返回false</returns>
-        public static bool DeleteStartupItems(string strName)
+        public static bool DeleteStartupItems(string? strName)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace EasyDeploy.Helpers
                 {
                     return false;
                 }
-                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                var registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
                 if (registryKey == null)
                 {
                     return false;
@@ -76,25 +76,24 @@ namespace EasyDeploy.Helpers
         /// 获得注册表中所有启动项
         /// </summary>
         /// <returns>注册表中启动项(键值,启动路径)</returns>
-        public static Dictionary<string, string> GetAllStartupItems()
+        public static Dictionary<string, string>? GetAllStartupItems()
         {
             try
             {
                 Dictionary<string, string> dicAllStartupItems = new Dictionary<string, string>();
-                RegistryKey registryKey = null;
-                //获取HKEY_CURRENT_USER中的启动项
-                registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                // 获取 HKEY_CURRENT_USER 中的启动项
+                var registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
                 if (registryKey != null)
                 {
                     foreach (string strValeName in registryKey.GetValueNames())
                     {
                         if (!dicAllStartupItems.ContainsKey(strValeName))
                         {
-                            dicAllStartupItems.Add(strValeName, registryKey.GetValue(strValeName).ToString());
+                            dicAllStartupItems.Add(strValeName, $"{registryKey.GetValue(strValeName)}");
                         }
                     }
                 }
-                //获取HKEY_LOCAL_MACHINE中的启动项
+                // 获取 HKEY_LOCAL_MACHINE 中的启动项
                 registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
                 if (registryKey != null)
                 {
@@ -102,7 +101,7 @@ namespace EasyDeploy.Helpers
                     {
                         if (!dicAllStartupItems.ContainsKey(strValeName))
                         {
-                            dicAllStartupItems.Add(strValeName, registryKey.GetValue(strValeName).ToString());
+                            dicAllStartupItems.Add(strValeName, $"{registryKey.GetValue(strValeName)}");
                         }
                     }
                 }
@@ -131,16 +130,16 @@ namespace EasyDeploy.Helpers
                 {
                     return false;
                 }
-                RegistryKey registryKey = Registry.ClassesRoot.OpenSubKey(strFileType, true);
+                var registryKey = Registry.ClassesRoot.OpenSubKey(strFileType, true);
                 if (registryKey == null)
                 {
                     registryKey = Registry.ClassesRoot.CreateSubKey(strFileType);
                 }
-                //获取(默认)中的数据
-                string strDefault = registryKey.ValueCount >= 1 ? registryKey.GetValue("").ToString() : string.Empty;
+                // 获取(默认)中的数据
+                var strDefault = registryKey.ValueCount >= 1 ? $"{registryKey.GetValue("")}" : string.Empty;
                 if (string.IsNullOrEmpty(strDefault))
                 {
-                    //如果该后缀名里(默认)没有值,则创建shell写入菜单功能
+                    // 如果该后缀名里(默认)没有值,则创建shell写入菜单功能
                     registryKey = Registry.ClassesRoot.OpenSubKey(strFileType + @"\DefaultIcon\", true);
                     if (registryKey == null)
                     {
@@ -153,7 +152,7 @@ namespace EasyDeploy.Helpers
                 }
                 else
                 {
-                    //如果该后缀名里(默认)存在值,读取值所在的路径创建shell写入菜单功能
+                    // 如果该后缀名里(默认)存在值,读取值所在的路径创建shell写入菜单功能
                     registryKey = Registry.ClassesRoot.OpenSubKey(strDefault + @"\DefaultIcon\", true);
                     if (registryKey == null)
                     {
@@ -190,16 +189,16 @@ namespace EasyDeploy.Helpers
                 {
                     return false;
                 }
-                RegistryKey registryKey = Registry.ClassesRoot.OpenSubKey(strFileType, true);
+                var registryKey = Registry.ClassesRoot.OpenSubKey(strFileType, true);
                 if (registryKey == null)
                 {
                     registryKey = Registry.ClassesRoot.CreateSubKey(strFileType);
                 }
-                //获取(默认)中的数据
-                string strDefault = registryKey.ValueCount >= 1 ? registryKey.GetValue("").ToString() : string.Empty;
+                // 获取(默认)中的数据
+                var strDefault = registryKey.ValueCount >= 1 ? $"{registryKey.GetValue("")}" : string.Empty;
                 if (string.IsNullOrEmpty(strDefault))
                 {
-                    //如果该后缀名里(默认)没有值,则创建shell写入菜单功能
+                    // 如果该后缀名里(默认)没有值,则创建shell写入菜单功能
                     registryKey = Registry.ClassesRoot.OpenSubKey(strFileType + @"\shell\open\command\", true);
                     if (registryKey == null)
                     {
@@ -212,7 +211,7 @@ namespace EasyDeploy.Helpers
                 }
                 else
                 {
-                    //如果该后缀名里(默认)存在值,读取值所在的路径创建shell写入菜单功能
+                    // 如果该后缀名里(默认)存在值,读取值所在的路径创建shell写入菜单功能
                     registryKey = Registry.ClassesRoot.OpenSubKey(strDefault + @"\shell\open\command\", true);
                     if (registryKey == null)
                     {
@@ -249,8 +248,8 @@ namespace EasyDeploy.Helpers
                 {
                     return false;
                 }
-                //Web端调用方法:<a href="strName://"%1"参数>URL Protocol</a>
-                RegistryKey registryKey = Registry.ClassesRoot.OpenSubKey(strName + @"\shell\open\command", true);
+                // Web端调用方法:<a href="strName://"%1"参数>URL Protocol</a>
+                var registryKey = Registry.ClassesRoot.OpenSubKey(strName + @"\shell\open\command", true);
                 if (registryKey == null)
                 {
                     registryKey = Registry.ClassesRoot.CreateSubKey(strName + @"\shell\open\command");
@@ -279,7 +278,7 @@ namespace EasyDeploy.Helpers
                 {
                     return false;
                 }
-                RegistryKey registryKey = Registry.ClassesRoot.OpenSubKey(strName, true);
+                var registryKey = Registry.ClassesRoot.OpenSubKey(strName, true);
                 if (registryKey == null)
                 {
                     return false;

@@ -13,11 +13,11 @@ namespace EasyDeploy.Models
         /// <summary>
         /// 标题
         /// </summary>
-        public string Header { get; set; }
+        public string? Header { get; set; }
 
         /// <summary>
         /// Terminal Control
         /// </summary>
-        public IceRichTextBox Control { get; set; }
+        public IceRichTextBox? Control { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace EasyDeploy.Views
         /// <summary>
         /// 构造函数
         /// </summary>
-        public AddServiceWindow(ServiceModel serviceModel = null)
+        public AddServiceWindow(ServiceModel? serviceModel = null)
         {
             InitializeComponent();
 
@@ -86,7 +86,7 @@ namespace EasyDeploy.Views
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.DefaultExt = ".exe";
             dialog.Filter = "EXE File|*.exe;*.bat|全部文件|*.*";
-            if ((bool)dialog.ShowDialog())
+            if (dialog.ShowDialog().GetValueOrDefault())
             {
                 try
                 {
@@ -102,7 +102,7 @@ namespace EasyDeploy.Views
         /// <summary>
         /// 全局服务配置
         /// </summary>
-        public ServiceModel ServiceModel { get; set; }
+        public ServiceModel? ServiceModel { get; set; }
 
         /// <summary>
         /// 保存
@@ -130,8 +130,8 @@ namespace EasyDeploy.Views
             ServiceModel.ServiceName = ServiceName.Text;
             ServiceModel.ServicePath = ServicePath.Text;
             ServiceModel.Parameter = Parameter.Text;
-            ServiceModel.AutoStart = (bool)AutoStart.IsChecked;
-            ServiceModel.AutoReStart = (bool)AutoReStart.IsChecked;
+            ServiceModel.AutoStart = AutoStart.IsChecked.GetValueOrDefault();
+            ServiceModel.AutoReStart = AutoReStart.IsChecked.GetValueOrDefault();
             this.Close();
         }
 
@@ -167,7 +167,7 @@ namespace EasyDeploy.Views
                 blinkStoryboard.Begin(containingObject, true);
 
                 Timer timer = new Timer(5000);
-                timer.Elapsed += delegate (object senderTimer, ElapsedEventArgs eTimer)
+                timer.Elapsed += delegate (object? senderTimer, ElapsedEventArgs eTimer)
                 {
                     timer.Enabled = false;
                     this.Dispatcher.Invoke(new Action(() =>
@@ -186,7 +186,7 @@ namespace EasyDeploy.Views
         /// <param name="e"></param>
         private void PathType_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)this.AbsolutePath.IsChecked)
+            if (this.AbsolutePath.IsChecked.GetValueOrDefault())
             {
                 IsAbsolutePath = true;
                 if (!string.IsNullOrEmpty(ServicePath.Text))

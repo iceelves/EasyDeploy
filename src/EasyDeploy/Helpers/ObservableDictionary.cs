@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,14 +9,15 @@ using System.Text;
 namespace EasyDeploy.Helpers
 {
     public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged
+        where TKey : notnull
     {
         public ObservableDictionary()
             : base()
         { }
 
         private int _index;
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public new KeyCollection Keys
         {
@@ -32,16 +34,16 @@ namespace EasyDeploy.Helpers
             get { return base.Count; }
         }
 
-        public new TValue this[TKey key]
+        public new TValue? this[TKey key]
         {
             get { return this.GetValue(key); }
-            set { this.SetValue(key, value); }
+            set { SetValue(key, value); }
         }
 
-        public TValue this[int index]
+        public TValue? this[int index]
         {
             get { return this.GetIndexValue(index); }
-            set { this.SetIndexValue(index, value); }
+            set { SetIndexValue(index, value); }
         }
 
         public new void Add(TKey key, TValue value)
@@ -76,6 +78,7 @@ namespace EasyDeploy.Helpers
             return false;
         }
 
+        [SuppressPropertyChangedWarnings]
         protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (this.CollectionChanged != null)
@@ -93,7 +96,7 @@ namespace EasyDeploy.Helpers
         }
 
         #region private方法
-        private TValue GetIndexValue(int index)
+        private TValue? GetIndexValue(int index)
         {
             for (int i = 0; i < this.Count; i++)
             {
@@ -104,10 +107,10 @@ namespace EasyDeploy.Helpers
                 }
             }
 
-            return default(TValue);
+            return default;
         }
 
-        private void SetIndexValue(int index, TValue value)
+        private void SetIndexValue(int index, TValue? value)
         {
             try
             {
@@ -120,7 +123,7 @@ namespace EasyDeploy.Helpers
             }
         }
 
-        private TValue GetValue(TKey key)
+        private TValue? GetValue(TKey key)
         {
             if (base.ContainsKey(key))
             {
@@ -128,17 +131,22 @@ namespace EasyDeploy.Helpers
             }
             else
             {
-                return default(TValue);
+                return default;
             }
         }
 
-        private void SetValue(TKey key, TValue value)
+        private void SetValue(TKey key, TValue? value)
         {
             if (base.ContainsKey(key))
             {
                 var pair = this.FindPair(key);
                 int index = _index;
-                base[key] = value;
+
+                if (value != null)
+                {
+                    base[key] = value;
+                }
+
                 var newpair = this.FindPair(key);
                 this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newpair, pair, index));
                 OnPropertyChanged("Values");
@@ -146,22 +154,25 @@ namespace EasyDeploy.Helpers
             }
             else
             {
-                this.Add(key, value);
+                if (value != null)
+                {
+                    this.Add(key, value);
+                }
             }
         }
 
-        private KeyValuePair<TKey, TValue> FindPair(TKey key)
+        private KeyValuePair<TKey, TValue>? FindPair(TKey key)
         {
             _index = 0;
             foreach (var item in this)
             {
-                if (item.Key.Equals(key))
+                if (item.Key != null && item.Key.Equals(key))
                 {
                     return item;
                 }
                 _index++;
             }
-            return default(KeyValuePair<TKey, TValue>);
+            return default;
         }
 
         private int IndexOf(TKey key)
@@ -169,7 +180,7 @@ namespace EasyDeploy.Helpers
             int index = 0;
             foreach (var item in this)
             {
-                if (item.Key.Equals(key))
+                if (item.Key != null && item.Key.Equals(key))
                 {
                     return index;
                 }
