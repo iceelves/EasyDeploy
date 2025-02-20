@@ -36,6 +36,11 @@ namespace EasyDeploy.Views
         }
 
         /// <summary>
+        /// 下拉菜单按钮是否按下
+        /// </summary>
+        private bool _isMoreMenusDown = false;
+
+        /// <summary>
         /// 关闭窗体
         /// </summary>
         /// <param name="sender"></param>
@@ -79,7 +84,23 @@ namespace EasyDeploy.Views
         /// <param name="e"></param>
         private void MoreMenus_Click(object sender, RoutedEventArgs e)
         {
-            popup_Menu.IsOpen = !popup_Menu.IsOpen;
+            // 为了避免点击按钮反复打开 Popup
+            // 通过按钮是否按下作为判断条件
+            if (_isMoreMenusDown)
+            {
+                _isMoreMenusDown = false;
+                popup_Menu.IsOpen = !popup_Menu.IsOpen;
+            }
+        }
+
+        /// <summary>
+        /// 下拉菜单按钮按下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MoreMenus_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _isMoreMenusDown = true;
         }
 
         /// <summary>

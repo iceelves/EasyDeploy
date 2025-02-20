@@ -124,7 +124,7 @@
                         <control:IceSvgButton x:Name="MoreMenus" Width="30" Height="25" ImageMargin="5"
                                            ButtonImage="m1002.98416,498.77581l-472.13262,475.50902c-11.25466,11.25464 -29.82483,11.25464 -41.07949,0l-472.13262,-475.50902c-18.00744,-18.00745 -5.06459,-48.95774 20.25837,-48.95774l944.82798,0c25.88571,0 38.82855,30.95029 20.25837,48.95774zm-31.51302,-165.44337l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042zm0,-205.39739l-918.94229,0c-23.63478,0 -43.3304,-19.69564 -43.3304,-43.33042c0,-23.63476 19.69563,-43.3304 43.3304,-43.3304l918.94229,0c23.63476,0 43.3304,19.69564 43.3304,43.3304c0,24.19751 -19.69564,43.33042 -43.3304,43.33042z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
-                                           Click="MoreMenus_Click"/>
+                                           Click="MoreMenus_Click" PreviewMouseDown="MoreMenus_PreviewMouseDown"/>
                         <control:IceSvgButton x:Name="mainMinimize" Width="30" Height="25" ImageMargin="7"
                                            ButtonImage="M96 417.984h832v188.032h-832z"
                                            NormalFill="White" IsMouseOverFill="White" IsMouseOverBackground="#575553"
