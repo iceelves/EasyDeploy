@@ -654,6 +654,20 @@ namespace EasyDeploy.ViewModels
         }
 
         /// <summary>
+        /// 关闭
+        /// </summary>
+        public DelegateCommand Close
+        {
+            get
+            {
+                return new DelegateCommand(delegate ()
+                {
+                    Application.Current.Shutdown();
+                });
+            }
+        }
+
+        /// <summary>
         /// 关于
         /// </summary>
         public DelegateCommand About
