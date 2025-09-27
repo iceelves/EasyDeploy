@@ -411,19 +411,6 @@
                 DoubleClickCommand="{Binding ShowWindow}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu Foreground="White">
-                        <ContextMenu.Style>
-                            <Style TargetType="{x:Type ContextMenu}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ContextMenu}">
-                                            <Border Name="Border" Background="#35363A" BorderBrush="#888888" BorderThickness="1" >
-                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ContextMenu.Style>
                         <MenuItem Header="{DynamicResource ShowOrHide}" Command="{Binding ShowOrHide}"/>
                         <MenuItem Header="{DynamicResource Setting}" Command="{Binding Settings}"/>
                         <MenuItem Header="{DynamicResource Exit}" Command="{Binding Close}"/>

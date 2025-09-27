@@ -44,6 +44,9 @@
     <Page Update="Language\zh-CN.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\IceContextMenuStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\IceGroupBoxStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -51,6 +54,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\IceComboBoxStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\IceMenuItemStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\IceTabControlStyle.xaml">

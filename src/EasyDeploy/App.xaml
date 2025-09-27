@@ -17,6 +17,8 @@
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceScrollViewerStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceToolTipStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceGroupBoxStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceContextMenuStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceMenuItemStyle.xaml"/>
                 <!--设置语言-->
                 <ResourceDictionary Source="pack://application:,,,/Language/en-US.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Language/zh-CN.xaml"/>
@@ -25,6 +27,8 @@
             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource IceScrollViewerStyle}" />
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource IceToolTipStyle}" />
             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource IceGroupBoxStyle}" />
+            <Style TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource IceContextMenuStyle}" />
+            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource IceMenuItemStyle}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
