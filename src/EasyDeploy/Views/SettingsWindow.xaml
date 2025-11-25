@@ -49,13 +49,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5">
                                     <Label Content="{DynamicResource Language}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
-                                    <ComboBox x:Name="SystemLanguage" Width="150" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" Foreground="White">
-                                        <ComboBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <ContentPresenter Content="{Binding Language}"/>
-                                            </DataTemplate>
-                                        </ComboBox.ItemTemplate>
-                                    </ComboBox>
+                                    <ComboBox x:Name="SystemLanguage" Width="150" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" Foreground="White" DisplayMemberPath="Language" />
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
