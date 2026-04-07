@@ -5,7 +5,7 @@
 
 ; 安装程序初始定义常量
 !define PRODUCT_NAME "EasyDeploy"
-!define PRODUCT_VERSION "1.0.1.3"
+!define PRODUCT_VERSION "1.0.1.4"
 !define PRODUCT_PUBLISHER "北京冰云信息科技有限公司"
 !define PRODUCT_PUBLISHER_ENGLISH "IceElves"
 !define PRODUCT_WEB_SITE "iceelves.com"
@@ -66,7 +66,7 @@ ShowUnInstDetails show
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File /r "..\EasyDeploy\bin\Release\net6.0-windows\publish_${ProcessorArchitecture}\*.*"
+  File /r "..\EasyDeploy\bin\Release\net8.0-windows\publish_${ProcessorArchitecture}\*.*"
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
