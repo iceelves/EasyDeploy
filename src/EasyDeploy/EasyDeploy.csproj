@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<!--使用 MSBuild 构建发布项目项目时需要配置-->
 		<RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
 		<Nullable>enable</Nullable>
