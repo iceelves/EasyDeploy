@@ -70,7 +70,7 @@ Section "MainSection" SEC01
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
   CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\EasyDeploy.exe"
-  File "..\EasyDeploy\bin\Release\net6.0-windows\publish_${ProcessorArchitecture}\EasyDeploy.exe"
+  File "..\EasyDeploy\bin\Release\net8.0-windows\publish_${ProcessorArchitecture}\EasyDeploy.exe"
 SectionEnd
 
 Section -AdditionalIcons
