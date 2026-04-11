@@ -121,10 +121,10 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_StandardOutputCommandEvent(string obj)
         {
-            Application.Current?.Dispatcher?.Invoke(() =>
+            Application.Current?.Dispatcher?.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
                 Terminal?.SetText(obj);
-            });
+            }));
         }
 
         /// <summary>
@@ -133,10 +133,10 @@ namespace EasyDeploy.Models
         /// <param name="obj"></param>
         private void CliWrap_StandardErrorCommandEvent(string obj)
         {
-            Application.Current?.Dispatcher?.Invoke(() =>
+            Application.Current?.Dispatcher?.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
                 Terminal?.SetText(obj);
-            });
+            }));
         }
 
         /// <summary>

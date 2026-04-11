@@ -1,5 +1,6 @@
 ﻿using EasyDeploy.Helpers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace EasyDeploy.Controls
 {
@@ -21,9 +23,45 @@ namespace EasyDeploy.Controls
     /// </summary>
     public partial class IceRichTextBox : UserControl
     {
+        /// <summary>
+        /// 待写入文本队列（线程安全）
+        /// </summary>
+        private readonly ConcurrentQueue<string> _pendingLines = new ConcurrentQueue<string>();
+
+        /// <summary>
+        /// 批量刷新定时器，每 50ms 将队列内容一次性写入 RichTextBox
+        /// </summary>
+        private readonly DispatcherTimer _flushTimer;
+
         public IceRichTextBox()
         {
             InitializeComponent();
+
+            _flushTimer = new DispatcherTimer(DispatcherPriority.Background)
+            {
+                Interval = TimeSpan.FromMilliseconds(50)
+            };
+            _flushTimer.Tick += FlushPendingLines;
+            _flushTimer.Start();
+        }
+
+        /// <summary>
+        /// 将队列中积累的行批量写入 RichTextBox
+        /// </summary>
+        private void FlushPendingLines(object? sender, EventArgs e)
+        {
+            if (_pendingLines.IsEmpty) return;
+
+            // 一次最多处理 200 行，避免单帧耗时过长
+            int count = 0;
+            while (count < 200 && _pendingLines.TryDequeue(out var line))
+            {
+                AppendLine(line);
+                count++;
+            }
+
+            // 写完后滚动到底部（layout 已在本帧更新）
+            ScrollToEndIfNeeded();
         }
 
         /// <summary>
@@ -95,7 +133,25 @@ namespace EasyDeploy.Controls
         /// </summary>
         public void ScrollToEnd()
         {
-            rtb.ScrollToEnd();
+            // 延迟执行，确保 TabControl 切换后 layout 已完成
+            Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+            {
+                rtb.ScrollToEnd();
+            }));
+        }
+
+        /// <summary>
+        /// 根据滚动位置决定是否滚动到底部
+        /// </summary>
+        private void ScrollToEndIfNeeded()
+        {
+            // 已在底部附近（80% 以上）或内容不足一屏时自动跟随
+            bool nearBottom = rtb.ExtentHeight <= this.ActualHeight ||
+                              rtb.VerticalOffset >= (rtb.ExtentHeight - rtb.ViewportHeight) * 0.8;
+            if (nearBottom)
+            {
+                rtb.ScrollToEnd();
+            }
         }
 
         /// <summary>
@@ -112,29 +168,36 @@ namespace EasyDeploy.Controls
         /// </summary>
         public void Collect()
         {
+            _flushTimer.Stop();
+            // 清空未处理队列
+            while (_pendingLines.TryDequeue(out _)) { }
             ClearText();
             GC.Collect();
         }
 
         /// <summary>
-        /// 添加文本
+        /// 添加文本（入队，由定时器批量写入）
         /// </summary>
         /// <param name="Text"></param>
         public void SetText(string Text)
         {
-            // 根据最大显示行数删除
-            int iRempveNumber = TerminalDocument.Blocks.Count - MaxRows;
-            if (iRempveNumber >= 1)
+            _pendingLines.Enqueue(Text);
+        }
+
+        /// <summary>
+        /// 实际将一行写入 RichTextBox（仅在 UI 线程的 FlushPendingLines 中调用）
+        /// </summary>
+        private void AppendLine(string Text)
+        {
+            // 根据最大显示行数删除旧行
+            int iRemoveNumber = TerminalDocument.Blocks.Count - MaxRows;
+            if (iRemoveNumber >= 1)
             {
-                for (int i = 0; i < iRempveNumber; i++)
+                for (int i = 0; i < iRemoveNumber; i++)
                 {
-                    foreach (var item in TerminalDocument.Blocks)
-                    {
-                        rtb.BeginChange();
-                        TerminalDocument.Blocks.Remove(item as Paragraph);
-                        rtb.EndChange();
-                        break;
-                    }
+                    var first = TerminalDocument.Blocks.FirstBlock;
+                    if (first != null)
+                        TerminalDocument.Blocks.Remove(first);
                 }
             }
 
@@ -145,7 +208,6 @@ namespace EasyDeploy.Controls
             {
                 if (item.Contains(AnsiHelper.AnsiStart))
                 {
-                    // 设置颜色
                     ansiColor = item;
                 }
                 else
@@ -153,20 +215,7 @@ namespace EasyDeploy.Controls
                     paragraph.Inlines.Add(SetColorFromAnsi(new Run() { Text = item }, ansiColor));
                 }
             }
-            rtb.BeginChange();
             TerminalDocument.Blocks.Add(paragraph);
-            rtb.EndChange();
-
-            // 如果滚动条不在最底部时继续判断
-            // 达到最大行数后滚动条会保持在最底部
-            if (rtb.VerticalOffset + this.ActualHeight != rtb.ExtentHeight)
-            {
-                // 滚动条超过 80% 或滚动条小于一倍控件高度 滚动到底部
-                if (rtb.VerticalOffset / (rtb.ExtentHeight - this.ActualHeight) >= 0.8 || (rtb.ExtentHeight - this.ActualHeight) <= this.ActualHeight)
-                {
-                    rtb.ScrollToEnd();
-                }
-            }
         }
 
         /// <summary>
