@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceDataGridStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceCheckBoxStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceRadioButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceTabControlStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceTabItemStyle.xaml"/>
@@ -25,6 +26,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceMenuItemStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <!--通用默认样式-->
+            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource IceCheckBoxStyle}"/>
             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource IceScrollViewerStyle}" />
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource IceToolTipStyle}" />
             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource IceGroupBoxStyle}" />

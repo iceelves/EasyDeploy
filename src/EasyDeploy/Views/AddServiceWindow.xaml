@@ -55,7 +55,7 @@
                         <StackPanel Orientation="Horizontal" Height="30" Margin="0,10,0,0">
                             <Label Width="120" Content="{DynamicResource ServicePath}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="White"/>
                             <TextBox x:Name="ServicePath" Width="250" Height="25" VerticalContentAlignment="Center" Margin="15,0" Background="Transparent" Foreground="White" CaretBrush="White"/>
-                            <control:IceButton x:Name="Select" Width="50" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="…"
+                            <control:IceButton x:Name="Select" Width="50" Height="27" Margin="10,0" Content="…"
                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Select_Click"/>
                         </StackPanel>
@@ -78,11 +78,11 @@
                             <CheckBox x:Name="AutoStart" Content="{DynamicResource AutoStart}" Foreground="White" ToolTip="{DynamicResource AutoStartToolTip}"/>
                             <CheckBox x:Name="AutoReStart" Content="{DynamicResource AutoReStart}" Foreground="White" Margin="20,0" ToolTip="{DynamicResource AutoReStartToolTip}"/>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <control:IceButton x:Name="Save" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Save}"
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0">
+                            <control:IceButton x:Name="Save" Width="80" Height="27" Margin="5" Content="{DynamicResource Save}"
                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Save_Click"/>
-                            <control:IceButton x:Name="Cancel" Width="80" Height="27" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Content="{DynamicResource Cancel}"
+                            <control:IceButton x:Name="Cancel" Width="80" Height="27" Margin="5" Content="{DynamicResource Cancel}"
                                                Background="#5A5A5A" IsMouseOverFill="#5E5E5E" ButtonCornerRadius="4" Cursor="Hand"
                                                Foreground="White" BorderThickness="0" FontWeight="Bold" IsDefault="True" Click="Cancel_Click"/>
                         </StackPanel>
