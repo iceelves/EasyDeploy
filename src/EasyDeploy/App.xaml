@@ -13,12 +13,12 @@
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceSvgButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceDataGridStyle.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Themes/IceCheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceRadioButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceTabControlStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceTabItemStyle.xaml"/>
                 <!--通用默认样式-->
+                <ResourceDictionary Source="pack://application:,,,/Themes/IceCheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceScrollViewerStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceToolTipStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Themes/IceGroupBoxStyle.xaml"/>
