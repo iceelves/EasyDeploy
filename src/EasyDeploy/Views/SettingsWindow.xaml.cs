@@ -67,6 +67,19 @@ namespace EasyDeploy.Views
             _initialConfig.Add(SystemConfigHelper.APPLICATION_START_WAIT_TIMES, vApplicationConfigInfo_StartWaitTimes);
             StartWaitTimes.Text = $"{vApplicationConfigInfo_StartWaitTimes}";
 
+            // 应用 - 定时重启
+            var vApplicationConfigInfo_TimedRestartEnable = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE);
+            var vTimedRestartEnable = !string.IsNullOrEmpty(vApplicationConfigInfo_TimedRestartEnable) && bool.Parse(vApplicationConfigInfo_TimedRestartEnable);
+            _initialConfig.Add(SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE, vTimedRestartEnable);
+            TimedRestartEnable.IsChecked = vTimedRestartEnable;
+
+            // 应用 - 定时重启时间
+            var vApplicationConfigInfo_TimedRestartTime = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME);
+            var vTimedRestartTime = SystemConfigHelper.IsValidTimedRestartTime(vApplicationConfigInfo_TimedRestartTime) ? vApplicationConfigInfo_TimedRestartTime : "03:00";
+            _initialConfig.Add(SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME, vTimedRestartTime);
+            TimedRestartTime.Text = $"{vTimedRestartTime}";
+            TimedRestartTime.IsEnabled = vTimedRestartEnable;
+
             // 获取终端配置
             // 终端 - 最大行数
             var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
@@ -145,6 +158,7 @@ namespace EasyDeploy.Views
                 else
                 {
                     SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_START_WITH_WINDOWS, StartWithWindows.IsChecked.ToString());
+                    OutConfig.Add(SystemConfigHelper.SYSTEM_START_WITH_WINDOWS, StartWithWindows.IsChecked.GetValueOrDefault());
                     var vDicAllStartupItems = RegistryHelper.GetAllStartupItems();
                     if (StartWithWindows.IsChecked.GetValueOrDefault())
                     {
@@ -174,6 +188,7 @@ namespace EasyDeploy.Views
                 if (_initialConfig.ContainsKey(SystemConfigHelper.SYSTEM_LANGUAGE) && !$"{_initialConfig[SystemConfigHelper.SYSTEM_LANGUAGE]}".Equals(selectedLanguage.FileName))
                 {
                     SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_SYSTEM, SystemConfigHelper.SYSTEM_LANGUAGE, selectedLanguage.FileName);
+                    OutConfig.Add(SystemConfigHelper.SYSTEM_LANGUAGE, selectedLanguage.FileName);
                     SystemConfigHelper.SetLanguage(selectedLanguage?.Resource?.Source.OriginalString);
                 }
             }
@@ -192,6 +207,26 @@ namespace EasyDeploy.Views
                 }
                 SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_START_WAIT_TIMES, StartWaitTimes.Text);
                 OutConfig.Add(SystemConfigHelper.APPLICATION_START_WAIT_TIMES, StartWaitTimes.Text);
+            }
+            #endregion
+
+            #region 定时重启
+            if (_initialConfig.ContainsKey(SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE) && bool.Parse($"{_initialConfig[SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE]}") != TimedRestartEnable.IsChecked.GetValueOrDefault())
+            {
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE, TimedRestartEnable.IsChecked.ToString());
+                OutConfig.Add(SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE, TimedRestartEnable.IsChecked.GetValueOrDefault());
+            }
+
+            TimedRestartTime.Text = TimedRestartTime.Text.Replace(" ", "");
+            if (_initialConfig.ContainsKey(SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME) && !$"{_initialConfig[SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME]}".Equals(TimedRestartTime.Text))
+            {
+                if (!SystemConfigHelper.IsValidTimedRestartTime(TimedRestartTime.Text))
+                {
+                    BorderFlashing(TimedRestartTime);
+                    return;
+                }
+                SystemConfigHelper.SetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME, TimedRestartTime.Text);
+                OutConfig.Add(SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME, TimedRestartTime.Text);
             }
             #endregion
             #endregion
@@ -265,6 +300,26 @@ namespace EasyDeploy.Views
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+        }
+
+        /// <summary>
+        /// 定时重启开关切换时间输入框可用状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimedRestartEnable_Changed(object sender, RoutedEventArgs e)
+        {
+            TimedRestartTime.IsEnabled = TimedRestartEnable.IsChecked.GetValueOrDefault();
+        }
+
+        /// <summary>
+        /// 限制定时重启时间只允许输入数字和冒号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimedRestartTime_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9:]+").IsMatch(e.Text);
         }
 
         /// <summary>

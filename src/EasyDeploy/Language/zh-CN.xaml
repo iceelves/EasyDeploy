@@ -58,6 +58,10 @@
     <!--设置:应用设置-->
     <System:String x:Key="ApplicationSettings">应用设置</System:String>
     <System:String x:Key="StartWaitTimes">启动等待次数：</System:String>
+    <System:String x:Key="TimedRestart">定时重启：</System:String>
+    <System:String x:Key="TimedRestartToolTip">每天到设定时间自动停止所有服务并重启软件</System:String>
+    <System:String x:Key="TimedRestartTime">重启时间：</System:String>
+    <System:String x:Key="TimedRestartTimeExample">（HH:mm，如 03:00）</System:String>
     <!--设置:终端设置-->
     <System:String x:Key="TerminalSettings">终端设置</System:String>
     <System:String x:Key="MaxRows">最大行数：</System:String>

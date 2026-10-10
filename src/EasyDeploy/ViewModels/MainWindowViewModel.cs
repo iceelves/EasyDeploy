@@ -9,11 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Threading;
 using System.Timers;
 using System.Windows;
+using Timer = System.Timers.Timer;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Data;
@@ -45,6 +48,16 @@ namespace EasyDeploy.ViewModels
                     // 应用 - 启动等待次数
                     var vTerminalConfigInfo_StartWaitTimes = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_START_WAIT_TIMES);
                     StartWaitTimes = !string.IsNullOrEmpty(vTerminalConfigInfo_StartWaitTimes) && int.Parse(vTerminalConfigInfo_StartWaitTimes) >= 1 ? int.Parse(vTerminalConfigInfo_StartWaitTimes) : 1;
+                    // 应用 - 定时重启
+                    var vApplicationConfigInfo_TimedRestartEnable = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE);
+                    TimedRestartEnable = !string.IsNullOrEmpty(vApplicationConfigInfo_TimedRestartEnable) && bool.Parse(vApplicationConfigInfo_TimedRestartEnable);
+                    // 应用 - 定时重启时间
+                    var vApplicationConfigInfo_TimedRestartTime = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_APPLICATION, SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME);
+                    TimedRestartTime = SystemConfigHelper.IsValidTimedRestartTime(vApplicationConfigInfo_TimedRestartTime) ? vApplicationConfigInfo_TimedRestartTime : "03:00";
+                    // 启动时已过当日触发时间则跳过当日，避免启动即重启
+                    UpdateTimedRestartBaseline();
+                    // 启动定时重启轮询
+                    StartTimedRestartTimer();
                     // 终端 - 最大行数
                     var vTerminalConfigInfo_MaxRows = SystemConfigHelper.GetSystemConfigInfo(SystemConfigHelper.SECTION_TERMINAL, SystemConfigHelper.TERMINAL_MAXROWS);
                     TerminalMaxRows = !string.IsNullOrEmpty(vTerminalConfigInfo_MaxRows) && int.Parse(vTerminalConfigInfo_MaxRows) >= 1 ? int.Parse(vTerminalConfigInfo_MaxRows) : 1;
@@ -68,6 +81,13 @@ namespace EasyDeploy.ViewModels
                     });
                     SetLogLogo();
                     SetLog("Easy Deploy Start!");
+
+                    // 输出定时重启计划
+                    var vStartNextTimedRestart = GetNextTimedRestartTime();
+                    if (vStartNextTimedRestart != null)
+                    {
+                        SetLog($"Timed restart enabled,next restart at {vStartNextTimedRestart:yyyy-MM-dd HH:mm}");
+                    }
 
                     // 加载 CPU、内存
                     SystemStateHelper systemState = new SystemStateHelper();
@@ -237,6 +257,147 @@ namespace EasyDeploy.ViewModels
         /// 启动等待次数
         /// </summary>
         public int StartWaitTimes { get; set; } = 20;
+
+        /// <summary>
+        /// 定时重启
+        /// </summary>
+        public bool TimedRestartEnable { get; set; }
+
+        /// <summary>
+        /// 定时重启时间(HH:mm)
+        /// </summary>
+        public string? TimedRestartTime { get; set; } = "03:00";
+        #endregion
+
+        #region 定时重启
+        /// <summary>
+        /// 定时重启轮询计时器
+        /// </summary>
+        private System.Timers.Timer? _timedRestartTimer;
+
+        /// <summary>
+        /// 定时重启最后触发日期
+        /// 用于避免同一天内重复触发
+        /// </summary>
+        private DateTime? _timedRestartLastDate;
+
+        /// <summary>
+        /// 是否正在执行定时重启
+        /// </summary>
+        private bool _isTimedRestarting;
+
+        /// <summary>
+        /// 启动定时重启轮询计时器
+        /// </summary>
+        private void StartTimedRestartTimer()
+        {
+            _timedRestartTimer = new Timer(20000);
+            _timedRestartTimer.Elapsed += TimedRestartTimer_Elapsed;
+            _timedRestartTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// 记录定时重启基线
+        /// 启动或修改设置时已过当日触发时间则标记当日已触发，避免立即触发重启
+        /// 设定时间晚于当前时间时清除当日标记，允许当日触发
+        /// </summary>
+        private void UpdateTimedRestartBaseline()
+        {
+            if (!TimedRestartEnable || !SystemConfigHelper.TryGetTimedRestartTime(TimedRestartTime, out var vTimedRestartTime))
+            {
+                return;
+            }
+            if (DateTime.Now >= DateTime.Now.Date + vTimedRestartTime)
+            {
+                // 已过当日触发时间，标记当日已触发
+                _timedRestartLastDate = DateTime.Now.Date;
+            }
+            else if (_timedRestartLastDate != null && _timedRestartLastDate >= DateTime.Now.Date)
+            {
+                // 设定时间晚于当前时间，清除当日标记允许当日触发
+                _timedRestartLastDate = null;
+            }
+        }
+
+        /// <summary>
+        /// 获取下一次定时重启触发时间
+        /// </summary>
+        /// <returns>未开启或时间非法时返回 null</returns>
+        private DateTime? GetNextTimedRestartTime()
+        {
+            if (!TimedRestartEnable || !SystemConfigHelper.TryGetTimedRestartTime(TimedRestartTime, out var vTimedRestartTime))
+            {
+                return null;
+            }
+            var vTargetTime = DateTime.Now.Date + vTimedRestartTime;
+            return DateTime.Now < vTargetTime ? vTargetTime : vTargetTime.AddDays(1);
+        }
+
+        /// <summary>
+        /// 定时重启轮询检测
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimedRestartTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            if (!TimedRestartEnable || _isTimedRestarting)
+            {
+                return;
+            }
+            if (!SystemConfigHelper.TryGetTimedRestartTime(TimedRestartTime, out var vTimedRestartTime))
+            {
+                return;
+            }
+            var vNow = DateTime.Now;
+            if (vNow < vNow.Date + vTimedRestartTime || (_timedRestartLastDate != null && _timedRestartLastDate >= vNow.Date))
+            {
+                return;
+            }
+            _isTimedRestarting = true;
+            _timedRestartLastDate = vNow.Date;
+            TimedRestartCore();
+        }
+
+        /// <summary>
+        /// 执行定时重启
+        /// 停止所有服务后启动新实例并退出当前实例
+        /// </summary>
+        private void TimedRestartCore()
+        {
+            SetLog($"Timed restart triggered:{DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            // 停止所有正在运行的服务
+            Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                StopAllService();
+            });
+            try
+            {
+                // 等待服务进程完全退出并释放端口
+                Thread.Sleep(3000);
+                // 启动新实例
+                var vSystemExePath = Process.GetCurrentProcess()?.MainModule?.FileName;
+                if (string.IsNullOrEmpty(vSystemExePath))
+                {
+                    throw new InvalidOperationException("Get current process path failed!");
+                }
+                Process.Start(new ProcessStartInfo(vSystemExePath) { UseShellExecute = true });
+                SetLog("Timed restart,Start new instance success");
+            }
+            catch (Exception ex)
+            {
+                // 启动新实例失败时放弃本次重启，保留当前实例运行
+                SetLog("Timed restart failed,Keep current instance running");
+                NLogHelper.SaveDebug($"Timed restart,Start new instance failed!");
+                NLogHelper.SaveError($"{ex}");
+                _isTimedRestarting = false;
+                return;
+            }
+            // 退出当前实例
+            Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                Application.Current.Shutdown();
+            });
+        }
         #endregion
 
         #region 终端相关配置
@@ -600,11 +761,22 @@ namespace EasyDeploy.ViewModels
                     settingsWindow.ShowDialog();
                     if (settingsWindow.OutConfig != null && settingsWindow.OutConfig.Any())
                     {
+                        // 系统 - 自动启动、语言（保存时已直接生效）
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.SYSTEM_START_WITH_WINDOWS))
+                        {
+                            SetLog($"Setting changed,{SystemConfigHelper.SYSTEM_START_WITH_WINDOWS}: {settingsWindow.OutConfig[SystemConfigHelper.SYSTEM_START_WITH_WINDOWS]}");
+                        }
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.SYSTEM_LANGUAGE))
+                        {
+                            SetLog($"Setting changed,{SystemConfigHelper.SYSTEM_LANGUAGE}: {settingsWindow.OutConfig[SystemConfigHelper.SYSTEM_LANGUAGE]}");
+                        }
+
                         // 应用 - 启动等待次数
                         if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.APPLICATION_START_WAIT_TIMES))
                         {
                             var vApplicationStartWaitTimes = $"{settingsWindow.OutConfig[SystemConfigHelper.APPLICATION_START_WAIT_TIMES]}";
                             var vStartWaitTimes = !string.IsNullOrEmpty(vApplicationStartWaitTimes) && int.Parse(vApplicationStartWaitTimes) >= 1 ? int.Parse(vApplicationStartWaitTimes) : 1;
+                            SetLog($"Setting changed,{SystemConfigHelper.APPLICATION_START_WAIT_TIMES}: {StartWaitTimes} -> {vStartWaitTimes}");
                             StartWaitTimes = vStartWaitTimes;
 
                             // 如果有正在运行的服务，一起修改启动等待次数
@@ -617,11 +789,41 @@ namespace EasyDeploy.ViewModels
                             }
                         }
 
+                        // 应用 - 定时重启
+                        var vTimedRestartChanged = false;
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE))
+                        {
+                            var vTimedRestartEnable = bool.Parse($"{settingsWindow.OutConfig[SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE]}");
+                            SetLog($"Setting changed,{SystemConfigHelper.APPLICATION_TIMED_RESTART_ENABLE}: {TimedRestartEnable} -> {vTimedRestartEnable}");
+                            TimedRestartEnable = vTimedRestartEnable;
+                            vTimedRestartChanged = true;
+                        }
+                        if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME))
+                        {
+                            var vTimedRestartTime = $"{settingsWindow.OutConfig[SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME]}";
+                            if (SystemConfigHelper.IsValidTimedRestartTime(vTimedRestartTime))
+                            {
+                                SetLog($"Setting changed,{SystemConfigHelper.APPLICATION_TIMED_RESTART_TIME}: {TimedRestartTime} -> {vTimedRestartTime}");
+                                TimedRestartTime = vTimedRestartTime;
+                                vTimedRestartChanged = true;
+                            }
+                        }
+                        if (vTimedRestartChanged)
+                        {
+                            // 修改设置时已过当日触发时间则跳过当日，避免修改后立即触发重启
+                            UpdateTimedRestartBaseline();
+                            var vNextTimedRestart = GetNextTimedRestartTime();
+                            SetLog(vNextTimedRestart != null
+                                ? $"Timed restart enabled,next restart at {vNextTimedRestart:yyyy-MM-dd HH:mm}"
+                                : "Timed restart disabled");
+                        }
+
                         // 终端 - 最大行数
                         if (settingsWindow.OutConfig.ContainsKey(SystemConfigHelper.TERMINAL_MAXROWS))
                         {
                             var vTerminalMaxRows = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_MAXROWS]}";
                             var vMaxRows = !string.IsNullOrEmpty(vTerminalMaxRows) && int.Parse(vTerminalMaxRows) >= 1 ? int.Parse(vTerminalMaxRows) : 1;
+                            SetLog($"Setting changed,{SystemConfigHelper.TERMINAL_MAXROWS}: {TerminalMaxRows} -> {vMaxRows}");
                             TerminalMaxRows = vMaxRows;
                         }
 
@@ -630,6 +832,7 @@ namespace EasyDeploy.ViewModels
                         {
                             var vTerminalFontSize = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FONTSIZE]}";
                             var vFontSize = !string.IsNullOrEmpty(vTerminalFontSize) && int.Parse(vTerminalFontSize) >= 1 ? int.Parse(vTerminalFontSize) : 1;
+                            SetLog($"Setting changed,{SystemConfigHelper.TERMINAL_FONTSIZE}: {TerminalFontSize} -> {vFontSize}");
                             TerminalFontSize = vFontSize;
                         }
 
@@ -638,6 +841,7 @@ namespace EasyDeploy.ViewModels
                         {
                             var vTerminalBackground = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_BACKGROUND]}";
                             var vBackground = !string.IsNullOrEmpty(vTerminalBackground) ? vTerminalBackground : "#0C0C0C";
+                            SetLog($"Setting changed,{SystemConfigHelper.TERMINAL_BACKGROUND}: {TerminalBackground?.Color} -> {vBackground}");
                             TerminalBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vBackground));
                         }
 
@@ -646,6 +850,7 @@ namespace EasyDeploy.ViewModels
                         {
                             var vTerminalForeground = $"{settingsWindow.OutConfig[SystemConfigHelper.TERMINAL_FOREGROUND]}";
                             var vForeground = !string.IsNullOrEmpty(vTerminalForeground) ? vTerminalForeground : "#FFFFFF";
+                            SetLog($"Setting changed,{SystemConfigHelper.TERMINAL_FOREGROUND}: {TerminalForeground?.Color} -> {vForeground}");
                             TerminalForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(vForeground));
                         }
                     }

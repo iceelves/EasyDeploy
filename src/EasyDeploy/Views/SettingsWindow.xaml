@@ -9,7 +9,7 @@
         AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize"
         Icon="pack://application:,,,/Images/terminal.ico"
-        Title="{DynamicResource Setting}" Height="400" Width="600">
+        Title="{DynamicResource Setting}" Height="430" Width="600">
     <Window.Resources>
         <!--文本框边框闪烁-->
         <Storyboard x:Key="BlinkAnime">
@@ -63,6 +63,14 @@
                                     <Label Content="{DynamicResource StartWaitTimes}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
                                     <TextBox x:Name="StartWaitTimes" Width="150" Height="25" MaxLength="9" VerticalContentAlignment="Center" Margin="10,0,0,0" Background="Transparent" Foreground="White" CaretBrush="White"
                                              InputMethod.IsInputMethodEnabled="False" PreviewTextInput="TextBox_PreviewTextInput"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="{DynamicResource TimedRestart}" Foreground="White" Width="140" HorizontalContentAlignment="Right"/>
+                                    <CheckBox x:Name="TimedRestartEnable" Margin="10,0" VerticalAlignment="Center" ToolTip="{DynamicResource TimedRestartToolTip}"
+                                              Checked="TimedRestartEnable_Changed" Unchecked="TimedRestartEnable_Changed"/>
+                                    <Label Content="{DynamicResource TimedRestartTime}" Foreground="White" Width="82" HorizontalContentAlignment="Right"/>
+                                    <TextBox x:Name="TimedRestartTime" Width="150" Height="25" MaxLength="5" VerticalContentAlignment="Center" Margin="10,0,0,0" Background="Transparent" Foreground="White" CaretBrush="White"
+                                             ToolTip="{DynamicResource TimedRestartTimeExample}" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="TimedRestartTime_PreviewTextInput"/>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>

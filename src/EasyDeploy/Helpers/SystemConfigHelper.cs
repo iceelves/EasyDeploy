@@ -40,6 +40,16 @@ namespace EasyDeploy.Helpers
         public const string APPLICATION_START_WAIT_TIMES = "StartWaitTimes";
 
         /// <summary>
+        /// 定时重启
+        /// </summary>
+        public const string APPLICATION_TIMED_RESTART_ENABLE = "TimedRestartEnable";
+
+        /// <summary>
+        /// 定时重启时间(HH:mm)
+        /// </summary>
+        public const string APPLICATION_TIMED_RESTART_TIME = "TimedRestartTime";
+
+        /// <summary>
         /// 终端节点标识
         /// </summary>
         public const string SECTION_TERMINAL = "Terminal";
@@ -111,6 +121,8 @@ namespace EasyDeploy.Helpers
                     INIHelper.INIWriteValue(strPath, SECTION_SYSTEM, SYSTEM_LANGUAGE, vLanguage);
                     // 创建默认应用配置信息
                     INIHelper.INIWriteValue(strPath, SECTION_APPLICATION, APPLICATION_START_WAIT_TIMES, "20");
+                    INIHelper.INIWriteValue(strPath, SECTION_APPLICATION, APPLICATION_TIMED_RESTART_ENABLE, "false");
+                    INIHelper.INIWriteValue(strPath, SECTION_APPLICATION, APPLICATION_TIMED_RESTART_TIME, "03:00");
                     // 创建默认终端配置信息
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_MAXROWS, "5000");
                     INIHelper.INIWriteValue(strPath, SECTION_TERMINAL, TERMINAL_BACKGROUND, "#FF0C0C0C");
@@ -168,6 +180,27 @@ namespace EasyDeploy.Helpers
                 NLogHelper.SaveError($"{ex}");
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 校验定时重启时间格式(HH:mm)
+        /// </summary>
+        /// <param name="time">时间字符串</param>
+        /// <returns>合法返回True</returns>
+        public static bool IsValidTimedRestartTime(string? time)
+        {
+            return TryGetTimedRestartTime(time, out _);
+        }
+
+        /// <summary>
+        /// 解析定时重启时间
+        /// </summary>
+        /// <param name="time">时间字符串</param>
+        /// <param name="timeSpan">解析结果</param>
+        /// <returns>解析成功返回True</returns>
+        public static bool TryGetTimedRestartTime(string? time, out TimeSpan timeSpan)
+        {
+            return TimeSpan.TryParseExact(time, new[] { @"hh\:mm", @"h\:mm" }, CultureInfo.InvariantCulture, out timeSpan);
         }
 
         /// <summary>
