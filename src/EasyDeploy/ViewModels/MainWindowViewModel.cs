@@ -360,20 +360,46 @@ namespace EasyDeploy.ViewModels
 
         /// <summary>
         /// 执行定时重启
-        /// 停止所有服务后启动新实例并退出当前实例
+        /// 停止所有服务并等待进程完全退出后，启动新实例并退出当前实例
         /// </summary>
         private void TimedRestartCore()
         {
             SetLog($"Timed restart triggered:{DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-            // 停止所有正在运行的服务
+            // 记录需要等待退出的服务进程 PID
+            var vServicePids = new List<int>();
             Application.Current?.Dispatcher?.Invoke(() =>
             {
+                if (ServicesResources != null)
+                {
+                    foreach (var item in ServicesResources)
+                    {
+                        var vPid = item.Value?.CliWrap?.threadID;
+                        if (vPid != null && vPid > 0)
+                        {
+                            vServicePids.Add(vPid.Value);
+                        }
+                    }
+                }
                 StopAllService();
             });
             try
             {
-                // 等待服务进程完全退出并释放端口
-                Thread.Sleep(3000);
+                // 轮询等待所有服务进程完全退出并释放端口
+                var vDeadline = DateTime.Now.AddSeconds(30);
+                while (vServicePids.Any(PidHelper.GetProcessIsOnline))
+                {
+                    if (DateTime.Now > vDeadline)
+                    {
+                        // 服务进程无法退出时放弃本次重启，保留当前实例，避免端口冲突
+                        SetLog("Timed restart aborted,Service processes not exited!");
+                        NLogHelper.SaveError("Timed restart aborted,Service processes not exited!");
+                        _isTimedRestarting = false;
+                        return;
+                    }
+                    Thread.Sleep(500);
+                }
+                // 缓冲 1 秒等待端口完全释放
+                Thread.Sleep(1000);
                 // 启动新实例
                 var vSystemExePath = Process.GetCurrentProcess()?.MainModule?.FileName;
                 if (string.IsNullOrEmpty(vSystemExePath))
@@ -939,6 +965,8 @@ namespace EasyDeploy.ViewModels
                 SetLog($"App shutdown,Stop all running services");
                 foreach (var item in ServicesResources)
                 {
+                    // 先停止监控计时器，避免进程被杀后自动重启机制复活服务
+                    item.Value?.StopTimer();
                     PidHelper.KillProcessAndChildren(item.Value?.CliWrap?.threadID);
                     SetLog($"App shutdown,Stop services:{item.Value?.Service?.ServiceName},PID:{item.Value?.Service?.Pid}");
                 }

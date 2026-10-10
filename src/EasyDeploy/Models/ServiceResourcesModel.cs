@@ -84,6 +84,12 @@ namespace EasyDeploy.Models
         }
 
         /// <summary>
+        /// 是否已人为停止
+        /// 用于阻止监控计时器与退出事件自动重启服务
+        /// </summary>
+        private bool _isStopped;
+
+        /// <summary>
         /// 计时器事件
         /// </summary>
         /// <param name="state"></param>
@@ -91,7 +97,11 @@ namespace EasyDeploy.Models
         {
             Task.Run(() =>
             {
-                if (!PidHelper.GetProcessIsOnline(int.Parse($"{Pid}")) && Service != null)
+                if (_isStopped || Service == null)
+                {
+                    return;
+                }
+                if (!PidHelper.GetProcessIsOnline(int.Parse($"{Pid}")))
                 {
                     SetLog($"Error Stop Service PID:{Pid}");
                     timerPerSecond?.Stop();
@@ -112,6 +122,7 @@ namespace EasyDeploy.Models
         /// </summary>
         public void StopTimer()
         {
+            _isStopped = true;
             timerPerSecond?.Stop();
         }
 
@@ -156,7 +167,7 @@ namespace EasyDeploy.Models
                 // 尝试重启
                 CliWrap?.Stop();
                 CliWrap = null;
-                if (Service != null && Service.AutoReStart)
+                if (Service != null && Service.AutoReStart && !_isStopped)
                 {
                     ReCliWrap();
                 }
